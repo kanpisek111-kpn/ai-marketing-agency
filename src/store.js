@@ -115,7 +115,7 @@ function getInitialDB() {
         notifyOnEachStep: true,
         autoSendOnComplete: true,
         sendMode: "broadcast", // "push" | "broadcast"
-        channelAccessToken: "",
+        channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN || "",
         targetId: ""
       }
     },

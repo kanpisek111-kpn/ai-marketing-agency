@@ -133,6 +133,39 @@
 
       <!-- ================= TAB 1: COMMAND CENTER ================= -->
       <section id="tab-command" class="tab-panel active">
+        <!-- Full AI Autopilot & 7-Agent Connected Ecosystem Bar -->
+        <div id="autopilotHeroBanner" style="background:linear-gradient(135deg, rgba(99,102,241,0.18), rgba(16,185,129,0.14), rgba(6,182,212,0.16)); border:1px solid rgba(99,102,241,0.45); border-radius:14px; padding:16px 18px; margin-bottom:16px; display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="background:#10b981; color:#052e16; font-weight:700; font-size:11px; padding:3px 9px; border-radius:99px;">FULL AI AUTOPILOT</span>
+                <h3 style="margin:0; font-size:16px; color:#f8fafc;">🤖 ให้ AI สั่งการเองทั้งหมด: คิดหัวข้อแคมเปญ • ออกแบบรูป Canva/AI • ส่งตรวจใน LINE • โพสต์ครบทุกแพลตฟอร์ม</h3>
+              </div>
+              <p style="margin:4px 0 0; font-size:12.5px; color:#cbd5e1;">ไม่ต้องพิมพ์โจทย์เอง! กดปุ่มเดียว หัวหน้าทีม AI (Aria) จะคิดแคมเปญให้เพจที่เลือก สั่ง Maya ออกแบบรูปโปสเตอร์จริง + ผูก Canva แล้วส่งการ์ดเข้า LINE ให้คุณกด <strong>"✅ ยืนยันงาน"</strong> เพื่อโพสต์ลง FB / IG / TikTok (ผ่าน Make.com) และ LINE OA ทันที</p>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button type="button" id="btnRunAutopilotApprove" class="btn-primary" style="background:linear-gradient(135deg,#10b981,#059669); border:none; padding:11px 16px; font-weight:700; font-size:13.5px; box-shadow:0 6px 20px rgba(16,185,129,0.35);" onclick="handleTriggerAutopilot(true)">
+                🤖 ให้ AI คิด + ออกแบบ Canva + ส่งให้กดยืนยันใน LINE
+              </button>
+              <button type="button" id="btnRunAutopilotDirect" class="btn-secondary" style="background:linear-gradient(135deg,#6366f1,#8b5cf6); border:none; color:#fff; padding:11px 14px; font-weight:600; font-size:13px;" onclick="handleTriggerAutopilot(false)">
+                ⚡ ให้ AI คิด + ออกแบบ + โพสต์ลงทุกเพจทันที 100%
+              </button>
+            </div>
+          </div>
+
+          <!-- 7 Agents Connected Software Pills -->
+          <div style="display:flex; flex-wrap:wrap; gap:6px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08); font-size:11.5px;">
+            <span style="color:#94a3b8; font-weight:600; align-self:center;">🔗 โปรแกรมที่เชื่อมกับ 7 Agents แล้ว:</span>
+            <a href="https://eu1.make.com/3327599/scenarios" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(99,102,241,0.4); color:#c7d2fe; padding:4px 10px; border-radius:8px;">👑 Aria ↔ Make.com Autopilot</a>
+            <a href="https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=TH&q=%E0%B8%9A%E0%B8%B4%E0%B9%89%E0%B8%A7%E0%B8%AD%E0%B8%B4%E0%B8%99" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.4); color:#bae6fd; padding:4px 10px; border-radius:8px;">🔍 Marcus ↔ Meta Ad Library</a>
+            <a href="https://trends.google.com/trends/explore?geo=TH&q=%E0%B8%9A%E0%B8%B4%E0%B9%89%E0%B8%A7%E0%B8%AD%E0%B8%B4%E0%B8%99" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(16,185,129,0.4); color:#a7f3d0; padding:4px 10px; border-radius:8px;">📈 Sophia ↔ Google Trends & SEO</a>
+            <a href="https://adsmanager.facebook.com/" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(245,158,11,0.4); color:#fde68a; padding:4px 10px; border-radius:8px;">🚀 Victor ↔ Meta Ads Manager</a>
+            <span style="background:rgba(15,23,42,0.8); border:1px solid rgba(236,72,153,0.4); color:#fbcfe8; padding:4px 10px; border-radius:8px;">✍️ Elena ↔ Multi-Channel Copy AI</span>
+            <a href="https://www.canva.com/" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(0,196,204,0.5); color:#67e8f9; padding:4px 10px; border-radius:8px;">🎨 Maya ↔ Google Flow + Canva (ไร้ลายน้ำ 100%)</a>
+            <span style="background:rgba(15,23,42,0.8); border:1px solid rgba(34,197,94,0.5); color:#86efac; padding:4px 10px; border-radius:8px;">📅 Leo ↔ LINE Flex Approval + Make.com</span>
+          </div>
+        </div>
+
         <!-- Quick Presets Bar -->
         <div class="preset-bar">
           <span class="preset-label">💡 เติมโจทย์ตัวอย่างในคลิกเดียว:</span>
@@ -272,6 +305,7 @@
               </div>
 
               <!-- 4-Platform Posting Checklist Grid -->
+              <div id="lineApprovalGateBox" class="hidden" style="background:linear-gradient(135deg,rgba(16,185,129,0.16),rgba(6,182,212,0.14)); border:1.5px solid #10b981; border-radius:12px; padding:12px; margin-bottom:12px;"></div>
               <div id="platformPostingBoard" class="platform-posting-board">
                 <!-- Rendered dynamically by JS: Facebook, TikTok, Instagram, LINE OA -->
               </div>
@@ -454,10 +488,16 @@
                 <select id="fbPageSelectDropdown" onchange="handleSelectDetectedFbPage(this.value)"></select>
               </div>
 
-              <div class="form-group">
-                <label>Automation Webhook URL (Make.com / n8n / Zapier สำหรับโพสต์ลง TikTok + IG + FB พร้อมกัน)</label>
-                <input type="text" id="brandWebhookUrl" placeholder="https://hook.eu1.make.com/xxxx หรือ Webhook ของ n8n" />
-                <small class="help-text">หากยังไม่ได้ใส่ Token ระบบจะทำงานในโหมดจำลองคิวโพสต์ให้คุณทดสอบกดส่งจาก Dashboard ได้ทันที</small>
+              <div class="form-group" style="background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.35); border-radius:12px; padding:14px; margin-top:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                  <label style="margin:0; color:#c7d2fe; font-weight:600;">⚡ ลิงก์ Make.com Webhook URL (โพสต์ลง Facebook / IG / TikTok อัตโนมัติ 100%)</label>
+                  <button type="button" class="btn-primary btn-sm" onclick="handleTestMakeWebhook()">
+                    📡 บันทึก & ยิงทดสอบเข้า Make.com
+                  </button>
+                </div>
+                <input type="text" id="brandWebhookUrl" placeholder="วางลิงก์ https://hook.eu1.make.com/xxxx หรือ https://hook.us1.make.com/xxxx ที่นี่" />
+                <div id="makeWebhookStatusBanner" class="link-inspect-badge hidden" style="margin-top:8px;"></div>
+                <small class="help-text" style="display:block; margin-top:6px;">💡 แนะนำ! การใช้ Make.com จะช่วยให้โพสต์ลงเพจ Facebook จริงได้ทันทีโดยไม่ต้องขอสิทธิ์แอป Meta (#200)</small>
               </div>
 
               <div class="form-actions split">

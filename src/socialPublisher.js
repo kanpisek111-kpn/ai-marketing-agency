@@ -265,18 +265,73 @@ async function publishViaAutomationWebhook({ webhookUrl, payload }) {
 }
 
 // ฟังก์ชันรวมสำหรับสั่งโพสต์ลงเพจที่ผูกไว้
-async function executeSocialPublish({ brandProfile, platforms, contentText, campaignTitle, brief, lineSettings }) {
+async function executeSocialPublish({ brandProfile, platforms, contentText, campaignTitle, brief, lineSettings, visualAssets }) {
   const results = [];
   const targetPlatforms = platforms && platforms.length > 0 ? platforms : ["Facebook", "Instagram", "TikTok"];
   const cleanCaption = extractCleanPostCaption(contentText, brief);
   const webhookUrl = (brandProfile?.automationWebhookUrl || "").trim();
 
-  // 1. ตรวจสอบการโพสต์ตรงเข้า Facebook Page (Direct Graph API)
+  // 1. ตรวจสอบการโพสต์ตรงเข้า Facebook Page (Direct Graph API หรือ Make.com Webhook)
   if (targetPlatforms.includes("Facebook")) {
     const autoPageId = extractFacebookPageIdFromUrl(brandProfile?.fbUrl);
     const pageId = (brandProfile?.fbPageId || autoPageId || "").trim();
     const pageToken = (brandProfile?.fbPageAccessToken || "").trim();
-    if (pageId && pageToken) {
+
+    if (webhookUrl) {
+      // หากผู้ใช้ผูก Make.com / Automation Webhook ไว้ ให้ยิงเข้า Make.com เป็นหลัก (ข้ามข้อจำกัดสิทธิ์แอป Meta #200 ได้ทันที)
+      try {
+        const whRes = await publishViaAutomationWebhook({
+          webhookUrl,
+          payload: {
+            platform: "Facebook",
+            platforms: ["Facebook"],
+            brandName: brandProfile?.brandName || "",
+            fbPageId: pageId,
+            campaignTitle: campaignTitle || "",
+            message: cleanCaption,
+            caption: cleanCaption,
+            content: cleanCaption,
+            imageUrl: visualAssets?.fbBannerImageUrl || "",
+            fbBannerImageUrl: visualAssets?.fbBannerImageUrl || "",
+            igSquareImageUrl: visualAssets?.igSquareImageUrl || "",
+            tiktokVerticalImageUrl: visualAssets?.tiktokVerticalImageUrl || "",
+            canvaUrl: visualAssets?.canva?.fbTemplateUrl || "https://www.canva.com/",
+            fbUrl: brandProfile?.fbUrl || "",
+            igUrl: brandProfile?.igUrl || "",
+            tiktokUrl: brandProfile?.tiktokUrl || "",
+            lineUrl: brandProfile?.lineUrl || "",
+            websiteUrl: brandProfile?.websiteUrl || brandProfile?.shopUrl || "",
+            contactPhone: brandProfile?.contactPhone || "",
+            links: {
+              fbUrl: brandProfile?.fbUrl || "",
+              igUrl: brandProfile?.igUrl || "",
+              tiktokUrl: brandProfile?.tiktokUrl || "",
+              lineUrl: brandProfile?.lineUrl || "",
+              websiteUrl: brandProfile?.websiteUrl || ""
+            },
+            timestamp: new Date().toISOString()
+          }
+        });
+        results.push({
+          ...whRes,
+          platform: "Facebook Page (Make.com)",
+          targetUrl: brandProfile?.fbUrl || `https://facebook.com/${pageId}`
+        });
+      } catch (whErr) {
+        if (pageId && pageToken) {
+          const fbRes = await publishToFacebookPage({
+            pageId,
+            pageAccessToken: pageToken,
+            message: cleanCaption,
+            link: brandProfile?.websiteUrl || ""
+          });
+          fbRes.message = `⚠️ Make.com ยังไม่ได้กด Run once/เปิดสวิตช์ ON — ระบบจึงสลับมาช่วยเปิดเพจ FB + คัดลอกแคปชันให้แทน!`;
+          results.push(fbRes);
+        } else {
+          throw whErr;
+        }
+      }
+    } else if (pageId && pageToken) {
       const fbRes = await publishToFacebookPage({
         pageId,
         pageAccessToken: pageToken,
@@ -284,39 +339,44 @@ async function executeSocialPublish({ brandProfile, platforms, contentText, camp
         link: brandProfile?.websiteUrl || ""
       });
       results.push(fbRes);
-    } else if (webhookUrl) {
-      const whRes = await publishViaAutomationWebhook({
-        webhookUrl,
-        payload: {
-          campaignTitle,
-          brandName: brandProfile?.brandName,
-          platforms: ["Facebook"],
-          links: { fbUrl: brandProfile?.fbUrl },
-          content: cleanCaption,
-          timestamp: new Date().toISOString()
-        }
-      });
-      results.push(whRes);
     } else {
       results.push({
         success: true,
         simulated: true,
         platform: "Facebook Page",
         targetUrl: brandProfile?.fbUrl || "ยังไม่ระบุลิงก์เพจ FB",
-        message: `⚠️ โหมดจำลอง (ยังไม่ได้ใส่ Facebook Page Access Token สำหรับโพสต์ขึ้นเพจจริง)`
+        message: `⚠️ โหมดจำลอง (ยังไม่ได้ใส่ Make.com Webhook หรือ Facebook Page Access Token)`
       });
     }
   }
 
-  // 2. ตรวจสอบการส่งเข้า Instagram & TikTok ผ่าน Automation Webhook
+  // 2. ตรวจสอบการส่งเข้า Instagram & TikTok ผ่าน Automation Webhook (Make.com)
   if (targetPlatforms.includes("Instagram") || targetPlatforms.includes("TikTok")) {
     if (webhookUrl) {
-      const whRes = await publishViaAutomationWebhook({
+      const igTiktokPlatforms = targetPlatforms.filter((p) => p === "Instagram" || p === "TikTok");
+      try {
+        const whRes = await publishViaAutomationWebhook({
         webhookUrl,
         payload: {
-          campaignTitle,
-          brandName: brandProfile?.brandName,
-          platforms: targetPlatforms.filter((p) => p === "Instagram" || p === "TikTok"),
+          platform: igTiktokPlatforms.join(", "),
+          platforms: igTiktokPlatforms,
+          brandName: brandProfile?.brandName || "",
+          fbPageId: brandProfile?.fbPageId || "",
+          campaignTitle: campaignTitle || "",
+          message: cleanCaption,
+          caption: cleanCaption,
+          content: cleanCaption,
+          imageUrl: visualAssets?.igSquareImageUrl || visualAssets?.fbBannerImageUrl || "",
+          fbBannerImageUrl: visualAssets?.fbBannerImageUrl || "",
+          igSquareImageUrl: visualAssets?.igSquareImageUrl || "",
+          tiktokVerticalImageUrl: visualAssets?.tiktokVerticalImageUrl || "",
+          canvaUrl: visualAssets?.canva?.igTemplateUrl || "https://www.canva.com/",
+          fbUrl: brandProfile?.fbUrl || "",
+          igUrl: brandProfile?.igUrl || "",
+          tiktokUrl: brandProfile?.tiktokUrl || "",
+          lineUrl: brandProfile?.lineUrl || "",
+          websiteUrl: brandProfile?.websiteUrl || brandProfile?.shopUrl || "",
+          contactPhone: brandProfile?.contactPhone || "",
           links: {
             fbUrl: brandProfile?.fbUrl,
             tiktokUrl: brandProfile?.tiktokUrl,
@@ -324,11 +384,19 @@ async function executeSocialPublish({ brandProfile, platforms, contentText, camp
             lineUrl: brandProfile?.lineUrl,
             websiteUrl: brandProfile?.websiteUrl
           },
-          content: cleanCaption,
           timestamp: new Date().toISOString()
         }
       });
-      results.push(whRes);
+        results.push(whRes);
+      } catch (whErr) {
+        results.push({
+          success: true,
+          simulated: true,
+          platform: igTiktokPlatforms.join(" & "),
+          targetUrl: brandProfile?.igUrl || brandProfile?.tiktokUrl || "",
+          message: `⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)`
+        });
+      }
     } else {
       if (targetPlatforms.includes("Instagram")) {
         results.push({

@@ -1,5 +1,5 @@
 // src/lineNotifier.js
-// ระบบส่งแจ้งเตือนติดตามสถานะงาน และติดตามสถานะการโพสต์ลงเพจต่างๆ (FB / TikTok / IG / LINE โพสต์ไปหรือยัง) เข้า LINE OA
+// ระบบส่งแจ้งเตือนติดตามสถานะงาน, ส่งการ์ดตรวจงานพร้อมรูปโปสเตอร์ (LINE Flex Approval Card) และรายงานการโพสต์เข้า LINE OA
 
 function buildProgressBar(completed, total) {
   const safeTotal = Math.max(total || 4, 1);
@@ -39,7 +39,6 @@ function formatPlatformPostingStatusLineMessage({ campaign, latestPlatform, proj
     return `${p.icon} ${p.platform}: ⬜ ยังไม่ได้โพสต์ (รอคิว)\n   🔗 ${p.targetUrl || "-"}`;
   });
 
-  // เช็กสถานะฝั่งการคิดคอนเทนต์ของ Agent ทั้ง 7 แผนกด้วยสั้นๆ
   const agentSteps = campaign?.steps || [];
   const agentDone = agentSteps.filter((s) => s.status === "completed").length;
   const agentTotal = agentSteps.length || 7;
@@ -66,11 +65,11 @@ function formatCampaignStartLineMessage(campaign, projectName) {
   const channelList = postingSteps.map((p) => `• ${p.icon} ${p.platform}: ⬜ รอคิวโพสต์ (${p.targetUrl || "-"})`).join("\n");
 
   return [
-    `🚀 [เริ่มงานแคมเปญ & เตรียมโพสต์ลงเพจ]`,
+    `🚀 [AI Autopilot เริ่มทำงาน 7 แผนกอัตโนมัติ]`,
     `━━━━━━━━━━━━━━━━━━`,
     `📁 โปรเจกต์/เพจ: ${projectName || brief.productName || "เพจหลัก"}`,
-    `📌 แคมเปญ: ${brief.productName || "-"}`,
-    `🤖 สถานะตอนนี้: ทีม AI กำลังผลิตคอนเทนต์เพื่อนำไปโพสต์ลงเพจ`,
+    `📌 หัวข้อแคมเปญ: ${brief.productName || "-"}`,
+    `🎨 สิ่งที่กำลังทำ: วิเคราะห์ตลาด + เขียนแคปชัน + ออกแบบโปสเตอร์ Canva/AI`,
     `━━━━━━━━━━━━━━━━━━`,
     `🌐 เพจเป้าหมายที่เข้าคิวรอโพสต์:`,
     channelList,
@@ -82,12 +81,12 @@ function formatStepProgressLineMessage({ campaign, step, stepIndex, totalSteps, 
   const doneCount = stepIndex + 1;
   const brief = campaign.brief || {};
   return [
-    `⏳ [ความคืบหน้าเตรียมคอนเทนต์ก่อนโพสต์]`,
+    `⏳ [ความคืบหน้าทีม AI (${doneCount}/${totalSteps} แผนก)]`,
     `📁 โปรเจกต์: ${projectName || brief.productName || "เพจหลัก"}`,
-    `🤖 เตรียมงานเสร็จแล้ว: ${doneCount}/${totalSteps} แผนก`,
-    `✅ ล่าสุด: ${step.avatar || "🤖"} ${step.agentName}`,
-    nextStep ? `👉 ถัดไป: ${nextStep.avatar || "🤖"} ${nextStep.agentName}` : `👉 เตรียมเริ่มไล่โพสต์ลงเพจ FB / TikTok / IG!`,
-    `📌 สถานะการโพสต์ลงเพจ: ยังอยู่ในขั้นตอนเตรียมสื่อ (รอโพสต์หลังครบ 7 แผนก)`
+    `✅ เสร็จแล้ว: ${step.avatar || "🤖"} ${step.agentName}`,
+    nextStep
+      ? `👉 กำลังส่งต่อให้: ${nextStep.avatar || "🤖"} ${nextStep.agentName}`
+      : `👉 เสร็จครบ 7 แผนก! กำลังส่งการ์ดรูปโปสเตอร์ + แคปชันให้คุณกดยืนยันใน LINE!`
   ].join("\n");
 }
 
@@ -109,7 +108,7 @@ function formatCampaignLineSummary(campaign, projectName) {
   });
 }
 
-async function sendLineReport({ lineConfig, messageText }) {
+async function sendLineReport({ lineConfig, messageText, flexMessages }) {
   const token = (lineConfig?.channelAccessToken || "").trim();
   const targetId = (lineConfig?.targetId || "").trim();
   const mode = lineConfig?.sendMode || (targetId ? "push" : "broadcast");
@@ -118,7 +117,7 @@ async function sendLineReport({ lineConfig, messageText }) {
     return {
       success: false,
       simulated: true,
-      message: "บันทึกแจ้งเตือนสถานะการโพสต์ลงระบบ Log เรียบร้อย (ใส่ LINE Channel Access Token เพื่อเด้งเข้ามือถือจริง)"
+      message: "บันทึกแจ้งเตือนลงระบบ Log เรียบร้อย (ใส่ LINE Channel Access Token เพื่อเด้งเข้ามือถือจริง)"
     };
   }
 
@@ -127,14 +126,13 @@ async function sendLineReport({ lineConfig, messageText }) {
     ? "https://api.line.me/v2/bot/message/push"
     : "https://api.line.me/v2/bot/message/broadcast";
 
+  const messages = Array.isArray(flexMessages) && flexMessages.length > 0
+    ? flexMessages
+    : [{ type: "text", text: (messageText || "").slice(0, 4900) }];
+
   const payload = isPush
-    ? {
-        to: targetId,
-        messages: [{ type: "text", text: messageText }]
-      }
-    : {
-        messages: [{ type: "text", text: messageText }]
-      };
+    ? { to: targetId, messages }
+    : { messages };
 
   const response = await fetch(endpoint, {
     method: "POST",
@@ -146,6 +144,27 @@ async function sendLineReport({ lineConfig, messageText }) {
   });
 
   if (!response.ok) {
+    // หากส่ง Flex Message ไม่ผ่าน ให้ fallback ส่งข้อความ Text แทนอัตโนมัติ
+    if (flexMessages && messageText) {
+      const fallbackPayload = isPush
+        ? { to: targetId, messages: [{ type: "text", text: messageText.slice(0, 4900) }] }
+        : { messages: [{ type: "text", text: messageText.slice(0, 4900) }] };
+      const retryRes = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(fallbackPayload)
+      });
+      if (retryRes.ok) {
+        return {
+          success: true,
+          simulated: false,
+          message: "ส่งข้อความแจ้งเตือนเข้า LINE OA สำเร็จ!"
+        };
+      }
+    }
     const errBody = await response.text();
     throw new Error(`LINE Messaging API Error (${response.status}): ${errBody}`);
   }
@@ -154,8 +173,186 @@ async function sendLineReport({ lineConfig, messageText }) {
     success: true,
     simulated: false,
     mode: isPush ? `Push ไปยัง ${targetId}` : "Broadcast ไปยังผู้ติดตาม LINE OA",
-    message: "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!"
+    message: "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!"
   };
+}
+
+// ส่งการ์ดตรวจงานพร้อมรูปโปสเตอร์ที่ AI ออกแบบเสร็จแล้ว + ปุ่มกดยืนยันงาน (Approve & Auto-Post) เข้า LINE OA
+async function sendLineApprovalCard({
+  lineConfig,
+  campaign,
+  brandProfile,
+  visualAssets,
+  cleanCaption,
+  serverBaseUrl = "http://localhost:3080"
+}) {
+  const brandName = brandProfile?.brandName || campaign?.projectName || "KPN บิ้วอิน เชียงใหม่";
+  const approvePcUrl = `${serverBaseUrl}/api/campaigns/approve-get?campaignId=${encodeURIComponent(campaign.id)}`;
+  const regeneratePcUrl = `${serverBaseUrl}/api/campaigns/regenerate-get?campaignId=${encodeURIComponent(campaign.id)}`;
+  const canvaUrl = visualAssets?.canva?.fbTemplateUrl || "https://www.canva.com/";
+  const heroImageUrl =
+    visualAssets?.fbBannerImageUrl ||
+    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90";
+
+  // สร้างลิงก์ยิงเข้า Make.com โดยตรงกรณีผู้ใช้กดยืนยันจากมือถือผ่าน 4G/5G
+  const makeWebhook = (brandProfile?.automationWebhookUrl || "").trim();
+  const shortCaptionForQuery = (cleanCaption || "").slice(0, 420);
+  const directMakeApproveUrl = makeWebhook
+    ? `${makeWebhook}?platform=Facebook&brandName=${encodeURIComponent(brandName)}&fbPageId=${encodeURIComponent(
+        brandProfile?.fbPageId || ""
+      )}&message=${encodeURIComponent(shortCaptionForQuery)}`
+    : approvePcUrl;
+
+  const captionPreview = (cleanCaption || "").slice(0, 260) + ((cleanCaption || "").length > 260 ? "..." : "");
+
+  const flexBubble = {
+    type: "flex",
+    altText: `🎨 ตรวจงานและกดยืนยันโพสต์: ${brandName}`,
+    contents: {
+      type: "bubble",
+      size: "mega",
+      hero: {
+        type: "image",
+        url: heroImageUrl,
+        size: "full",
+        aspectRatio: "20:13",
+        aspectMode: "cover",
+        action: {
+          type: "uri",
+          label: "ดูรูปขนาดเต็ม",
+          uri: heroImageUrl
+        }
+      },
+      body: {
+        type: "box",
+        layout: "vertical",
+        spacing: "sm",
+        contents: [
+          {
+            type: "text",
+            text: "🎨 AI ออกแบบรูป & แคปชันเสร็จแล้ว!",
+            weight: "bold",
+            color: "#10b981",
+            size: "xs"
+          },
+          {
+            type: "text",
+            text: brandName,
+            weight: "bold",
+            size: "lg",
+            wrap: true
+          },
+          {
+            type: "text",
+            text: visualAssets?.headline || campaign?.brief?.productName || "แคมเปญใหม่พร้อมโพสต์",
+            size: "sm",
+            color: "#6366f1",
+            weight: "bold",
+            wrap: true
+          },
+          {
+            type: "separator",
+            margin: "md"
+          },
+          {
+            type: "text",
+            text: "📝 ตัวอย่างแคปชันที่จะโพสต์ลงเพจ:",
+            size: "xs",
+            color: "#64748b",
+            margin: "md",
+            weight: "bold"
+          },
+          {
+            type: "text",
+            text: captionPreview || "พร้อมโพสต์ลง Facebook, IG, TikTok และ LINE OA",
+            size: "xs",
+            color: "#334155",
+            wrap: true
+          },
+          {
+            type: "separator",
+            margin: "md"
+          },
+          {
+            type: "text",
+            text: "🔗 เชื่อมครบ 7 Agents: Google Flow • Canva (ไร้ลายน้ำ 100%) • Make.com • Meta Ads",
+            size: "xxs",
+            color: "#94a3b8",
+            wrap: true,
+            margin: "sm"
+          }
+        ]
+      },
+      footer: {
+        type: "box",
+        layout: "vertical",
+        spacing: "sm",
+        contents: [
+          {
+            type: "button",
+            style: "primary",
+            color: "#10b981",
+            height: "sm",
+            action: {
+              type: "uri",
+              label: "✅ ยืนยัน & โพสต์ทุกเพจ (บนคอม)",
+              uri: approvePcUrl
+            }
+          },
+          {
+            type: "button",
+            style: "primary",
+            color: "#6366f1",
+            height: "sm",
+            action: {
+              type: "uri",
+              label: "📲 ยืนยันส่งเข้า Make.com (มือถือ)",
+              uri: directMakeApproveUrl
+            }
+          },
+          {
+            type: "button",
+            style: "secondary",
+            height: "sm",
+            action: {
+              type: "uri",
+              label: "🎨 เปิดดู/แต่งต่อใน Canva",
+              uri: canvaUrl
+            }
+          },
+          {
+            type: "button",
+            style: "link",
+            height: "sm",
+            action: {
+              type: "uri",
+              label: "🔄 สั่ง AI ออกแบบ & คิดใหม่",
+              uri: regeneratePcUrl
+            }
+          }
+        ]
+      }
+    }
+  };
+
+  const fullCaptionTextMsg = {
+    type: "text",
+    text: [
+      `📋 [แคปชันฉบับเต็มสำหรับตรวจทาน — ${brandName}]`,
+      `━━━━━━━━━━━━━━━━━━`,
+      cleanCaption || "",
+      `━━━━━━━━━━━━━━━━━━`,
+      `🖼️ ลิงก์รูปโปสเตอร์ AI (FB 1200x630):\n${heroImageUrl}`,
+      `🎨 ลิงก์แก้ไขใน Canva:\n${canvaUrl}`,
+      `✅ กดปุ่มสีเขียวในการ์ดด้านบนเพื่อยืนยันและปล่อยโพสต์ลงทุกแพลตฟอร์มได้ทันที!`
+    ].join("\n").slice(0, 4900)
+  };
+
+  return sendLineReport({
+    lineConfig,
+    messageText: fullCaptionTextMsg.text,
+    flexMessages: [flexBubble, fullCaptionTextMsg]
+  });
 }
 
 module.exports = {
@@ -165,5 +362,6 @@ module.exports = {
   formatStepProgressLineMessage,
   formatLiveStatusCheckLineMessage,
   formatCampaignLineSummary,
-  sendLineReport
+  sendLineReport,
+  sendLineApprovalCard
 };

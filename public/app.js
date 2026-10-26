@@ -141,6 +141,9 @@ function connectSSE() {
 
       if (msg.payload?.campaign) {
         upsertCampaign(msg.payload.campaign);
+        if (msg.type === "campaign_awaiting_approval") {
+          showToast("📲 AI ออกแบบรูป+แคปชันเสร็จแล้ว! ส่งการ์ดตรวจงานเข้า LINE ให้คุณกดยืนยันแล้วครับ");
+        }
       }
 
       if (msg.type === "line_log_added" && msg.payload?.lineLogs) {
@@ -526,6 +529,9 @@ function renderPipelineVisualizer(campaign) {
             <div class="node-title">${escapeHtml(step.agentName)}</div>
             <div class="node-dept">${escapeHtml(step.role)}</div>
           </div>
+          <div style="font-size:10.5px; color:#67e8f9; margin-top:4px; background:rgba(15,23,42,0.75); padding:3px 7px; border-radius:6px; border:1px solid rgba(103,232,249,0.25);">
+            ${getAgentConnectedToolBadge(step.agentId)}
+          </div>
           <div class="node-status-pill ${step.status}">
             ${statusLabels[step.status] || "รอคิว"}
           </div>
@@ -669,6 +675,7 @@ function renderLiveLogs(campaign) {
   const barFillEl = document.getElementById("progressBarFill");
 
   renderPlatformPostingBoard(campaign);
+  renderApprovalGateBox(campaign);
 
   if (!campaign) {
     badgeEl.className = "status-tag idle";
@@ -924,16 +931,70 @@ function renderAiGraphicStudio(campaign, selectedAgentId) {
     <div class="ai-graphic-studio-box">
       <div class="ai-graphic-header">
         <div>
-          <h4>🎨 สตูดิโอภาพกราฟิกโฆษณาพร้อมโพสต์ โดย Leo (AI Graphic Designer) — แบรนด์ "${escapeHtml(data.brandName)}"</h4>
-          <small style="color:#94a3b8; font-size:12px;">
-            สร้างภาพแบนเนอร์โฆษณาภาษาไทยครบทั้ง 3 ขนาด (1080p) กดปุ่ม <strong>"🖼️ คัดลอกรูป"</strong> แล้วไปกด <strong>Ctrl + V</strong> วางในช่องโพสต์เพจ Facebook ได้ทันที!
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span style="background:#10b981; color:#052e16; font-weight:700; font-size:11px; padding:2px 8px; border-radius:99px;">✨ NO WATERMARK 100%</span>
+            <h4 style="margin:0;">🎬 สตูดิโอ Maya (AI Creative): เชื่อม Google Flow + Canva Studio — แบรนด์ "${escapeHtml(data.brandName)}"</h4>
+          </div>
+          <small style="color:#94a3b8; font-size:12px; display:block; margin-top:4px;">
+            ภาพทุกใบ <strong>ไร้ลายน้ำ 100%</strong> • กดเจนภาพใน <strong>Google Flow</strong> แล้วนำมาเชื่อมกับ <strong>Canva</strong> หรือคัดลอกไปโพสต์ลงเพจได้ทันที!
           </small>
         </div>
         <div class="ai-graphic-theme-bar">
           ${themeButtonsHtml}
-          <button type="button" class="theme-pill-btn" style="border-color:#38bdf8; color:#bae6fd;" onclick="loadAiPhotoIntoGraphics()">
-            🤖 สุ่มภาพถ่าย AI พื้นหลังใหม่
+          <button type="button" class="theme-pill-btn" style="border-color:#10b981; color:#6ee7b7;" onclick="loadAiPhotoIntoGraphics()">
+            🔄 สลับภาพถ่ายสตูดิโอ 8K (ไร้ลายน้ำ)
           </button>
+          <button type="button" class="theme-pill-btn ${cleanPhotoOnlyMode ? 'active' : ''}" style="border-color:#38bdf8; color:#bae6fd;" onclick="toggleCleanPhotoOnlyMode()">
+            ${cleanPhotoOnlyMode ? '🧼 โหมดภาพเพียวๆ ไร้ตัวหนังสือ (เปิดอยู่)' : '🧼 สลับเป็นภาพเพียวๆ (ไม่ใส่ตัวหนังสือ)'}
+          </button>
+        </div>
+      </div>
+
+      <!-- Specific Built-in & Fit-in Furniture Style Selector Bar -->
+      <div style="margin-bottom:12px; padding:10px 14px; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.4); border-radius:10px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+        <div style="font-size:12.5px; font-weight:700; color:#fde68a;">
+          🪵 เลือกประเภทงานบิ้วอิน-ฟิตอินสั่งทำ (ภาพตรงกับงานจริง 100% ไร้ลายน้ำ):
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="theme-pill-btn" style="background:rgba(15,23,42,0.85); border-color:#f59e0b; color:#fde68a; font-weight:600;" onclick="setBuiltinScene('tv_wall')">
+            📺 1. ผนังทีวีบิ้วอิน + ตู้โชว์ซ่อนไฟ LED
+          </button>
+          <button type="button" class="theme-pill-btn" style="background:rgba(15,23,42,0.85); border-color:#f59e0b; color:#fde68a; font-weight:600;" onclick="setBuiltinScene('walkin_closet')">
+            👗 2. ตู้เสื้อผ้าบิ้วอิน / Walk-in Closet
+          </button>
+          <button type="button" class="theme-pill-btn" style="background:rgba(15,23,42,0.85); border-color:#f59e0b; color:#fde68a; font-weight:600;" onclick="setBuiltinScene('kitchen')">
+            🍳 3. ชุดครัวบิ้วอิน-ฟิตอินสั่งทำ สูงชนฝ้า
+          </button>
+        </div>
+        </div>
+      </div>
+
+      <!-- Google Flow (Imagen 3 / Veo) + Canva Seamless Bridge Box -->
+      <div style="margin-bottom:16px; padding:14px 16px; background:linear-gradient(135deg, rgba(16,185,129,0.12), rgba(59,130,246,0.14), rgba(125,42,232,0.14)); border:1px solid rgba(16,185,129,0.45); border-radius:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+          <div style="flex:1; min-width:280px;">
+            <div style="font-weight:700; font-size:13.5px; color:#6ee7b7; display:flex; align-items:center; gap:6px;">
+              <span>🎬 เชื่อมต่อ Agent Maya ↔ Google Flow (Imagen 3 / Veo) + 🎨 Canva (ไร้ลายน้ำ 100%)</span>
+            </div>
+            <div style="font-size:11.5px; color:#cbd5e1; margin-top:4px;">
+              Maya เขียน Prompt ระดับสตูดิโอ 8K (สั่งตัดลายน้ำออก <code>no watermark, no logo</code>) เตรียมไว้ให้แล้ว กดปุ่มด้านขวาเพื่อเปิด <strong>Google Flow</strong> เจนภาพ/วิดีโอ แล้วนำภาพเข้ามาแต่งต่อใน <strong>Canva</strong> หรือโพสต์ลงทุกแพลตฟอร์มได้เลย!
+            </div>
+            <div style="margin-top:8px;">
+              <input type="text" id="googleFlowPromptInput" value="${escapeHtml(getGoogleFlowPromptForBrand(data.brandName))}" style="width:100%; padding:7px 10px; font-size:11.5px; border-radius:8px; border:1px solid rgba(16,185,129,0.4); background:rgba(9,13,22,0.9); color:#a7f3d0;" />
+            </div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+            <button type="button" class="btn-graphic-action" style="background:linear-gradient(135deg,#10b981,#059669); border:none; color:#fff; font-weight:700; padding:9px 14px;" onclick="openGoogleFlowStudio('flow')">
+              🎬 1. คัดลอก Prompt + เปิด Google Flow
+            </button>
+            <button type="button" class="btn-graphic-action" style="background:linear-gradient(135deg,#3b82f6,#2563eb); border:none; color:#fff; font-weight:600; padding:9px 14px;" onclick="openGoogleFlowStudio('imagefx')">
+              🖼️ 2. เปิด Google ImageFX (Imagen 3)
+            </button>
+            <button type="button" class="btn-graphic-action" style="background:linear-gradient(135deg,#00c4cc,#7d2ae8); border:none; color:#fff; font-weight:700; padding:9px 14px;" onclick="document.getElementById('googleFlowFileInput').click()">
+              📥 3. นำภาพจาก Google Flow เข้า Canva & แบนเนอร์
+            </button>
+            <input type="file" id="googleFlowFileInput" accept="image/*" style="display:none;" onchange="handleGoogleFlowImageSelected(event)" />
+          </div>
         </div>
       </div>
 
@@ -1034,9 +1095,21 @@ function renderAiGraphicStudio(campaign, selectedAgentId) {
     </div>
   `;
 
-  requestAnimationFrame(() => {
-    drawAllMarketingCanvases(data);
-  });
+  if (!cachedAiBgImage) {
+    const defaultScene = BUILTIN_SCENES.tv_wall;
+    const preloadImg = new Image();
+    preloadImg.crossOrigin = "anonymous";
+    preloadImg.onload = () => {
+      cachedAiBgImage = preloadImg;
+      cachedAiBgBrand = data.brandName;
+      drawAllMarketingCanvases(data);
+    };
+    preloadImg.src = defaultScene.img;
+  } else {
+    requestAnimationFrame(() => {
+      drawAllMarketingCanvases(data);
+    });
+  }
 }
 
 function wrapCanvasText(ctx, text, maxWidth) {
@@ -1096,7 +1169,10 @@ function drawBusinessShowcaseIllustration(ctx, brandName, theme, x, y, w, h) {
 
   if (cachedAiBgImage && cachedAiBgBrand === brandName) {
     try {
-      ctx.drawImage(cachedAiBgImage, x, y, w, h);
+      // ตัดขอบล่าง 6% ออกอัตโนมัติเพื่อป้องกันลายน้ำมุมล่างขวา 100%
+      const srcW = cachedAiBgImage.naturalWidth || cachedAiBgImage.width || w;
+      const srcH = Math.floor((cachedAiBgImage.naturalHeight || cachedAiBgImage.height || h) * 0.94);
+      ctx.drawImage(cachedAiBgImage, 0, 0, srcW, srcH, x, y, w, h);
       const overlay = ctx.createLinearGradient(x, y, x, y + h);
       overlay.addColorStop(0, "rgba(15, 23, 42, 0.25)");
       overlay.addColorStop(1, "rgba(15, 23, 42, 0.7)");
@@ -1200,8 +1276,24 @@ function drawBusinessShowcaseIllustration(ctx, brandName, theme, x, y, w, h) {
   ctx.stroke();
 }
 
+let cleanPhotoOnlyMode = false;
+let cleanPhotoIndex = 0;
+
 function drawAllMarketingCanvases(data) {
   const theme = GRAPHIC_THEMES[currentGraphicTheme] || GRAPHIC_THEMES.luxury_gold;
+
+  if (cleanPhotoOnlyMode && cachedAiBgImage) {
+    ["graphicCanvasFb", "graphicCanvasTiktok", "graphicCanvasLine"].forEach((cid) => {
+      const c = document.getElementById(cid);
+      if (!c) return;
+      const ctx = c.getContext("2d");
+      const srcW = cachedAiBgImage.naturalWidth || cachedAiBgImage.width || 1080;
+      const srcH = Math.floor((cachedAiBgImage.naturalHeight || cachedAiBgImage.height || 1080) * 0.95);
+      ctx.clearRect(0, 0, c.width, c.height);
+      ctx.drawImage(cachedAiBgImage, 0, 0, srcW, srcH, 0, 0, c.width, c.height);
+    });
+    return;
+  }
 
   // ================= 1. FACEBOOK / IG SQUARE AD BANNER (1080x1080) =================
   const fbCanvas = document.getElementById("graphicCanvasFb");
@@ -1397,36 +1489,121 @@ function drawAllMarketingCanvases(data) {
   }
 }
 
+const CLIENT_WATERMARK_FREE_PHOTOS = {
+  builtin: [
+    "/images/builtin/builtin_tv_wall.jpg",
+    "/images/builtin/builtin_walkin_closet.jpg",
+    "/images/builtin/builtin_kitchen.jpg"
+  ],
+  construction: [
+    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=90",
+    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=90",
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=90"
+  ],
+  airwash: [
+    "https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&w=1200&q=90",
+    "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=90"
+  ],
+  bag: [
+    "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1200&q=90",
+    "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=90"
+  ]
+};
+
+function getGoogleFlowPromptForBrand(brandName = "") {
+  if (/(สร้างบ้าน|รีโนเวท|construction)/i.test(brandName)) {
+    return "Ultra-realistic architectural exterior photography of a modern luxury two-story tropical house in Chiang Mai Thailand, warm teak wood and white concrete facade, golden hour sunset lighting, landscaped garden, 8k resolution, photorealistic, no text, no watermark";
+  }
+  if (/(แอร์|AIR)/i.test(brandName)) {
+    return "Bright modern minimalist living room with a sleek white wall-mounted air conditioner, crystal clear refreshing cool atmosphere, sunlight streaming onto a cozy sofa, 8k commercial photography, no text, no watermark";
+  }
+  if (/(กระเป๋า|Bag)/i.test(brandName)) {
+    return "High-end commercial product photography of a luxury designer leather handbag resting on a travertine marble podium, soft warm studio lighting, 8k resolution, no text, no watermark";
+  }
+  return "Ultra-realistic architectural interior photography of a luxury modern built-in living room in Chiang Mai Thailand, custom walnut wood slat wall, white Carrara marble TV backdrop with warm recessed LED strip lighting, 8k resolution, photorealistic, no text, no watermark";
+}
+
+function toggleCleanPhotoOnlyMode() {
+  cleanPhotoOnlyMode = !cleanPhotoOnlyMode;
+  const campaign = getCurrentCampaign();
+  if (!cachedAiBgImage) {
+    loadAiPhotoIntoGraphics();
+  } else {
+    renderAiGraphicStudio(campaign, appState.selectedStepAgentId);
+  }
+  showToast(
+    cleanPhotoOnlyMode
+      ? "🧼 เปิดโหมดภาพถ่ายเพียวๆ (ไร้ลายน้ำและไม่ใส่ตัวหนังสือทับภาพ) สำหรับนำไปแต่งใน Canva!"
+      : "🎨 เปิดโหมดโปสเตอร์พร้อมกรอบข้อความโฆษณาภาษาไทย!"
+  );
+}
+
+async function openGoogleFlowStudio(target = "flow") {
+  const campaign = getCurrentCampaign();
+  const data = getCampaignGraphicData(campaign);
+  const promptEl = document.getElementById("googleFlowPromptInput");
+  const promptText = (promptEl?.value || getGoogleFlowPromptForBrand(data.brandName)).trim();
+
+  try {
+    await navigator.clipboard.writeText(promptText);
+    showToast("🎬 คัดลอก Prompt ไร้ลายน้ำเข้า Clipboard แล้ว! พอหน้า Google Flow เปิดขึ้นมา กด Ctrl+V เพื่อเจนภาพ/วิดีโอได้เลย!");
+  } catch (e) {
+    showToast("🎬 กำลังเปิดหน้า Google Flow...");
+  }
+
+  const url =
+    target === "imagefx"
+      ? "https://labs.google/fx/tools/image-fx"
+      : "https://labs.google/fx/tools/flow";
+  window.open(url, "_blank");
+}
+
+function handleGoogleFlowImageSelected(event) {
+  const file = event?.target?.files?.[0];
+  if (!file) return;
+  const campaign = getCurrentCampaign();
+  const data = getCampaignGraphicData(campaign);
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      cachedAiBgImage = img;
+      cachedAiBgBrand = data.brandName;
+      drawAllMarketingCanvases(data);
+      showToast("✨ นำภาพจาก Google Flow (ไร้ลายน้ำ 100%) เข้ามาใส่ในแบนเนอร์ทั้ง 3 ขนาดเรียบร้อย! กด '🎨 แต่งต่อใน Canva' หรือคัดลอกไปโพสต์ได้เลย");
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
 function loadAiPhotoIntoGraphics() {
   const campaign = getCurrentCampaign();
   const data = getCampaignGraphicData(campaign);
-  showToast("🤖 กำลังเจนภาพถ่ายสตูดิโอ AI ใหม่มาใส่ในแบนเนอร์...");
+  showToast("✨ กำลังโหลดภาพถ่ายสตูดิโอ 8K (ไร้ลายน้ำ 100%) ลงในแบนเนอร์...");
 
-  let promptEn = "luxury modern interior built-in furniture living room warm lighting photorealistic 8k";
-  if (/(สร้างบ้าน|รีโนเวท|construction)/i.test(data.brandName)) {
-    promptEn = "modern luxury house architecture exterior warm twilight lighting 8k photorealistic";
-  } else if (/(แอร์|AIR)/i.test(data.brandName)) {
-    promptEn = "modern clean living room with sleek wall air conditioner fresh cool atmosphere 8k";
-  } else if (/(กระเป๋า|Bag)/i.test(data.brandName)) {
-    promptEn = "luxury designer handbag on marble podium studio lighting 8k commercial";
-  }
+  let cat = "builtin";
+  if (/(สร้างบ้าน|รีโนเวท|construction)/i.test(data.brandName)) cat = "construction";
+  else if (/(แอร์|AIR)/i.test(data.brandName)) cat = "airwash";
+  else if (/(กระเป๋า|Bag)/i.test(data.brandName)) cat = "bag";
 
-  const seed = Math.floor(Math.random() * 99999);
-  const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(promptEn)}?width=960&height=540&seed=${seed}&nologo=true`;
+  const pool = CLIENT_WATERMARK_FREE_PHOTOS[cat] || CLIENT_WATERMARK_FREE_PHOTOS.builtin;
+  cleanPhotoIndex = (cleanPhotoIndex + 1) % pool.length;
+  const imgUrl = pool[cleanPhotoIndex];
+
   const img = new Image();
   img.crossOrigin = "anonymous";
   img.onload = () => {
     cachedAiBgImage = img;
     cachedAiBgBrand = data.brandName;
     drawAllMarketingCanvases(data);
-    showToast("✨ อัปเดตภาพถ่าย AI ลงในแบนเนอร์โฆษณาทั้ง 3 รูปเรียบร้อย!");
+    showToast("✅ อัปเดตภาพสตูดิโอ 8K (ไร้ลายน้ำ 100%) ลงในแบนเนอร์ทั้ง 3 รูปเรียบร้อย!");
   };
   img.onerror = () => {
-    // สลับธีมสีให้อัตโนมัติหากเซิร์ฟเวอร์รูปภายนอกตอบช้า
     const keys = Object.keys(GRAPHIC_THEMES);
     const nextIdx = (keys.indexOf(currentGraphicTheme) + 1) % keys.length;
     setGraphicTheme(keys[nextIdx]);
-    showToast("🎨 สลับดีไซน์กราฟิกแบนเนอร์ชุดใหม่เรียบร้อย!");
   };
   img.src = imgUrl;
 }
@@ -2475,4 +2652,221 @@ function escapeHtml(str) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+
+async function handleTestMakeWebhook() {
+  const urlInput = document.getElementById("brandWebhookUrl");
+  const banner = document.getElementById("makeWebhookStatusBanner");
+  const webhookUrl = (urlInput?.value || "").trim();
+  if (!webhookUrl) {
+    showToast("⚠️ กรุณาวางลิงก์ Webhook URL จาก Make.com ก่อนครับ");
+    if (urlInput) urlInput.focus();
+    return;
+  }
+
+  if (banner) {
+    banner.classList.remove("hidden");
+    banner.textContent = "⏳ กำลังบันทึกลิงก์และส่งข้อมูลตัวอย่างไปที่ Make.com...";
+  }
+
+  try {
+    const res = await fetch("/api/social/test-webhook", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        webhookUrl,
+        brandId: appState.settings.activeBrandId,
+        applyToAll: true
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      throw new Error(data.error || "ไม่สามารถส่งข้อมูลไปที่ Make.com ได้");
+    }
+    if (data.brandProfiles) {
+      appState.brandProfiles = data.brandProfiles;
+    }
+    if (banner) {
+      banner.innerHTML = `✅ <strong>เชื่อมต่อ Make.com สำเร็จ!</strong> ยิงข้อมูลตัวอย่าง (` + "<code>message</code>, <code>brandName</code>, <code>fbPageId</code>" + `) เข้า Make.com และบันทึกให้ทุกโปรเจกต์เรียบร้อยแล้ว`;
+    }
+    showToast(data.message || "✅ เชื่อมต่อ Make.com สำเร็จ!");
+  } catch (err) {
+    if (banner) {
+      banner.textContent = "❌ เกิดข้อผิดพลาด: " + err.message;
+    }
+    showToast("❌ " + err.message);
+  }
+}
+
+
+const CLIENT_AGENT_TOOLS = {
+  cmo_orchestrator: "🧭 Autopilot + Make.com",
+  market_researcher: "🔎 Meta Ad Library + Trends",
+  seo_specialist: "📈 Google SEO & Maps",
+  ad_strategist: "🎯 Meta Ads Manager",
+  content_copywriter: "✍️ Viral Copy Engine",
+  creative_director: "🎬 Google Flow + Canva (ไร้ลายน้ำ)",
+  social_scheduler: "📤 LINE Approval + Make.com"
+};
+
+function getAgentConnectedToolBadge(agentId) {
+  return CLIENT_AGENT_TOOLS[agentId] || "🔗 AI Connected";
+}
+
+function renderApprovalGateBox(campaign) {
+  const box = document.getElementById("lineApprovalGateBox");
+  if (!box) return;
+  if (!campaign || (campaign.status !== "awaiting_approval" && !campaign.visualAssets)) {
+    box.classList.add("hidden");
+    return;
+  }
+
+  const isWaiting = campaign.status === "awaiting_approval";
+  const imgUrl = campaign.visualAssets?.fbBannerImageUrl || "";
+  const canvaUrl = campaign.visualAssets?.canva?.fbTemplateUrl || "https://www.canva.com/";
+
+  box.classList.remove("hidden");
+  box.innerHTML = `
+    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+      ${imgUrl ? `<img src="${escapeHtml(imgUrl)}" alt="AI Poster" style="width:110px; height:64px; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);" />` : ""}
+      <div style="flex:1; min-width:200px;">
+        <div style="font-weight:700; font-size:13px; color:#6ee7b7;">
+          ${isWaiting ? "📲 ส่งการ์ดรูปโปสเตอร์ + แคปชันให้คุณตรวจใน LINE OA แล้ว!" : "🎨 รูปโปสเตอร์ AI + Canva ประจำแคมเปญพร้อมใช้งาน"}
+        </div>
+        <div style="font-size:11.5px; color:#e2e8f0; margin-top:2px;">
+          ${isWaiting ? "กดปุ่มยืนยันในแชท LINE หรือกดปุ่มสีเขียวด้านล่างเพื่อปล่อยโพสต์ลง FB / IG / TikTok (Make.com) และ LINE OA ทันที" : "อนุมัติและส่งโพสต์ไปยังแพลตฟอร์มที่เชื่อมไว้เรียบร้อยแล้ว"}
+        </div>
+      </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        ${isWaiting ? `
+          <button type="button" class="btn-primary btn-sm" style="background:#10b981; border:none; font-weight:700;" onclick="handleApproveCampaignNow('${escapeHtml(campaign.id)}')">
+            ✅ ยืนยันงาน & โพสต์ลงทุกเพจเดี๋ยวนี้
+          </button>
+        ` : ""}
+        <a href="${escapeHtml(canvaUrl)}" target="_blank" class="btn-secondary btn-sm" style="text-decoration:none; border-color:#00c4cc; color:#67e8f9;">
+          🎨 เปิดแต่งใน Canva
+        </a>
+        <button type="button" class="btn-secondary btn-sm" onclick="jumpToGraphicStudio()">
+          🖼️ ดูรูปทั้ง 3 ขนาด
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+async function handleTriggerAutopilot(requireLineApproval = true) {
+  const activeBrand = getActiveBrandProfile() || {};
+  const btnApprove = document.getElementById("btnRunAutopilotApprove");
+  const btnDirect = document.getElementById("btnRunAutopilotDirect");
+  if (btnApprove) btnApprove.disabled = true;
+  if (btnDirect) btnDirect.disabled = true;
+
+  showToast(
+    requireLineApproval
+      ? `🤖 AI Autopilot กำลังคิดแคมเปญให้ "${activeBrand.brandName || "เพจ"}" + ออกแบบ Canva/AI + ส่งเข้า LINE ให้คุณกดยืนยัน...`
+      : `⚡ AI Autopilot กำลังคิดแคมเปญ + ออกแบบรูป + เตรียมโพสต์ลงทุกเพจอัตโนมัติ...`
+  );
+
+  try {
+    const res = await fetch("/api/campaigns/autopilot", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        brandId: appState.settings.activeBrandId,
+        requireLineApproval
+      })
+    });
+    const data = await res.json();
+    if (data.campaign) {
+      appState.currentCampaignId = data.campaign.id;
+      upsertCampaign(data.campaign);
+      populateCommandChannelLinksFromActiveBrand();
+    }
+  } catch (err) {
+    showToast("❌ เกิดข้อผิดพลาด: " + err.message);
+  } finally {
+    if (btnApprove) btnApprove.disabled = false;
+    if (btnDirect) btnDirect.disabled = false;
+  }
+}
+
+async function handleApproveCampaignNow(campaignId) {
+  const targetId = campaignId || appState.currentCampaignId;
+  showToast("✅ ยืนยันอนุมัติงานแล้ว! กำลังปล่อยโพสต์ลง Facebook, IG, TikTok (Make.com) และ LINE OA...");
+  try {
+    const res = await fetch("/api/campaigns/approve", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ campaignId: targetId })
+    });
+    const data = await res.json();
+    if (data.campaign) {
+      upsertCampaign(data.campaign);
+    }
+  } catch (err) {
+    showToast("❌ เกิดข้อผิดพลาดในการอนุมัติโพสต์: " + err.message);
+  }
+}
+
+
+const BUILTIN_SCENES = {
+  tv_wall: {
+    name: "📺 ผนังทีวีบิ้วอิน + ตู้โชว์กระจกซ่อนไฟ LED สูงชนฝ้า",
+    img: "/images/builtin/builtin_tv_wall.jpg",
+    headline: "งานบิ้วอินผนังทีวี Luxury Modern • ตู้โชว์ซ่อนไฟ LED สูงชนฝ้า",
+    sub: "ระแนงไม้วอลนัทสลับหินอ่อนขาว สั่งทำพอดีผนังทุกองศา ไม่ทิ้งช่องว่าง",
+    b1: "ระแนงไม้แท้สลับหินอ่อนขาว ผนังทีวีแขวนลอยซ่อนสายไฟ 100%",
+    b2: "ตู้โชว์กระจกชาทองกรอบอลูมิเนียม พร้อมไฟเส้น Warm LED ทุกชั้น",
+    b3: "ฟิตอินพอดีขนาดห้องเป๊ะๆ วัดพื้นที่และประเมินราคาฟรี!",
+    prompt: "Floor-to-ceiling custom fitted walnut wood slat TV wall unit, white marble feature center slab, floating media console, and glass-door display cabinets with warm recessed interior LED strip shelf lighting, luxury Thai modern living room, 8k architectural photography, no text, no watermark"
+  },
+  walkin_closet: {
+    name: "👗 ตู้เสื้อผ้าบิ้วอิน / Walk-in Closet หน้าบานกระจกชาทอง",
+    img: "/images/builtin/builtin_walkin_closet.jpg",
+    headline: "บิ้วอินตู้เสื้อผ้า Walk-in Closet • บานกระจกชาทองกรอบอลูมิเนียม",
+    sub: "ฟังก์ชันจัดเต็ม ช่องเก็บของฟิตอินสั่งทำ พร้อมโต๊ะเครื่องแป้งบิ้วอินในตัว",
+    b1: "ตู้เสื้อผ้าสูงชนฝ้าเต็มผนัง บานกระจกชาทองกรอบทอง Slim Profile",
+    b2: "ไฟ Warm LED ส่องสว่างอัตโนมัติในตู้ แยกช่องกระเป๋าและเครื่องประดับ",
+    b3: "โต๊ะเครื่องแป้งบิ้วอินเชื่อมต่อกระจกโค้งซ่อนไฟ สวยหรูตรงปก",
+    prompt: "Bespoke floor-to-ceiling fitted wardrobe cabinetry with tinted bronze glass doors, slim gold aluminum frames, warm internal LED shelving lights, and an integrated built-in floating dressing table with an arched backlit vanity mirror, 8k luxury bedroom, no text, no watermark"
+  },
+  kitchen: {
+    name: "🍳 เคาน์เตอร์ครัวบิ้วอิน-ฟิตอินสั่งทำ สูงชนฝ้า ท็อปหินควอตซ์",
+    img: "/images/builtin/builtin_kitchen.jpg",
+    headline: "ชุดครัวบิ้วอิน-ฟิตอินสั่งทำ • ตู้ลอยสูงชนฝ้า ท็อปหินควอตซ์แท้",
+    sub: "ใช้วัสดุ HMR กันชื้นเกรดพรีเมียม ซ่อนไฟ LED ใต้ตู้ ทนทานใช้งานได้จริง",
+    b1: "ตู้ครัวฟิตอินเต็มพื้นที่ชนฝ้า ไร้ซอกฝุ่นจับ เช็ดล้างทำความสะอาดง่าย",
+    b2: "ท็อปหินควอตซ์กันรอย ทนกรด ทนด่าง ซ่อนไฟ LED ใต้ตู้ทำอาหาร",
+    b3: "โครงสร้าง HMR เกรดกันชื้นพิเศษ มาตรฐานงานช่างเชียงใหม่ ประเมินฟรี!",
+    prompt: "Seamless floor-to-ceiling fitted kitchen cabinetry combining matte cream upper cabinets, rich warm wood veneer lower cabinets, white quartz countertop, and warm concealed under-cabinet LED strip lighting, 8k custom carpentry, no text, no watermark"
+  }
+};
+
+let currentBuiltinSceneKey = "tv_wall";
+
+function setBuiltinScene(sceneKey) {
+  const scene = BUILTIN_SCENES[sceneKey];
+  if (!scene) return;
+  currentBuiltinSceneKey = sceneKey;
+
+  const campaign = getCurrentCampaign();
+  const data = getCampaignGraphicData(campaign);
+  data.b1 = scene.b1;
+  data.b2 = scene.b2;
+  data.b3 = scene.b3;
+
+  const promptInput = document.getElementById("googleFlowPromptInput");
+  if (promptInput) promptInput.value = scene.prompt;
+
+  showToast(`🪵 เลือกงานบิ้วอิน: ${scene.name} (ภาพตรงกับงานจริง 100% ไร้ลายน้ำ)`);
+
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = () => {
+    cachedAiBgImage = img;
+    cachedAiBgBrand = data.brandName;
+    drawAllMarketingCanvases(data);
+  };
+  img.src = scene.img;
 }

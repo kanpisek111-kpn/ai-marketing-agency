@@ -13,8 +13,15 @@ const {
   formatStepProgressLineMessage,
   formatLiveStatusCheckLineMessage,
   formatCampaignLineSummary,
-  sendLineReport
+  sendLineReport,
+  sendLineApprovalCard
 } = require("./src/lineNotifier");
+const {
+  AGENT_TOOL_ECOSYSTEM,
+  generateAutonomousBriefForBrand,
+  generateCampaignVisualAssets,
+  buildAgentConnectedToolsOutput
+} = require("./src/agentIntegrations");
 const {
   inspectChannelLinks,
   executeSocialPublish,
@@ -198,7 +205,8 @@ async function executeSequentialPlatformPosting(campaignId, specificPlatform = n
         contentText,
         campaignTitle: campaign.brief?.productName || "แคมเปญการตลาด",
         brief: campaign.brief,
-        lineSettings: db.settings.line
+        lineSettings: db.settings.line,
+        visualAssets: campaign.visualAssets || generateCampaignVisualAssets(campaign, brandProfile)
       });
 
       const isSimulated = Boolean(pubRes?.[0]?.simulated);
@@ -412,16 +420,89 @@ async function executeCampaignPipeline(campaignId) {
   }
 
   campaign.activeAgentId = null;
+
+  const brandProfile =
+    db.brandProfiles.find((b) => b.id === (campaign.brandId || db.settings.activeBrandId)) ||
+    db.brandProfiles[0] ||
+    {};
+
+  // สร้างรูปโปสเตอร์ AI จริง (HTTPS) + ชุดเชื่อม Canva Studio + ลิงก์เครื่องมือครบทั้ง 7 Agents
+  campaign.visualAssets = generateCampaignVisualAssets(campaign, brandProfile);
+  campaign.connectedTools = buildAgentConnectedToolsOutput(campaign, brandProfile);
+
+  const copyStep =
+    (campaign.steps || []).find((s) => s.agentId === "content_copywriter" && s.output) ||
+    (campaign.steps || [])[0];
+  const rawCopy = copyStep?.output || `โปรโมชันพิเศษจาก ${campaign.brief?.productName || "เพจของเรา"}`;
+  const cleanCaption = extractCleanPostCaption(rawCopy, campaign.brief);
+  campaign.cleanCaption = cleanCaption;
+
+  campaign.logs.push({
+    time: new Date().toLocaleTimeString("th-TH"),
+    agentName: "Maya (Canva & AI Visual Studio)",
+    avatar: "🎨",
+    message: `ออกแบบรูปโปสเตอร์โฆษณา AI (3 ขนาด FB/IG/TikTok) + ผูกลิงก์ Canva Template เสร็จสมบูรณ์!`
+  });
+
+  // ส่งการ์ดตรวจงาน (พร้อมรูปโปสเตอร์ + แคปชัน + ปุ่มกดยืนยันงาน) เข้า LINE OA เสมอ
+  if (db.settings.line?.enabled) {
+    try {
+      const approvalRes = await sendLineApprovalCard({
+        lineConfig: db.settings.line,
+        campaign,
+        brandProfile,
+        visualAssets: campaign.visualAssets,
+        cleanCaption,
+        serverBaseUrl: `http://localhost:${PORT}`
+      });
+      db.lineLogs.unshift({
+        id: randomUUID(),
+        campaignId: campaign.id,
+        brandId: campaign.brandId,
+        campaignTitle: `${campaign.brief?.productName || "แคมเปญ"} — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE`,
+        timestamp: new Date().toISOString(),
+        status: approvalRes.success ? "sent" : "simulated",
+        details: approvalRes.message,
+        preview: cleanCaption.slice(0, 500)
+      });
+      broadcastEvent("line_log_added", { lineLogs: db.lineLogs });
+    } catch (e) {
+      console.error("Failed to send LINE approval card:", e.message);
+    }
+  }
+
+  // เช็กว่าต้องรอผู้ใช้กดยืนยันใน LINE ก่อนโพสต์ หรือโพสต์อัตโนมัติทันที
+  if (campaign.requireLineApproval !== false) {
+    campaign.status = "awaiting_approval";
+    campaign.approvalStatus = "pending";
+    if (campaign.postingSteps) {
+      campaign.postingSteps.forEach((p) => {
+        p.status = "pending";
+        p.note = "🟡 ส่งรูป+แคปชันเข้า LINE แล้ว (รอคุณกด '✅ ยืนยัน' ใน LINE หรือหน้าเว็บ)";
+      });
+    }
+    campaign.logs.push({
+      time: new Date().toLocaleTimeString("th-TH"),
+      agentName: "LINE Approval Gate",
+      avatar: "📲",
+      message: `ส่งการ์ดรูปโปสเตอร์ + แคปชันเข้า LINE OA ให้ตรวจแล้ว! กดปุ่ม "✅ ยืนยัน & โพสต์ทุกเพจ" ใน LINE หรือบนหน้าเว็บเพื่อปล่อยโพสต์ได้เลย`
+    });
+    saveDB(db);
+    broadcastEvent("campaign_awaiting_approval", { campaign });
+    return;
+  }
+
+  campaign.approvalStatus = "approved";
   campaign.logs.push({
     time: new Date().toLocaleTimeString("th-TH"),
     agentName: "Social Auto-Publisher",
     avatar: "📤",
-    message: `ทีม AI เตรียมคอนเทนต์ครบ 7 แผนกแล้ว! เริ่มวิ่งไล่โพสต์ลงเพจทีละช่องทาง (Facebook -> TikTok -> Instagram -> LINE OA)...`
+    message: `ทีม AI เตรียมคอนเทนต์และรูปโปสเตอร์ครบ 7 แผนกแล้ว! เริ่มวิ่งไล่โพสต์ลงเพจทีละช่องทาง (Facebook -> TikTok -> Instagram -> LINE OA)...`
   });
   saveDB(db);
   broadcastEvent("campaign_updated", { campaign });
 
-  // 3. เริ่มวิ่งไล่โพสต์ลงเพจทีละช่องทาง (FB -> TikTok -> IG -> LINE) พร้อมส่งแจ้งเตือนเข้า LINE OA ว่าเพจไหนโพสต์ไปแล้วบ้าง
+  // 3. เริ่มวิ่งไล่โพสต์ลงเพจทีละช่องทาง (FB -> TikTok -> IG -> LINE)
   await executeSequentialPlatformPosting(campaign.id);
 }
 
@@ -927,6 +1008,8 @@ const server = http.createServer(async (req, res) => {
         updatedAt: new Date().toISOString(),
         status: "starting",
         activeAgentId: null,
+        requireLineApproval: body.requireLineApproval !== false,
+        approvalStatus: "pending",
         brief,
         steps: activeAgents.map((a) => ({
           agentId: a.id,
@@ -973,6 +1056,221 @@ const server = http.createServer(async (req, res) => {
 
       executeSequentialPlatformPosting(campaign.id, platform || null);
       return sendJSON(res, 200, { ok: true, campaign });
+    }
+
+    // 5.6 ปุ่ม AI Autopilot: ให้ AI คิดหัวข้อแคมเปญเอง + ออกแบบรูป Canva/AI + ส่งตรวจใน LINE โดยไม่ต้องกรอกข้อมูล
+    if (pathname === "/api/campaigns/autopilot" && req.method === "POST") {
+      const body = await parseBody(req);
+      const activeBrand =
+        db.brandProfiles.find((b) => b.id === (body.brandId || db.settings.activeBrandId)) ||
+        db.brandProfiles[0] ||
+        {};
+
+      const autoBrief = generateAutonomousBriefForBrand(activeBrand);
+      const channels = {
+        fbUrl: activeBrand.fbUrl || "",
+        tiktokUrl: activeBrand.tiktokUrl || "",
+        igUrl: activeBrand.igUrl || "",
+        lineUrl: activeBrand.lineUrl || "",
+        websiteUrl: activeBrand.websiteUrl || "",
+        shopUrl: activeBrand.shopUrl || "",
+        contactPhone: activeBrand.contactPhone || ""
+      };
+      const brief = {
+        ...autoBrief,
+        channels
+      };
+
+      const activeAgents = db.agents
+        .filter((a) => a.enabled !== false)
+        .sort((a, b) => (a.stepOrder || 99) - (b.stepOrder || 99));
+
+      const campaign = {
+        id: randomUUID(),
+        brandId: activeBrand.id || "brand_default_1",
+        projectName: activeBrand.brandName || brief.productName,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        status: "starting",
+        activeAgentId: null,
+        isAutopilot: true,
+        requireLineApproval: body.requireLineApproval !== false,
+        approvalStatus: "pending",
+        brief,
+        postingSteps: buildInitialPostingSteps(channels, brief.platforms),
+        steps: activeAgents.map((a) => ({
+          agentId: a.id,
+          agentName: a.name,
+          role: a.role,
+          department: a.department,
+          avatar: a.avatar,
+          color: a.color,
+          status: "pending",
+          output: "",
+          providerUsed: "",
+          modelUsed: ""
+        })),
+        logs: [
+          {
+            time: new Date().toLocaleTimeString("th-TH"),
+            agentName: "Aria (AI Autopilot CMO)",
+            avatar: "🤖",
+            message: `[AI Autopilot] คิดหัวข้อแคมเปญให้เพจ "${activeBrand.brandName}" อัตโนมัติ: "${brief.autonomousAngle}" — เริ่มเดินเครื่องทั้ง 7 แผนก + ออกแบบ Canva/AI + ส่งเข้า LINE!`
+          }
+        ]
+      };
+
+      campaign.visualAssets = generateCampaignVisualAssets(campaign, activeBrand);
+      campaign.connectedTools = buildAgentConnectedToolsOutput(campaign, activeBrand);
+
+      db.campaigns.unshift(campaign);
+      saveDB(db);
+
+      executeCampaignPipeline(campaign.id);
+      return sendJSON(res, 200, { ok: true, campaign, brandProfiles: db.brandProfiles });
+    }
+
+    // 5.7 กดยืนยันอนุมัติงาน (จากปุ่มบนหน้าเว็บ Dashboard) เพื่อปล่อยโพสต์ลงทุกแพลตฟอร์มทันที
+    if (pathname === "/api/campaigns/approve" && req.method === "POST") {
+      const body = await parseBody(req);
+      const campaign = db.campaigns.find((c) => c.id === body.campaignId) || db.campaigns[0];
+      if (!campaign) return sendJSON(res, 404, { error: "ไม่พบแคมเปญ" });
+
+      campaign.approvalStatus = "approved";
+      campaign.status = "posting";
+      campaign.logs.push({
+        time: new Date().toLocaleTimeString("th-TH"),
+        agentName: "Owner Approval",
+        avatar: "✅",
+        message: "คุณกดยืนยันอนุมัติงานแล้ว! เริ่มปล่อยโพสต์ + รูปโปสเตอร์ลง Facebook, Instagram, TikTok (Make.com) และ LINE OA ทันที..."
+      });
+      saveDB(db);
+      broadcastEvent("campaign_updated", { campaign });
+
+      executeSequentialPlatformPosting(campaign.id, null);
+      return sendJSON(res, 200, { ok: true, campaign });
+    }
+
+    // 5.8 ลิงก์กดยืนยันงานในคลิกเดียวจากปุ่มในการ์ด LINE OA (GET /api/campaigns/approve-get)
+    if (pathname === "/api/campaigns/approve-get" && req.method === "GET") {
+      const campaignId = parsedUrl.searchParams.get("campaignId");
+      const campaign = db.campaigns.find((c) => c.id === campaignId) || db.campaigns[0];
+      if (!campaign) {
+        res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+        return res.end("<h2>ไม่พบแคมเปญนี้</h2>");
+      }
+
+      campaign.approvalStatus = "approved";
+      campaign.status = "posting";
+      campaign.logs.push({
+        time: new Date().toLocaleTimeString("th-TH"),
+        agentName: "LINE Approval",
+        avatar: "✅",
+        message: "ได้รับการกดยืนยันงานผ่านการ์ด LINE OA แล้ว! กำลังปล่อยโพสต์ลงทุกแพลตฟอร์มอัตโนมัติ..."
+      });
+      saveDB(db);
+      broadcastEvent("campaign_updated", { campaign });
+
+      executeSequentialPlatformPosting(campaign.id, null);
+
+      const htmlPage = `<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ยืนยันอนุมัติโพสต์สำเร็จ — AI Marketing Agency</title>
+  <style>
+    body { background:#090d16; color:#f8fafc; font-family:'Prompt',sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; padding:20px; }
+    .box { background:#111827; border:2px solid #10b981; border-radius:18px; max-width:540px; width:100%; padding:28px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.6); }
+    .icon { font-size:56px; margin-bottom:10px; }
+    h1 { font-size:22px; color:#34d399; margin:0 0 10px; }
+    p { font-size:14px; color:#cbd5e1; line-height:1.6; }
+    img { width:100%; border-radius:12px; margin:14px 0; border:1px solid rgba(255,255,255,0.15); }
+    .btn { display:inline-block; margin-top:14px; padding:12px 24px; background:linear-gradient(135deg,#10b981,#059669); color:#fff; text-decoration:none; border-radius:10px; font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="icon">✅</div>
+    <h1>ยืนยันงานเรียบร้อย! กำลังปล่อยโพสต์ทุกแพลตฟอร์ม</h1>
+    <p>โปรเจกต์: <strong>${campaign.projectName || ""}</strong><br/>ระบบกำลังส่งรูปโปสเตอร์และแคปชันไปยัง <strong>Make.com (Facebook / IG / TikTok)</strong> และ <strong>LINE OA</strong> อัตโนมัติ และจะส่งใบสรุปผลเข้า LINE เมื่อครบ 100% ครับ</p>
+    ${campaign.visualAssets?.fbBannerImageUrl ? `<img src="${campaign.visualAssets.fbBannerImageUrl}" alt="AI Poster" />` : ""}
+    <a class="btn" href="/">🚀 เปิดดูสถานะสดบน Dashboard</a>
+  </div>
+</body>
+</html>`;
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      return res.end(htmlPage);
+    }
+
+    // 5.9 ลิงก์สั่ง AI ออกแบบรูปและคิดแคปชันใหม่จากปุ่มในการ์ด LINE OA (GET /api/campaigns/regenerate-get)
+    if (pathname === "/api/campaigns/regenerate-get" && req.method === "GET") {
+      const campaignId = parsedUrl.searchParams.get("campaignId");
+      const oldCampaign = db.campaigns.find((c) => c.id === campaignId) || db.campaigns[0];
+      const activeBrand =
+        db.brandProfiles.find((b) => b.id === (oldCampaign?.brandId || db.settings.activeBrandId)) ||
+        db.brandProfiles[0] ||
+        {};
+
+      const autoBrief = generateAutonomousBriefForBrand(activeBrand);
+      const channels = oldCampaign?.brief?.channels || {
+        fbUrl: activeBrand.fbUrl || "",
+        tiktokUrl: activeBrand.tiktokUrl || "",
+        igUrl: activeBrand.igUrl || "",
+        lineUrl: activeBrand.lineUrl || "",
+        websiteUrl: activeBrand.websiteUrl || "",
+        shopUrl: activeBrand.shopUrl || "",
+        contactPhone: activeBrand.contactPhone || ""
+      };
+      const brief = { ...autoBrief, channels };
+      const activeAgents = db.agents
+        .filter((a) => a.enabled !== false)
+        .sort((a, b) => (a.stepOrder || 99) - (b.stepOrder || 99));
+
+      const newCampaign = {
+        id: randomUUID(),
+        brandId: activeBrand.id || "brand_default_1",
+        projectName: activeBrand.brandName || brief.productName,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        status: "starting",
+        activeAgentId: null,
+        isAutopilot: true,
+        requireLineApproval: true,
+        approvalStatus: "pending",
+        brief,
+        postingSteps: buildInitialPostingSteps(channels, brief.platforms),
+        steps: activeAgents.map((a) => ({
+          agentId: a.id,
+          agentName: a.name,
+          role: a.role,
+          department: a.department,
+          avatar: a.avatar,
+          color: a.color,
+          status: "pending",
+          output: "",
+          providerUsed: "",
+          modelUsed: ""
+        })),
+        logs: [
+          {
+            time: new Date().toLocaleTimeString("th-TH"),
+            agentName: "Aria (AI Autopilot CMO)",
+            avatar: "🔄",
+            message: `รับคำสั่งจาก LINE ให้คิดแคมเปญและออกแบบโปสเตอร์ชุดใหม่: "${brief.autonomousAngle}"`
+          }
+        ]
+      };
+
+      newCampaign.visualAssets = generateCampaignVisualAssets(newCampaign, activeBrand);
+      newCampaign.connectedTools = buildAgentConnectedToolsOutput(newCampaign, activeBrand);
+
+      db.campaigns.unshift(newCampaign);
+      saveDB(db);
+      executeCampaignPipeline(newCampaign.id);
+
+      res.writeHead(302, { Location: "/" });
+      return res.end();
     }
 
     // 6. สั่งรันหรือสั่งแก้ไขงานเฉพาะ Agent รายตัว
@@ -1153,6 +1451,16 @@ const server = http.createServer(async (req, res) => {
         });
 
         // หากผู้ใช้พิมพ์ถามสถานะใน LINE ให้ส่งความคืบหน้าของแคมเปญล่าสุดกลับไปทันที
+        if (userText.includes("ยืนยัน") || userText.includes("อนุมัติ") || userText.toLowerCase().includes("approve")) {
+          const pendingCampaign = db.campaigns.find((c) => c.status === "awaiting_approval") || db.campaigns[0];
+          if (pendingCampaign) {
+            pendingCampaign.approvalStatus = "approved";
+            pendingCampaign.status = "posting";
+            saveDB(db);
+            broadcastEvent("campaign_updated", { campaign: pendingCampaign });
+            executeSequentialPlatformPosting(pendingCampaign.id, null);
+          }
+        }
         if (userText.includes("สถานะ") || userText.includes("เช็คงาน") || userText.toLowerCase().includes("status")) {
           const latestCampaign = db.campaigns[0];
           if (latestCampaign) {
@@ -1166,6 +1474,81 @@ const server = http.createServer(async (req, res) => {
       }
       saveDB(db);
       return sendJSON(res, 200, { ok: true });
+    }
+
+    // 9.5 ทดสอบและบันทึก Make.com / Automation Webhook URL
+    if (pathname === "/api/social/test-webhook" && req.method === "POST") {
+      const body = await parseBody(req);
+      const webhookUrl = (body.webhookUrl || "").trim();
+      if (!webhookUrl || !webhookUrl.startsWith("http")) {
+        return sendJSON(res, 400, { error: "กรุณาวางลิงก์ Webhook URL จาก Make.com (ขึ้นต้นด้วย https://hook...)" });
+      }
+
+      const activeBrand =
+        db.brandProfiles.find((b) => b.id === (body.brandId || db.settings.activeBrandId)) ||
+        db.brandProfiles[0];
+
+      if (body.applyToAll !== false) {
+        db.brandProfiles.forEach((b) => {
+          b.automationWebhookUrl = webhookUrl;
+        });
+      } else if (activeBrand) {
+        activeBrand.automationWebhookUrl = webhookUrl;
+      }
+      saveDB(db);
+
+      const sampleCaption = [
+        `🔥 โปรโมชันพิเศษจาก ${activeBrand?.brandName || "KPN บิ้วอิน เชียงใหม่"}!`,
+        `✨ รับออกแบบและติดตั้งงานบิ้วอินครบวงจร งานเนี้ยบ งบไม่บานปลาย`,
+        `📌 สนใจประเมินราคาฟรี ทักแชทเพจหรือแอด LINE: ${activeBrand?.lineUrl || ""}`,
+        `📞 โทร: ${activeBrand?.contactPhone || "089-xxx-xxxx"}`,
+        `#KPNบิ้วอิน #บิ้วอินเชียงใหม่ #ตกแต่งภายใน`
+      ].join("\n");
+
+      const samplePayload = {
+        platform: "Facebook",
+        platforms: ["Facebook", "Instagram", "TikTok"],
+        brandName: activeBrand?.brandName || "KPN บิ้วอิน เชียงใหม่",
+        fbPageId: activeBrand?.fbPageId || "1226235303916599",
+        campaignTitle: "ทดสอบเชื่อมต่อระบบ AI Marketing -> Make.com",
+        message: sampleCaption,
+        caption: sampleCaption,
+        content: sampleCaption,
+        fbUrl: activeBrand?.fbUrl || "https://www.facebook.com/1226235303916599",
+        igUrl: activeBrand?.igUrl || "",
+        tiktokUrl: activeBrand?.tiktokUrl || "",
+        lineUrl: activeBrand?.lineUrl || "",
+        websiteUrl: activeBrand?.websiteUrl || activeBrand?.shopUrl || "",
+        contactPhone: activeBrand?.contactPhone || "",
+        timestamp: new Date().toISOString()
+      };
+
+      const whRes = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(samplePayload)
+      });
+
+      const resText = await whRes.text();
+      if (!whRes.ok) {
+        if (whRes.status === 410) {
+          return sendJSON(res, 200, {
+            ok: true,
+            listening: false,
+            message: "✅ บันทึกลิงก์ Make.com ให้ครบทั้ง 5 เพจแล้ว! (ตอนนี้ไปที่หน้า Make.com กดปุ่ม 'Redetermine data structure' หรือกดปุ่ม '▶️ Run once' มุมซ้ายล่าง แล้วกดปุ่มทดสอบนี้อีกครั้งครับ)",
+            brandProfiles: db.brandProfiles
+          });
+        }
+        return sendJSON(res, 400, {
+          error: `Make.com ตอบกลับสถานะ ${whRes.status}: ${resText}`
+        });
+      }
+
+      return sendJSON(res, 200, {
+        ok: true,
+        message: "✅ ยิงข้อมูลตัวอย่างเข้า Make.com สำเร็จ! และบันทึกลิงก์ Webhook ให้ทุกโปรเจกต์เรียบร้อยแล้ว",
+        brandProfiles: db.brandProfiles
+      });
     }
 
     return serveStaticFile(req, res);

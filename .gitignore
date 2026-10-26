@@ -1,5 +1,7 @@
 node_modules/
+cloudflared.exe
 data/db.json
+data/active_tunnel.txt
 .env
 *.log
 .DS_Store

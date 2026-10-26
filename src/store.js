@@ -5,6 +5,7 @@ const { DEFAULT_AGENTS } = require("./defaultAgents");
 
 const DATA_DIR = path.join(__dirname, "..", "data");
 const DB_PATH = path.join(DATA_DIR, "db.json");
+const SEED_DB_PATH = path.join(DATA_DIR, "default_db.json");
 
 const DEFAULT_BRAND_PROFILES = [
   {
@@ -132,7 +133,9 @@ function ensureDB() {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
   if (!fs.existsSync(DB_PATH)) {
-    const initial = getInitialDB();
+    const initial = fs.existsSync(SEED_DB_PATH)
+      ? JSON.parse(fs.readFileSync(SEED_DB_PATH, "utf8"))
+      : getInitialDB();
     fs.writeFileSync(DB_PATH, JSON.stringify(initial, null, 2), "utf8");
     return initial;
   }
@@ -161,7 +164,9 @@ function ensureDB() {
     if (!parsed.publishLogs) parsed.publishLogs = [];
     return parsed;
   } catch (err) {
-    const initial = getInitialDB();
+    const initial = fs.existsSync(SEED_DB_PATH)
+      ? JSON.parse(fs.readFileSync(SEED_DB_PATH, "utf8"))
+      : getInitialDB();
     fs.writeFileSync(DB_PATH, JSON.stringify(initial, null, 2), "utf8");
     return initial;
   }

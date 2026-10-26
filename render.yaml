@@ -3,7 +3,8 @@ services:
     name: kpn-ai-marketing-agency
     runtime: node
     plan: free
-    buildCommand: echo "No build step needed"
+    region: singapore
+    buildCommand: npm install
     startCommand: node server.js
     envVars:
       - key: NODE_ENV

@@ -190,13 +190,47 @@ function triggerWindowsAssistedFacebookPost(pageId, message) {
   }
 }
 
-// โพสต์ลงเพจ Facebook จริงผ่าน Facebook Graph API
-async function publishToFacebookPage({ pageId, pageAccessToken, message, link }) {
+// โพสต์ลงเพจ Facebook จริงผ่าน Facebook Graph API (รองรับทั้ง Photo Post อัปโหลดรูปภาพพร้อมแคปชัน และ Feed Post)
+async function publishToFacebookPage({ pageId, pageAccessToken, message, link, imageUrl }) {
   // ลองแปลงเป็น Page Token อัตโนมัติหากผู้ใช้เผลอวาง User Token
   const resolved = await resolvePageAccessToken(pageId, pageAccessToken);
   const targetPageId = resolved.pageId || pageId;
   const targetToken = resolved.pageAccessToken || pageAccessToken;
 
+  // 1. ถ้ามี URL รูปภาพที่เป็น HTTPS ให้โพสต์แบบ Photo Post (รูปภาพ + แคปชันโพสต์) ทันที
+  if (imageUrl && imageUrl.startsWith("http")) {
+    try {
+      const photoUrl = `https://graph.facebook.com/v19.0/${encodeURIComponent(targetPageId)}/photos`;
+      const photoRes = await fetch(photoUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          url: imageUrl,
+          caption: message,
+          access_token: targetToken
+        })
+      });
+
+      if (photoRes.ok) {
+        const photoData = await photoRes.json();
+        const createdPostId = photoData.post_id || photoData.id;
+        return {
+          success: true,
+          simulated: false,
+          postId: createdPostId,
+          platform: "Facebook Page",
+          targetUrl: `https://www.facebook.com/${targetPageId}`,
+          message: `✅ โพสต์รูปภาพผลงานพร้อมแคปชันขึ้นเพจ Facebook จริงสำเร็จ! (Post ID: ${createdPostId})`
+        };
+      }
+      const photoErrText = await photoRes.text();
+      console.warn("Facebook Photo Post warning (falling back to feed post):", photoErrText);
+    } catch (photoErr) {
+      console.warn("Facebook Photo Post error (falling back to feed post):", photoErr.message);
+    }
+  }
+
+  // 2. ถ้าไม่มีรูปหรือ Photo Post ล้มเหลว ให้โพสต์แบบ Feed Post (ข้อความแคปชัน + ลิงก์)
   const url = `https://graph.facebook.com/v19.0/${encodeURIComponent(targetPageId)}/feed`;
   const bodyPayload = {
     message,
@@ -223,7 +257,7 @@ async function publishToFacebookPage({ pageId, pageAccessToken, message, link })
         assisted: true,
         platform: "Facebook Page",
         targetUrl: `https://www.facebook.com/${targetPageId}`,
-        message: `✅ คัดลอกแคปชันเข้า Clipboard + เปิดหน้าเพจ Facebook ให้แล้ว! (กด Ctrl+V วางโพสต์ได้เลย — หรือเพิ่มสิทธิ์ pages_manage_posts ในแอป FB เพื่อให้บอทโพสต์หลังบ้านเอง)`
+        message: `✅ คัดลอกแคปชันเข้า Clipboard + เปิดหน้าเพจ Facebook ให้แล้ว! (กด Ctrl+V วางโพสต์ได้เลย)`
       };
     }
     let friendlyError = `Facebook Graph API Error (${res.status}): ${errText}`;
@@ -239,6 +273,7 @@ async function publishToFacebookPage({ pageId, pageAccessToken, message, link })
     simulated: false,
     postId: data.id,
     platform: "Facebook Page",
+    targetUrl: `https://www.facebook.com/${targetPageId}`,
     message: `✅ โพสต์ขึ้นเพจ Facebook จริงสำเร็จ! (Post ID: ${data.id})`
   };
 }
@@ -264,21 +299,55 @@ async function publishViaAutomationWebhook({ webhookUrl, payload }) {
   };
 }
 
-// ฟังก์ชันรวมสำหรับสั่งโพสต์ลงเพจที่ผูกไว้
+// ฟังก์ชันรวมสำหรับสั่งโพสต์ลงเพจที่ผูกไว้ พร้อมระบบ Self-Healing / Auto-Fallback อัตโนมัติ
 async function executeSocialPublish({ brandProfile, platforms, contentText, campaignTitle, brief, lineSettings, visualAssets }) {
   const results = [];
   const targetPlatforms = platforms && platforms.length > 0 ? platforms : ["Facebook", "Instagram", "TikTok"];
   const cleanCaption = extractCleanPostCaption(contentText, brief);
   const webhookUrl = (brandProfile?.automationWebhookUrl || "").trim();
 
-  // 1. ตรวจสอบการโพสต์ตรงเข้า Facebook Page (Direct Graph API หรือ Make.com Webhook)
+  // ตรวจสอบ URL รูปภาพที่เป็น HTTPS สาธารณะจริงเสมอ (ป้องกัน Make.com / Facebook ล้มเหลวจาก Relative Path)
+  let postImageUrl = visualAssets?.primaryImageUrl || visualAssets?.fbBannerImageUrl || "";
+  if (!postImageUrl || !postImageUrl.startsWith("http")) {
+    postImageUrl = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85";
+  }
+
+  // 1. ตรวจสอบการโพสต์ตรงเข้า Facebook Page (ยิงตรงผ่าน Facebook Graph API ทันที + ยิงเข้า Make.com Webhook ควบคู่)
   if (targetPlatforms.includes("Facebook")) {
     const autoPageId = extractFacebookPageIdFromUrl(brandProfile?.fbUrl);
     const pageId = (brandProfile?.fbPageId || autoPageId || "").trim();
     const pageToken = (brandProfile?.fbPageAccessToken || "").trim();
+    let directFbSuccess = false;
 
+    // A. โพสต์ตรงเข้า Facebook Page ผ่าน Graph API ทันที (หากมี Page ID และ Token)
+    if (pageId && pageToken) {
+      try {
+        const fbRes = await publishToFacebookPage({
+          pageId,
+          pageAccessToken: pageToken,
+          message: cleanCaption,
+          link: brandProfile?.websiteUrl || "",
+          imageUrl: postImageUrl
+        });
+        results.push(fbRes);
+        directFbSuccess = true;
+      } catch (fbErr) {
+        console.error("Direct Facebook Graph API publish error:", fbErr.message);
+        triggerWindowsAssistedFacebookPost(pageId, cleanCaption);
+        results.push({
+          success: false,
+          simulated: false,
+          assisted: true,
+          platform: "Facebook Page",
+          targetUrl: `https://www.facebook.com/${pageId}`,
+          message: `❌ โพสต์เข้าเพจไม่สำเร็จ: Token หมดอายุ (${fbErr.message})`
+        });
+        directFbSuccess = false;
+      }
+    }
+
+    // B. ยิงเข้า Make.com Automation Webhook ควบคู่เสมอ
     if (webhookUrl) {
-      // หากผู้ใช้ผูก Make.com / Automation Webhook ไว้ ให้ยิงเข้า Make.com เป็นหลัก (ข้ามข้อจำกัดสิทธิ์แอป Meta #200 ได้ทันที)
       try {
         const whRes = await publishViaAutomationWebhook({
           webhookUrl,
@@ -291,10 +360,10 @@ async function executeSocialPublish({ brandProfile, platforms, contentText, camp
             message: cleanCaption,
             caption: cleanCaption,
             content: cleanCaption,
-            imageUrl: visualAssets?.fbBannerImageUrl || "",
-            fbBannerImageUrl: visualAssets?.fbBannerImageUrl || "",
-            igSquareImageUrl: visualAssets?.igSquareImageUrl || "",
-            tiktokVerticalImageUrl: visualAssets?.tiktokVerticalImageUrl || "",
+            imageUrl: postImageUrl,
+            fbBannerImageUrl: postImageUrl,
+            igSquareImageUrl: visualAssets?.igSquareImageUrl || postImageUrl,
+            tiktokVerticalImageUrl: visualAssets?.tiktokVerticalImageUrl || postImageUrl,
             canvaUrl: visualAssets?.canva?.fbTemplateUrl || "https://www.canva.com/",
             fbUrl: brandProfile?.fbUrl || "",
             igUrl: brandProfile?.igUrl || "",
@@ -312,34 +381,19 @@ async function executeSocialPublish({ brandProfile, platforms, contentText, camp
             timestamp: new Date().toISOString()
           }
         });
-        results.push({
-          ...whRes,
-          platform: "Facebook Page (Make.com)",
-          targetUrl: brandProfile?.fbUrl || `https://facebook.com/${pageId}`
-        });
-      } catch (whErr) {
-        if (pageId && pageToken) {
-          const fbRes = await publishToFacebookPage({
-            pageId,
-            pageAccessToken: pageToken,
-            message: cleanCaption,
-            link: brandProfile?.websiteUrl || ""
+        if (!directFbSuccess) {
+          results.push({
+            ...whRes,
+            platform: "Facebook Page (Make.com)",
+            targetUrl: brandProfile?.fbUrl || `https://facebook.com/${pageId}`
           });
-          fbRes.message = `⚠️ Make.com ยังไม่ได้กด Run once/เปิดสวิตช์ ON — ระบบจึงสลับมาช่วยเปิดเพจ FB + คัดลอกแคปชันให้แทน!`;
-          results.push(fbRes);
-        } else {
+        }
+      } catch (whErr) {
+        if (!directFbSuccess) {
           throw whErr;
         }
       }
-    } else if (pageId && pageToken) {
-      const fbRes = await publishToFacebookPage({
-        pageId,
-        pageAccessToken: pageToken,
-        message: cleanCaption,
-        link: brandProfile?.websiteUrl || ""
-      });
-      results.push(fbRes);
-    } else {
+    } else if (!directFbSuccess && (!pageId || !pageToken)) {
       results.push({
         success: true,
         simulated: true,

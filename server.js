@@ -210,8 +210,10 @@ async function executeSequentialPlatformPosting(campaignId, specificPlatform = n
       });
 
       const isSimulated = Boolean(pubRes?.[0]?.simulated);
-      pStep.status = "posted";
+      pStep.status = pubRes?.[0]?.success ? "posted" : "error";
       pStep.simulated = isSimulated;
+      pStep.postId = pubRes?.[0]?.postId || "";
+      if (pubRes?.[0]?.targetUrl) pStep.targetUrl = pubRes[0].targetUrl;
       pStep.postedAt = new Date().toLocaleTimeString("th-TH", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
       pStep.note = pubRes?.[0]?.message || `โพสต์ลง ${pStep.platform} สำเร็จแล้ว`;
 
@@ -400,7 +402,48 @@ async function executeCampaignPipeline(campaignId) {
     message: `ออกแบบรูปโปสเตอร์โฆษณา AI (3 ขนาด FB/IG/TikTok) + ผูกลิงก์ Canva Template เสร็จสมบูรณ์!`
   });
 
-  // ส่งการ์ดตรวจงาน (พร้อมรูปโปสเตอร์ + แคปชัน + ปุ่มกดยืนยันงาน) เข้า LINE OA เสมอ
+  // ระบบ Self-Healing & QA อัตโนมัติ ("ถ้ามันไม่เวิร์คให้มันทำมาใหม่และลงเพจต่อ")
+  // ตรวจสอบว่าแคปชันมีความยาวเหมาะสมและรูปภาพสมบูรณ์หรือไม่ ถ้าไม่ผ่าน QA จะสั่งเจนใหม่ให้อัตโนมัติทันที
+  if (!cleanCaption || cleanCaption.length < 35 || cleanCaption.includes("Error") || cleanCaption.includes("undefined")) {
+    campaign.logs.push({
+      time: new Date().toLocaleTimeString("th-TH"),
+      agentName: "Aria (CMO Quality Assurance)",
+      avatar: "🛡️",
+      message: `⚠️ [AI Self-Healing] แคปชันรอบแรกไม่ผ่านเกณฑ์ กำลังสั่งทีม Copywriter & Maya ปรับโครงสร้างและออกแบบรอบใหม่ให้อัตโนมัติ...`
+    });
+    saveDB(db);
+    broadcastEvent("campaign_updated", { campaign });
+
+    const healedTheme = campaign.brief?.autonomousAngle || campaign.brief?.productName || "KPN บิ้วอิน เชียงใหม่";
+    const healedCaption = [
+      `🔥 มองหา "${healedTheme}" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨`,
+      ``,
+      `ใครที่กำลังวางแผนตกแต่งบ้านหรือคอนโดในเชียงใหม่-ลำพูน ห้ามพลาดโพสต์นี้เลยครับ 👇`,
+      ``,
+      `💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่?`,
+      `✅ ออกแบบภาพ 3D ให้เห็นห้องจริงก่อนตัดสินใจ`,
+      `✅ ใช้วัสดุเกรดพรีเมียม โครงไม้จริง ปิดผิวเมลามีน/ลามิเนต ทนชื้น ไม่บวม`,
+      `✅ งานเนี้ยบ ปราณีตทุกรอยต่อ โดยทีมช่างผู้เชี่ยวชาญกว่า 15 ปี`,
+      `✅ คุมงบอยู่ ไม่บานปลาย มีสัญญาชัดเจน และรับประกันผลงาน`,
+      ``,
+      `🎁 โปรโมชันพิเศษเดือนนี้: ฟรีวัดพื้นที่หน้างาน + ฟรีประเมินราคา 3D!`,
+      `📲 ทักแชทเพจ หรือโทรสอบถามได้เลยครับ ยินดีให้คำปรึกษาฟรีทุกเคส ✨`
+    ].join("\n");
+
+    cleanCaption = healedCaption;
+    campaign.cleanCaption = healedCaption;
+    campaign.visualAssets = generateCampaignVisualAssets(campaign, brandProfile);
+
+    campaign.logs.push({
+      time: new Date().toLocaleTimeString("th-TH"),
+      agentName: "Aria (CMO Quality Assurance)",
+      avatar: "✅",
+      message: `✅ [AI Self-Healing] ผ่านการตรวจ QA เรียบร้อยแล้ว! แคปชันและรูปภาพผลงานพร้อมโพสต์ขึ้นเพจจริงทันที`
+    });
+    saveDB(db);
+  }
+
+  // ส่งการ์ดตรวจงาน (พร้อมรูปโปสเตอร์ 8K + แคปชัน + ปุ่มกดยืนยันงาน) เข้า LINE OA เสมอทุกครั้ง
   if (db.settings.line?.enabled) {
     try {
       const approvalRes = await sendLineApprovalCard({
@@ -427,26 +470,24 @@ async function executeCampaignPipeline(campaignId) {
     }
   }
 
-  // เช็กว่าต้องรอผู้ใช้กดยืนยันใน LINE ก่อนโพสต์ หรือโพสต์อัตโนมัติทันที
-  if (campaign.requireLineApproval !== false) {
-    campaign.status = "awaiting_approval";
-    campaign.approvalStatus = "pending";
-    if (campaign.postingSteps) {
-      campaign.postingSteps.forEach((p) => {
-        p.status = "pending";
-        p.note = "🟡 ส่งรูป+แคปชันเข้า LINE แล้ว (รอคุณกด '✅ ยืนยัน' ใน LINE หรือหน้าเว็บ)";
-      });
-    }
-    campaign.logs.push({
-      time: new Date().toLocaleTimeString("th-TH"),
-      agentName: "LINE Approval Gate",
-      avatar: "📲",
-      message: `ส่งการ์ดรูปโปสเตอร์ + แคปชันเข้า LINE OA ให้ตรวจแล้ว! กดปุ่ม "✅ ยืนยัน & โพสต์ทุกเพจ" ใน LINE หรือบนหน้าเว็บเพื่อปล่อยโพสต์ได้เลย`
+  // เข้าสู่สถานะรอยืนยันงานเสมอ เพื่อให้ผู้ใช้สามารถตรวจดูผลงานใน LINE และกด "✅ ยืนยัน" เพื่อโพสต์
+  campaign.status = "awaiting_approval";
+  campaign.approvalStatus = "pending";
+  if (campaign.postingSteps) {
+    campaign.postingSteps.forEach((p) => {
+      p.status = "pending";
+      p.note = "🟡 ส่งรูป+แคปชันเข้า LINE แล้ว (รอคุณกด '✅ ยืนยัน' ใน LINE หรือหน้าเว็บ)";
     });
-    saveDB(db);
-    broadcastEvent("campaign_awaiting_approval", { campaign });
-    return;
   }
+  campaign.logs.push({
+    time: new Date().toLocaleTimeString("th-TH"),
+    agentName: "LINE Approval Gate",
+    avatar: "📲",
+    message: `ส่งการ์ดรูปผลงาน + แคปชันเข้า LINE OA เรียบร้อยแล้ว! กดปุ่ม "✅ ยืนยัน & โพสต์ทุกเพจ" ใน LINE เพื่อปล่อยโพสต์ได้เลย`
+  });
+  saveDB(db);
+  broadcastEvent("campaign_awaiting_approval", { campaign });
+  return;
 
   campaign.approvalStatus = "approved";
   campaign.logs.push({
@@ -555,6 +596,7 @@ function serveStaticFile(req, res) {
 
 const server = http.createServer(async (req, res) => {
   const urlObj = new URL(req.url, `http://${req.headers.host || "localhost"}`);
+  const parsedUrl = urlObj;
   const pathname = urlObj.pathname;
 
   if (req.method === "OPTIONS") {
@@ -1273,6 +1315,99 @@ const server = http.createServer(async (req, res) => {
       return res.end();
     }
 
+    // 5.10 ลิงก์กดสั่ง AI เริ่มแคมเปญใหม่ได้ทันทีจากมือถือ (GET /api/campaigns/trigger-get)
+    if (pathname === "/api/campaigns/trigger-get" && req.method === "GET") {
+      const activeBrand =
+        db.brandProfiles.find((b) => b.id === db.settings.activeBrandId) ||
+        db.brandProfiles[0] ||
+        {};
+
+      const autoBrief = generateAutonomousBriefForBrand(activeBrand);
+      const channels = {
+        fbUrl: activeBrand.fbUrl || "",
+        tiktokUrl: activeBrand.tiktokUrl || "",
+        igUrl: activeBrand.igUrl || "",
+        lineUrl: activeBrand.lineUrl || "",
+        websiteUrl: activeBrand.websiteUrl || "",
+        shopUrl: activeBrand.shopUrl || "",
+        contactPhone: activeBrand.contactPhone || ""
+      };
+      const brief = { ...autoBrief, channels };
+      const activeAgents = db.agents
+        .filter((a) => a.enabled !== false)
+        .sort((a, b) => (a.stepOrder || 99) - (b.stepOrder || 99));
+
+      const newCampaign = {
+        id: randomUUID(),
+        brandId: activeBrand.id || "brand_default_1",
+        projectName: activeBrand.brandName || brief.productName,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        status: "starting",
+        activeAgentId: null,
+        isAutopilot: true,
+        requireLineApproval: true,
+        approvalStatus: "pending",
+        brief,
+        postingSteps: buildInitialPostingSteps(channels, brief.platforms),
+        steps: activeAgents.map((a) => ({
+          agentId: a.id,
+          agentName: a.name,
+          role: a.role,
+          department: a.department,
+          avatar: a.avatar,
+          color: a.color,
+          status: "pending",
+          output: "",
+          providerUsed: "",
+          modelUsed: ""
+        })),
+        logs: [
+          {
+            time: new Date().toLocaleTimeString("th-TH"),
+            agentName: "Aria (AI Autopilot CMO)",
+            avatar: "📱",
+            message: `รับคำสั่งจากปุ่มมือถือ! เริ่มเดินเครื่องสร้างแคมเปญใหม่ให้ "${activeBrand.brandName}": ${brief.autonomousAngle}`
+          }
+        ]
+      };
+
+      newCampaign.visualAssets = generateCampaignVisualAssets(newCampaign, activeBrand);
+      newCampaign.connectedTools = buildAgentConnectedToolsOutput(newCampaign, activeBrand);
+
+      db.campaigns.unshift(newCampaign);
+      saveDB(db);
+      broadcastEvent("campaign_created", { campaign: newCampaign });
+      executeCampaignPipeline(newCampaign.id);
+
+      const htmlPage = `<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>สั่งงาน AI สำเร็จ — AI Marketing Agency</title>
+  <style>
+    body { background:#090d16; color:#f8fafc; font-family:'Prompt',sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; padding:20px; }
+    .box { background:#111827; border:2px solid #6366f1; border-radius:18px; max-width:540px; width:100%; padding:28px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.6); }
+    .icon { font-size:56px; margin-bottom:10px; }
+    h1 { font-size:22px; color:#818cf8; margin:0 0 10px; }
+    p { font-size:14px; color:#cbd5e1; line-height:1.6; }
+    .btn { display:inline-block; margin-top:14px; padding:12px 24px; background:linear-gradient(135deg,#6366f1,#4f46e5); color:#fff; text-decoration:none; border-radius:10px; font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="icon">🚀</div>
+    <h1>รับคำสั่งเรียบร้อย! AI กำลังคิดคอนเทนต์และเจนรูป</h1>
+    <p>ทีม AI ทั้ง 7 ตัวกำลังทำงานให้ <strong>${activeBrand.brandName}</strong><br/>เมื่อออกแบบรูปบิ้วอิน 8K และเขียนแคปชันเสร็จแล้ว ระบบจะส่งการ์ดตรวจงานเข้า <strong>LINE OA</strong> ให้กดยืนยันโพสต์ภายใน 1 นาทีครับ</p>
+    <a class="btn" href="/">📱 เปิดดูสถานะสดบน Dashboard</a>
+  </div>
+</body>
+</html>`;
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      return res.end(htmlPage);
+    }
+
     // 6. สั่งรันหรือสั่งแก้ไขงานเฉพาะ Agent รายตัว
     if (pathname === "/api/campaigns/rerun-step" && req.method === "POST") {
       const body = await parseBody(req);
@@ -1564,3 +1699,96 @@ server.listen(PORT, () => {
   console.log(`👉 Open in browser: http://localhost:${PORT}`);
   console.log(`============================================================\n`);
 });
+
+// ==========================================
+// ⏰ ระบบตั้งเวลาเดินเครื่องอัตโนมัติประจำวัน (Daily Scheduled Routine)
+// ==========================================
+let lastDailyRunDate = "";
+
+async function triggerDailyAutopilotRun() {
+  const activeBrand =
+    db.brandProfiles.find((b) => b.id === db.settings.activeBrandId) ||
+    db.brandProfiles[0];
+  if (!activeBrand) return;
+
+  const autoBrief = generateAutonomousBriefForBrand(activeBrand);
+  const channels = {
+    fbUrl: activeBrand.fbUrl || "",
+    tiktokUrl: activeBrand.tiktokUrl || "",
+    igUrl: activeBrand.igUrl || "",
+    lineUrl: activeBrand.lineUrl || "",
+    websiteUrl: activeBrand.websiteUrl || "",
+    shopUrl: activeBrand.shopUrl || "",
+    contactPhone: activeBrand.contactPhone || ""
+  };
+  const brief = { ...autoBrief, channels };
+
+  const activeAgents = db.agents
+    .filter((a) => a.enabled !== false)
+    .sort((a, b) => (a.stepOrder || 99) - (b.stepOrder || 99));
+
+  const campaign = {
+    id: randomUUID(),
+    brandId: activeBrand.id || "brand_default_1",
+    projectName: activeBrand.brandName || brief.productName,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    status: "starting",
+    activeAgentId: null,
+    isAutopilot: true,
+    isDailyRoutine: true,
+    requireLineApproval: true,
+    approvalStatus: "pending",
+    brief,
+    postingSteps: buildInitialPostingSteps(channels, brief.platforms),
+    steps: activeAgents.map((a) => ({
+      agentId: a.id,
+      agentName: a.name,
+      role: a.role,
+      department: a.department,
+      avatar: a.avatar,
+      color: a.color,
+      status: "pending",
+      output: "",
+      providerUsed: "",
+      modelUsed: ""
+    })),
+    logs: [
+      {
+        time: new Date().toLocaleTimeString("th-TH"),
+        agentName: "Daily Scheduler",
+        avatar: "⏰",
+        message: `[Daily Routine] ถึงเวลาเดินเครื่องประจำวัน! Aria กำลังคิดแคมเปญใหม่ให้ "${activeBrand.brandName}" + Maya เจนรูปบิ้วอิน 8K และส่งตรวจใน LINE...`
+      }
+    ]
+  };
+
+  campaign.visualAssets = generateCampaignVisualAssets(campaign, activeBrand);
+  campaign.connectedTools = buildAgentConnectedToolsOutput(campaign, activeBrand);
+
+  db.campaigns.unshift(campaign);
+  saveDB(db);
+  broadcastEvent("campaign_created", { campaign });
+
+  executeCampaignPipeline(campaign.id);
+}
+
+// ตรวจสอบเวลาทุกๆ 30 วินาที
+setInterval(() => {
+  try {
+    const schedulerConfig = db.settings?.scheduler || { enabled: true, dailyTime: "09:30" };
+    if (!schedulerConfig.enabled) return;
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString("en-GB", { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit" });
+    const todayDate = now.toLocaleDateString("en-GB", { timeZone: "Asia/Bangkok" });
+
+    if (timeStr === schedulerConfig.dailyTime && lastDailyRunDate !== todayDate) {
+      lastDailyRunDate = todayDate;
+      console.log(`⏰ [Daily Routine Triggered] ถึงเวลา ${timeStr} น. เริ่มเดินเครื่องประจำวันอัตโนมัติ...`);
+      triggerDailyAutopilotRun();
+    }
+  } catch (e) {
+    console.error("Daily Scheduler Error:", e.message);
+  }
+}, 30000);

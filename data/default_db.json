@@ -1,0 +1,2134 @@
+{
+  "settings": {
+    "activeProvider": "simulation",
+    "apiKeys": {
+      "gemini": "",
+      "openai": "",
+      "claude": ""
+    },
+    "models": {
+      "gemini": "gemini-2.5-flash",
+      "openai": "gpt-4o-mini",
+      "claude": "claude-3-7-sonnet-latest"
+    },
+    "line": {
+      "enabled": true,
+      "autoSendOnComplete": true,
+      "sendMode": "broadcast",
+      "channelAccessToken": "pxOGcYnl4XBrmqaqh1Z1TAnlSMEbd41h/3c0XzH8Lx+NZbE6O8M/HucYdB6ub88rIIeszhpM4rO0cFW1UU2D7uAPA2rkIKuMELoqAK4FA4paYI1kBnuUt5E5gBlkR9tEnAnQMdye/eDxtgvYZKXB3gdB04t89/1O/w1cDnyilFU=",
+      "targetId": "",
+      "notifyOnStart": false,
+      "notifyOnEachStep": false,
+      "notifyOnlyApprovalAndResult": true
+    },
+    "activeBrandId": "brand_1792833736158",
+    "scheduler": {
+      "enabled": true,
+      "dailyTime": "09:30"
+    }
+  },
+  "agents": [
+    {
+      "id": "cmo_orchestrator",
+      "stepOrder": 1,
+      "name": "Aria (AI CMO & Orchestrator)",
+      "role": "หัวหน้าทีมการตลาด & ผู้วางแผนกลยุทธ์หลัก (Chief Marketing Officer)",
+      "department": "Executive & Strategy",
+      "avatar": "👑",
+      "color": "#6366f1",
+      "enabled": true,
+      "preferredProvider": "default",
+      "preferredModel": "",
+      "temperature": 0.7,
+      "description": "รับคำสั่งหลักจากคุณ วิเคราะห์โจทย์ธุรกิจ กำหนดทิศทางแคมเปญ (Campaign Brief) และแจกจ่ายงานให้ลูกทีมทั้ง 6 แผนกทำงานสอดประสานกัน",
+      "skills": [
+        "Campaign Architecture",
+        "Brand Positioning",
+        "Task Delegation",
+        "KPI Setting"
+      ],
+      "systemPrompt": "คุณคือ Chief Marketing Officer (CMO) และหัวหน้าทีมการตลาดออนไลน์ระดับท็อป\nหน้าที่ของคุณคือรับโจทย์จากเจ้าของธุรกิจ แล้วแปลงเป็น Master Campaign Brief ที่ชัดเจนเพื่อสั่งงานลูกทีมในแต่ละแผนก\nให้สรุปโครงสร้างดังนี้:\n1. 🎯 เป้าหมายหลักของแคมเปญ (Core Objective & KPIs)\n2. 💡 จุดขายหลักที่แตกต่าง (Unique Selling Proposition - USP) & Brand Voice\n3. 📋 คำสั่งมอบหมายงานให้แต่ละแผนก (Task Breakdown สำหรับทีม Research, SEO, Ads, Content, Creative และ Social Scheduler)\nตอบเป็นภาษาไทยแบบมืออาชีพ กระชับ ชัดเจน ในรูปแบบ Markdown"
+    },
+    {
+      "id": "market_researcher",
+      "stepOrder": 2,
+      "name": "Marcus (Market & Competitor Researcher)",
+      "role": "นักวิจัยตลาด วิเคราะห์กลุ่มเป้าหมายและคู่แข่ง",
+      "department": "Market Intelligence",
+      "avatar": "🔍",
+      "color": "#0ea5e9",
+      "enabled": true,
+      "preferredProvider": "default",
+      "preferredModel": "",
+      "temperature": 0.6,
+      "description": "วิเคราะห์ภาพรวมตลาด Customer Persona, Pain Points, จุดแข็ง-จุดอ่อนคู่แข่ง และโอกาสในการเจาะตลาด",
+      "skills": [
+        "Customer Persona",
+        "SWOT Analysis",
+        "Competitor Breakdown",
+        "Market Trends"
+      ],
+      "systemPrompt": "คุณคือผู้เชี่ยวชาญด้านการวิจัยตลาดและพฤติกรรมผู้บริโภค (Market & Competitor Researcher)\nอ้างอิงจากโจทย์แคมเปญและแผนของ CMO ให้วิเคราะห์ข้อมูลเชิงลึกดังนี้:\n1. 👥 วิเคราะห์กลุ่มเป้าหมายเชิงลึก (Buyer Persona 2-3 กลุ่ม: อายุ พฤติกรรม ความสนใจ)\n2. ⚡ Pain Points & Desires (ปัญหาที่ลูกค้าเจอ และสิ่งที่เขารอคอยให้มาช่วย)\n3. ⚔️ การวิเคราะห์คู่แข่งและช่องว่างในตลาด (Market Gap & SWOT สรุปกระชับ)\n4. 🔥 Winning Angles (มุมมองการสื่อสาร 3 มุมที่จะทำให้ลูกค้าหยุดนิ้วดูทันที)\nตอบเป็นภาษาไทยในรูปแบบ Markdown ที่อ่านง่ายและนำไปใช้งานต่อได้ทันที"
+    },
+    {
+      "id": "seo_specialist",
+      "stepOrder": 3,
+      "name": "Sophia (SEO & Keyword Specialist)",
+      "role": "ผู้เชี่ยวชาญด้าน SEO, คีย์เวิร์ด และ Search Intent",
+      "department": "Search & Organic Growth",
+      "avatar": "📈",
+      "color": "#10b981",
+      "enabled": true,
+      "preferredProvider": "default",
+      "preferredModel": "",
+      "temperature": 0.5,
+      "description": "ค้นหาคีย์เวิร์ดทำเงิน (High-Intent Keywords), วางโครงสร้างบทความ SEO, Meta Tags และ Hashtags ยอดนิยม",
+      "skills": [
+        "Keyword Research",
+        "Search Intent",
+        "On-Page SEO",
+        "Hashtag Strategy"
+      ],
+      "systemPrompt": "คุณคือผู้เชี่ยวชาญด้าน SEO & Search Marketing (Google Search, TikTok SEO, Social Search)\nอ้างอิงจากข้อมูลวิจัยตลาด ให้วางกลยุทธ์คำค้นหาดังนี้:\n1. 🔑 คีย์เวิร์ดหลักและคีย์เวิร์ดทำเงิน (Primary & High-Buying-Intent Keywords 8-10 คำ พร้อมระบุ Search Intent)\n2. 🏷️ Long-tail Keywords & คำถามที่คนชอบค้นหา (People Also Ask)\n3. 📝 โครงสร้าง On-Page SEO แนะนำ (SEO Title, Meta Description, โครงสร้าง H1-H3 สำหรับบทความหรือหน้า Landing Page)\n4. #️⃣ ชุด Hashtags แยกตามแพลตฟอร์ม (Facebook / IG / TikTok / Lemon8)\nตอบเป็นภาษาไทยในรูปแบบ Markdown"
+    },
+    {
+      "id": "ad_strategist",
+      "stepOrder": 4,
+      "name": "Victor (Ad Campaign & Funnel Strategist)",
+      "role": "นักวางแผนยิงแอดโฆษณา และกลยุทธ์ Sales Funnel",
+      "department": "Paid Media & Conversion",
+      "avatar": "🚀",
+      "color": "#f59e0b",
+      "enabled": true,
+      "preferredProvider": "default",
+      "preferredModel": "",
+      "temperature": 0.6,
+      "description": "ออกแบบ Sales Funnel (TOFU/MOFU/BOFU), แผนการตั้งค่ากลุ่มเป้าหมายยิงแอด, การจัดสรรงบประมาณ และโปรโมชันปิดการขาย",
+      "skills": [
+        "Meta/TikTok/Google Ads",
+        "Sales Funnel",
+        "Budget Allocation",
+        "Retargeting"
+      ],
+      "systemPrompt": "คุณคือผู้เชี่ยวชาญด้าน Performance Marketing & Ad Funnel Strategist\nอ้างอิงจากข้อมูลกลุ่มเป้าหมายและ SEO ให้วางแผนการยิงแอดและ Funnel การขายดังนี้:\n1. 🌪️ โครงสร้าง Full-Funnel Strategy:\n   - TOFU (สร้างการรับรู้ / หยุดนิ้วลูกค้าใหม่)\n   - MOFU (สร้างความมั่นใจ / รีวิว / ให้ความรู้)\n   - BOFU (ปิดการขาย / Retargeting / โปรโมชันเร่งตัดสินใจ)\n2. 🎯 การตั้งค่า Audience Targeting (Interest, Behavior, Custom Audience, Lookalike) สำหรับ Facebook/IG, TikTok และ Google\n3. 💰 แผนการจัดสรรงบประมาณแนะนำ (สัดส่วนงบ % ในแต่ละ Funnel และการทำ A/B Testing)\n4. 🎁 ข้อเสนอปิดการขาย (Irresistible Offer / Call to Action)\nตอบเป็นภาษาไทยในรูปแบบ Markdown"
+    },
+    {
+      "id": "content_copywriter",
+      "stepOrder": 5,
+      "name": "Chloe (Content Creator & Copywriter)",
+      "role": "นักเขียนคอนเทนต์ โพสต์ขายของ และสคริปต์วิดีโอสั้น",
+      "department": "Content & Copywriting",
+      "avatar": "✍️",
+      "color": "#ec4899",
+      "enabled": true,
+      "preferredProvider": "default",
+      "preferredModel": "",
+      "temperature": 0.8,
+      "description": "เขียนแคปชันขายของแบบหยุดนิ้ว (Hook-Story-Offer), สคริปต์คลิปสั้น TikTok/Reels และบทความพร้อมโพสต์ทันที",
+      "skills": [
+        "Direct Response Copy",
+        "TikTok/Reels Script",
+        "Storytelling",
+        "SEO Article"
+      ],
+      "systemPrompt": "คุณคือ Copywriter และ Content Creator มือทองที่เขียนคอนเทนต์ปิดการขายและไวรัลได้เก่งที่สุด\nอ้างอิงจากกลยุทธ์ของทีมวิจัยตลาด, SEO และทีมยิงแอด ให้เขียนชิ้นงานพร้อมใช้งานจริงดังนี้:\n1. 📱 โพสต์ขายของทรงพลังสำหรับ Facebook / IG (ใช้โครงสร้าง Hook - Pain - Solution - Social Proof - Offer - CTA) จำนวน 2 สไตล์ (สไตล์ป้ายยา/เล่าเรื่อง และสไตล์ฮาร์ดเซลล์เน้นโปรโมชัน)\n2. 🎬 สคริปต์วิดีโอสั้น TikTok / Reels / Shorts (ความยาว 30-45 วินาที แยกตารางวินาที: ภาพที่เห็น + บทพูด + ข้อความพาดหัวในคลิป ตั้งแต่ 3 วินาทีแรกจนจบคลิป)\n3. 💬 ข้อความบรอดแคสต์ LINE OA / ทักแชทปิดการขายสั้นๆ กระตุ้นยอดซื้อทันที\nตอบเป็นภาษาไทยที่อ่านสนุก น่าดึงดูด และคัดลอกไปโพสต์ได้ทันที"
+    },
+    {
+      "id": "creative_director",
+      "stepOrder": 6,
+      "name": "Leo (Creative & Media Prompt Generator)",
+      "role": "ผู้กำกับศิลป์ & นักออกแบบ AI Prompt สร้างภาพ/วิดีโอ",
+      "department": "Creative & Visual AI",
+      "avatar": "🎨",
+      "color": "#8b5cf6",
+      "enabled": true,
+      "preferredProvider": "default",
+      "preferredModel": "",
+      "temperature": 0.8,
+      "description": "ออกแบบคอนเซปต์ภาพโฆษณา Banner, Artwork Briefing และเขียน Prompt ภาษาอังกฤษสำหรับสร้างรูป/วิดีโอด้วย AI",
+      "skills": [
+        "Art Direction",
+        "Midjourney/Flux Prompts",
+        "Video AI Prompts",
+        "Ad Banner Layout"
+      ],
+      "systemPrompt": "คุณคือ Creative Director และผู้เชี่ยวชาญการเขียน Prompt สำหรับ AI สร้างภาพและวิดีโอ (Midjourney, Flux, Nanobanana, Sora, Runway)\nอ้างอิงจากคอนเทนต์และแอดของทีม ให้จัดทำ Creative Asset Guide ดังนี้:\n1. 🖼️ คอนเซปต์ภาพโฆษณา (Ad Creative Concept) 3 รูปแบบ (ระบุ Mood & Tone, โทนสี, การจัดวางองค์ประกอบ และข้อความ Headline บนภาพ)\n2. ✨ AI Image Generation Prompts (เขียน Prompt ภาษาอังกฤษแบบละเอียดพร้อมใช้งานทันที 3 Prompts สำหรับภาพสินค้า, ภาพ Lifestyle และภาพโฆษณา)\n3. 🎥 AI Video Generation Prompts (เขียน Prompt ภาษาอังกฤษสำหรับสร้าง B-Roll หรือวิดีโอโฆษณา 2 Prompts)\nตอบคำอธิบายเป็นภาษาไทย ส่วนตัว Prompt ให้ใส่ใน Code block ภาษาอังกฤษเพื่อให้คัดลอกไปเจนรูปได้ทันที"
+    },
+    {
+      "id": "social_scheduler_line",
+      "stepOrder": 7,
+      "name": "Namo (Social Scheduler & LINE Reporter)",
+      "role": "ผู้จัดการตารางโพสต์ & รายงานผลเข้า LINE อัตโนมัติ",
+      "department": "Operations & Reporting",
+      "avatar": "📲",
+      "color": "#06b6d4",
+      "enabled": true,
+      "preferredProvider": "default",
+      "preferredModel": "",
+      "temperature": 0.5,
+      "description": "จัดตารางโพสต์คอนเทนต์ 7 วัน (Content Calendar) ระบุเวลาทองในการโพสต์ และสรุปรายงานส่งเข้า LINE ของคุณ",
+      "skills": [
+        "7-Day Content Calendar",
+        "Best Posting Time",
+        "Executive Summary",
+        "LINE Notification"
+      ],
+      "systemPrompt": "คุณคือ Social Media Manager และผู้ดูแลระบบรายงานผลผู้บริหารผ่าน LINE\nอ้างอิงจากผลงานทั้งหมดของทุกแผนก ให้สรุปแผนปฏิบัติการดังนี้:\n1. 📅 ตารางโพสต์คอนเทนต์ 7 วัน (7-Day Actionable Content Calendar: ระบุ วัน, แพลตฟอร์ม, หัวข้อคอนเทนต์, รูปแบบสื่อ, และเวลาที่ควรโพสต์)\n2. ✅ Checklist ก่อนรันแคมเปญจริง\n3. 📲 ข้อความสรุปสำหรับส่งรายงานเข้า LINE (Executive Summary กระชับ อ่านง่ายบนมือถือ สรุปสิ่งที่ทีม AI ทั้ง 7 แผนกทำเสร็จเรียบร้อยแล้ว พร้อมคำแนะนำขั้นตอนถัดไป)\nตอบเป็นภาษาไทยในรูปแบบ Markdown"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "bca245e3-59f9-4e07-b4de-b49bd37833f8",
+      "brandId": "brand_1792833736158",
+      "projectName": "KPN บิ้วอิน เชียงใหม่",
+      "createdAt": "2026-10-26T11:35:56.482Z",
+      "updatedAt": "2026-10-26T11:35:56.485Z",
+      "status": "completed",
+      "activeAgentId": null,
+      "isAutopilot": true,
+      "requireLineApproval": true,
+      "approvalStatus": "approved",
+      "brief": {
+        "productName": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม",
+        "goal": "ดึงลูกค้าเจ้าของบ้านและคอนโดในเชียงใหม่-ลำพูน ทักแชทประเมินราคาฟรี 15 เคสในสัปดาห์นี้",
+        "targetAudience": "เจ้าของบ้านใหม่ คอนโด โฮมออฟฟิศ และคาเฟ่ในเชียงใหม่-ลำพูน อายุ 28-55 ปี ที่ต้องการงานบิ้วอินคุณภาพ",
+        "budget": "1000",
+        "platforms": [
+          "Facebook",
+          "Instagram",
+          "TikTok",
+          "LINE OA"
+        ],
+        "commandText": "เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโดยทีมช่างมืออาชีพเชียงใหม่ งบไม่บานปลาย มีรับประกันผลงาน ทักแชทวันนี้ประเมินราคาฟรี!",
+        "autonomousAngle": "เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม",
+        "channels": {
+          "fbUrl": "https://www.facebook.com/1226235303916599",
+          "tiktokUrl": "",
+          "igUrl": "",
+          "lineUrl": "https://manager.line.biz/account/@742srmne",
+          "websiteUrl": "",
+          "shopUrl": "",
+          "contactPhone": "088-7888-446"
+        }
+      },
+      "postingSteps": [
+        {
+          "platform": "Facebook",
+          "icon": "📘",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "status": "posted",
+          "postedAt": "18:37:47",
+          "note": "✅ โพสต์รูปภาพผลงานพร้อมแคปชันขึ้นเพจ Facebook จริงสำเร็จ! (Post ID: 1226235303916599_122128658571470030)",
+          "simulated": false,
+          "postId": "1226235303916599_122128658571470030"
+        },
+        {
+          "platform": "TikTok",
+          "icon": "🎵",
+          "targetUrl": "https://tiktok.com/@yourchannel",
+          "status": "posted",
+          "postedAt": "18:37:48",
+          "note": "⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)",
+          "simulated": true,
+          "postId": ""
+        },
+        {
+          "platform": "Instagram",
+          "icon": "📸",
+          "targetUrl": "https://instagram.com/yourbrand",
+          "status": "posted",
+          "postedAt": "18:37:49",
+          "note": "⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)",
+          "simulated": true,
+          "postId": ""
+        },
+        {
+          "platform": "LINE OA",
+          "icon": "💬",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "status": "posted",
+          "postedAt": "18:37:50",
+          "note": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!",
+          "simulated": false,
+          "postId": ""
+        }
+      ],
+      "steps": [
+        {
+          "agentId": "cmo_orchestrator",
+          "agentName": "Aria (AI CMO & Orchestrator)",
+          "role": "หัวหน้าทีมการตลาด & ผู้วางแผนกลยุทธ์หลัก (Chief Marketing Officer)",
+          "department": "Executive & Strategy",
+          "avatar": "👑",
+          "color": "#6366f1",
+          "status": "completed",
+          "output": "### 👑 Master Campaign Brief โดย Aria (AI CMO & Orchestrator)\n**แคมเปญ:** ปั้นยอดขายและสร้างแบรนด์ **KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม** แบบครบวงจร\n**คำสั่งหลักจากผู้บริหาร:** \"เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโดยทีมช่างมืออาชีพเชียงใหม่ งบไม่บานปลาย มีรับประกันผลงาน ทักแชทวันนี้ประเมินราคาฟรี!\"\n\n---\n\n#### 🌐 ช่องทางเพจเป้าหมายที่ทีม AI เข้าไปรับผิดชอบดูแล (Connected Target Channels)\n- 📘 **Facebook Page:** https://www.facebook.com/1226235303916599\n- 🎵 **TikTok Channel:** https://tiktok.com/@yourbrand\n- 📸 **Instagram:** https://instagram.com/yourbrand\n- 💬 **LINE OA (ปิดการขาย):** https://manager.line.biz/account/@742srmne\n- 📞 **เบอร์ติดต่อ:** 088-7888-446\n\n---\n\n#### 1. 🎯 เป้าหมายหลักของแคมเปญ (Core Objectives & KPIs)\n* **วัตถุประสงค์หลัก:** ดึงลูกค้าเจ้าของบ้านและคอนโดในเชียงใหม่-ลำพูน ทักแชทประเมินราคาฟรี 15 เคสในสัปดาห์นี้\n* **กลุ่มเป้าหมายหลัก:** เจ้าของบ้านใหม่ คอนโด โฮมออฟฟิศ และคาเฟ่ในเชียงใหม่-ลำพูน อายุ 28-55 ปี ที่ต้องการงานบิ้วอินคุณภาพ\n* **แพลตฟอร์มโฟกัส:** Facebook, Instagram, TikTok, LINE OA\n* **งบประมาณการตลาดตั้งต้น:** 1000\n* **กลยุทธ์เชื่อมโยงช่องทาง (Cross-Channel Ecosystem):**\n  * ใช้ **TikTok (https://tiktok.com/@yourbrand)** และ **IG Reels (https://instagram.com/yourbrand)** เป็นตัวดึงดูดสายตา (Organic Reach + Video Views)\n  * ใช้ **Facebook Page (https://www.facebook.com/1226235303916599)** เป็นฐานสร้างความน่าเชื่อถือ โพสต์รีวิว และยิงแอดทักแชท (Click to Messenger)\n  * ดึงลูกค้าทั้งหมดมาปิดการขายและทำ CRM ซ้ำใน **LINE OA (https://manager.line.biz/account/@742srmne)**\n\n#### 2. 📋 การจ่ายงานให้ลูกทีม AI ทั้ง 6 แผนก (Task Delegation)\n1. 🔍 **Marcus (Market Research):** วิเคราะห์กลุ่มลูกค้าของเพจ https://www.facebook.com/1226235303916599 และช่อง https://tiktok.com/@yourbrand เพื่อหาจุดแข็งเหนือคู่แข่ง\n2. 📈 **Sophia (SEO Specialist):** วางคีย์เวิร์ดติดหน้าแรก Google และ TikTok Search สำหรับช่อง https://tiktok.com/@yourbrand\n3. 🚀 **Victor (Ad Strategist):** วางแผนยิงแอดเข้าเพจ https://www.facebook.com/1226235303916599 และดึงคนแอด LINE https://manager.line.biz/account/@742srmne ภายใต้งบ 1000\n4. ✍️ **Chloe (Copywriter):** เขียนโพสต์พร้อมแนบลิงก์เพจจริงทุกช่องทาง + สคริปต์คลิป TikTok พร้อมถ่าย\n5. 🎨 **Leo (Creative Director):** คิดคอนเซปต์ภาพโฆษณาประจำเพจและเขียน Prompt เจนรูป/วิดีโอ\n6. 📲 **Namo (Scheduler & LINE Reporter):** จัดตารางโพสต์ลงเพจ FB / IG / TikTok อัตโนมัติ และส่งรายงานสรุปเข้า LINE",
+          "providerUsed": "simulation",
+          "modelUsed": "Smart Marketing Simulator v2",
+          "startedAt": "2026-10-26T11:35:56.491Z",
+          "completedAt": "2026-10-26T11:35:57.449Z"
+        },
+        {
+          "agentId": "market_researcher",
+          "agentName": "Marcus (Market & Competitor Researcher)",
+          "role": "นักวิจัยตลาด วิเคราะห์กลุ่มเป้าหมายและคู่แข่ง",
+          "department": "Market Intelligence",
+          "avatar": "🔍",
+          "color": "#0ea5e9",
+          "status": "completed",
+          "output": "### 🔍 รายงานวิเคราะห์ตลาดและเพจเป้าหมาย โดย Marcus (Market & Competitor Researcher)\n**สำหรับแบรนด์:** KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n**ช่องทางที่ตรวจสอบ:** FB (https://www.facebook.com/1226235303916599) | TikTok (https://tiktok.com/@yourbrand) | IG (https://instagram.com/yourbrand)\n\n---\n\n#### 1. 👥 วิเคราะห์กลุ่มเป้าหมายประจำเพจ (Buyer Personas)\n* **กลุ่มที่ 1: สายดูคลิปสั้นป้ายยาบน TikTok (https://tiktok.com/@yourbrand) — สัดส่วน 45%**\n  * **โปรไฟล์:** เจ้าของบ้านใหม่ คอนโด โฮมออฟฟิศ และคาเฟ่ในเชียงใหม่-ลำพูน อายุ 28-55 ปี ที่ต้องการงานบิ้วอินคุณภาพ ชอบดูคลิปรีวิวสั้นกระชับ เห็นผลลัพธ์จริงใน 5 วินาทีแรก\n  * **แนวทางดึงเข้าเพจ:** ใช้คลิปแก้ปัญหา + ปักตะกร้าหรือบอกให้กดลิงก์หน้าโปรไฟล์ไปที่ https://manager.line.biz/account/@742srmne\n* **กลุ่มที่ 2: สายอ่านรีวิวละเอียดบน Facebook (https://www.facebook.com/1226235303916599) & IG (https://instagram.com/yourbrand) — สัดส่วน 35%**\n  * **โปรไฟล์:** ชอบอ่านรายละเอียดเปรียบเทียบ ดูอัลบั้มรีวิวลูกค้าจริงในเพจก่อนตัดสินใจทักแชท\n* **กลุ่มที่ 3: สายโปรโมชันด่วนใน LINE OA (https://manager.line.biz/account/@742srmne) — สัดส่วน 20%**\n  * **โปรไฟล์:** ลูกค้าที่เคยเห็นแอดแล้ว รอจังหวะโปรโมชันพิเศษปลายเดือนหรือ Flash Sale\n\n#### 2. ⚡ Pain Points & Desires (ปัญหาที่ลูกค้าเจอ vs สิ่งที่ต้องการ)\n* **Pain Points:** กลัวซื้อไปแล้วไม่ตรงปก เคยเจอเพจที่ตอบช้าหรือไม่มีรีวิวจริงยืนยัน\n* **Desires:** อยากได้สินค้า/บริการจากเพจที่น่าเชื่อถือ ติดต่อได้จริงผ่าน https://www.facebook.com/1226235303916599 และ https://manager.line.biz/account/@742srmne\n\n#### 3. 🔥 3 Winning Angles สำหรับปั้นเพจให้โตไว\n1. **Angle #1 (TikTok Viral Hook):** *\"ทำไมคนถึงแห่เปลี่ยนมาใช้ KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม กันเต็มฟีด TikTok!\"*\n2. **Angle #2 (Facebook Trust Post):** *\"สรุปครบจบในโพสต์เดียว: 3 เหตุผลที่ลูกค้าเพจ https://www.facebook.com/1226235303916599 ซื้อซ้ำมากที่สุด\"*\n3. **Angle #3 (LINE VIP Exclusive):** *\"โปรลับเฉพาะคนที่แอด LINE https://manager.line.biz/account/@742srmne วันนี้เท่านั้น!\"*",
+          "providerUsed": "simulation",
+          "modelUsed": "Smart Marketing Simulator v2",
+          "startedAt": "2026-10-26T11:35:57.459Z",
+          "completedAt": "2026-10-26T11:35:58.429Z"
+        },
+        {
+          "agentId": "seo_specialist",
+          "agentName": "Sophia (SEO & Keyword Specialist)",
+          "role": "ผู้เชี่ยวชาญด้าน SEO, คีย์เวิร์ด และ Search Intent",
+          "department": "Search & Organic Growth",
+          "avatar": "📈",
+          "color": "#10b981",
+          "status": "completed",
+          "output": "### 📈 กลยุทธ์ SEO, Keywords & การตั้งค่าโปรไฟล์เพจ โดย Sophia (SEO & Keyword Specialist)\n**สำหรับแคมเปญ:** KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n\n---\n\n#### 1. 🛠️ คำแนะนำปรับแต่ง Bio & ชื่อเพจให้ติดการค้นหา (Social SEO Optimization)\n* **Facebook Page (https://www.facebook.com/1226235303916599):** ตั้งชื่อเพจให้มีคำค้นหาหลัก และใส่ลิงก์ https://manager.line.biz/account/@742srmne ไว้ในปุ่ม Action และคำอธิบายเพจ\n* **TikTok Bio (https://tiktok.com/@yourbrand):** ใส่คีย์เวิร์ดหลักในบรรทัดแรกของ Bio พร้อมชี้ลูกศรลงไปที่ลิงก์ https://manager.line.biz/account/@742srmne\n* **Instagram Bio (https://instagram.com/yourbrand):** ใช้ Highlight Stories แยกเป็นหมวด: `รีวิวจริง`, `โปรเดือนนี้`, `วิธีสั่งซื้อ`\n\n#### 2. 🔑 คีย์เวิร์ดทำเงิน (High-Buying-Intent Keywords)\n| ลำดับ | Keyword แนะนำ | ช่องทางที่ควรเน้น | โอกาสปิดการขาย |\n| :--- | :--- | :--- | :--- |\n| 1 | **KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม รีวิว** | TikTok Search / Facebook | ⭐⭐⭐⭐⭐ (สูงมาก) |\n| 2 | **KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ดีไหม** | Google / Lemon8 / Pantip | ⭐⭐⭐⭐⭐ (สูงมาก) |\n| 3 | **KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม โปรโมชัน** | Facebook Page / LINE OA | ⭐⭐⭐⭐⭐ (สูงมาก) |\n| 4 | **แนะนำ KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ยอดนิยม** | Website / TikTok | ⭐⭐⭐⭐ (สูง) |\n\n#### 3. #️⃣ ชุด Hashtags ประจำเพจ (ใส่ท้ายโพสต์ทุกครั้ง)\n* **TikTok (https://tiktok.com/@yourbrand):** `#KPNบิ้วอินเชียงใหม่—เปลี่ยนบ้านโล่งเป็นบ้านหรูด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม` `#รีวิวของดีบอกต่อ` `#ป้ายยาTikTok` `#ของมันต้องมี`\n* **Facebook (https://www.facebook.com/1226235303916599) & IG (https://instagram.com/yourbrand):** `#KPNบิ้วอินเชียงใหม่—เปลี่ยนบ้านโล่งเป็นบ้านหรูด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม` `#โปรโมชันพิเศษ` `#รีวิวผู้ใช้จริง`",
+          "providerUsed": "simulation",
+          "modelUsed": "Smart Marketing Simulator v2",
+          "startedAt": "2026-10-26T11:35:58.433Z",
+          "completedAt": "2026-10-26T11:35:59.389Z"
+        },
+        {
+          "agentId": "ad_strategist",
+          "agentName": "Victor (Ad Campaign & Funnel Strategist)",
+          "role": "นักวางแผนยิงแอดโฆษณา และกลยุทธ์ Sales Funnel",
+          "department": "Paid Media & Conversion",
+          "avatar": "🚀",
+          "color": "#f59e0b",
+          "status": "completed",
+          "output": "### 🚀 แผนยิงแอดโฆษณาเชื่อมทุกเพจ (Cross-Platform Ad Funnel) โดย Victor (Ad Campaign & Funnel Strategist)\n**งบประมาณรวม:** 1000\n\n---\n\n#### 1. 🌪️ โครงสร้างการยิงแอดเข้าเพจของคุณโดยตรง\n* **ขั้นที่ 1: TikTok Spark Ads & Reels Boost (ใช้งบ 35%)**\n  * **ช่องทางที่ยิง:** บูสต์คลิปจากช่อง **https://tiktok.com/@yourbrand** และ **https://instagram.com/yourbrand**\n  * **เป้าหมาย:** ดึงยอดวิวคุณภาพ + เก็บ Audience คนที่ดูคลิปเกิน 50%\n* **ขั้นที่ 2: Facebook Click-to-Messenger & LINE Conversion (ใช้งบ 45%)**\n  * **ช่องทางที่ยิง:** ยิงจากเพจ **https://www.facebook.com/1226235303916599** ส่งคนเข้า Inbox เพจ และแนบลิงก์ด่วนเข้า **https://manager.line.biz/account/@742srmne**\n  * **กลุ่มเป้าหมาย:** เจ้าของบ้านใหม่ คอนโด โฮมออฟฟิศ และคาเฟ่ในเชียงใหม่-ลำพูน อายุ 28-55 ปี ที่ต้องการงานบิ้วอินคุณภาพ\n* **ขั้นที่ 3: Retargeting ปิดการขายคนทักแชท (ใช้งบ 20%)**\n  * **กลุ่มเป้าหมาย:** คนที่เคยเข้าชมเพจ **https://www.facebook.com/1226235303916599**, ดูคลิปใน **https://tiktok.com/@yourbrand**, หรือทักแชทใน 14 วันล่าสุดแต่ยังไม่สั่งซื้อ\n\n#### 2. 🎯 ลิงก์ปลายทางสำหรับตั้งค่าใน Ads Manager (Destination URLs)\n* **Facebook Ad Destination:** Inbox ของเพจ `https://www.facebook.com/1226235303916599`\n* **Call-to-Action Link เสริม:** `https://manager.line.biz/account/@742srmne` ",
+          "providerUsed": "simulation",
+          "modelUsed": "Smart Marketing Simulator v2",
+          "startedAt": "2026-10-26T11:35:59.397Z",
+          "completedAt": "2026-10-26T11:36:00.361Z"
+        },
+        {
+          "agentId": "content_copywriter",
+          "agentName": "Chloe (Content Creator & Copywriter)",
+          "role": "นักเขียนคอนเทนต์ โพสต์ขายของ และสคริปต์วิดีโอสั้น",
+          "department": "Content & Copywriting",
+          "avatar": "✍️",
+          "color": "#ec4899",
+          "status": "completed",
+          "output": "### ✍️ ชิ้นงานคอนเทนต์พร้อมลิงก์เพจของคุณ (คัดลอกหรือกดสั่งโพสต์ลงเพจได้ทันที!) โดย Chloe (Content Creator & Copywriter)\n**สำหรับแคมเปญ:** KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n**บรีฟคำสั่งหลัก:** เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโดยทีมช่างมืออาชีพเชียงใหม่ งบไม่บานปลาย มีรับประกันผลงาน ทักแชทวันนี้ประเมินราคาฟรี!\n\n---\n\n#### 1. 📱 โพสต์ขายของสำหรับเพจ Facebook & IG (สไตล์ป้ายยา + แนบลิงก์เพจครบ)\n> 🔥 **มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม?** ✨\n>\n> ใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก **KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม** ห้ามพลาดโพสต์นี้เลยครับ 👇\n>\n> 💡 **ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?**\n> ✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโดยทีมช่างมืออาชีพเชียงใหม่ งบไม่บานปลาย มีรับประกันผลงาน ทักแชทวันนี้ประเมินราคาฟรี!\n> ✅ คุ้มค่าทุกงบประมาณ ตอบโจทย์ความต้องการของ เจ้าของบ้านใหม่ คอนโด โฮมออฟฟิศ และคาเฟ่ในเชียงใหม่-ลำพูน อายุ 28-55 ปี ที่ต้องการงานบิ้วอินคุณภาพ อย่างตรงจุด\n> ✅ ดูแลครบวงจร ปรึกษาฟรี ประเมินราคาชัดเจน มีผลงานจริงการันตี (เป้าหมายแคมเปญ: ดึงลูกค้าเจ้าของบ้านและคอนโดในเชียงใหม่-ลำพูน ทักแชทประเมินราคาฟรี 15 เคสในสัปดาห์นี้)\n>\n> 🎁 **โปรโมชันพิเศษเฉพาะลูกค้าที่ทักมาจากเพจวันนี้!**\n> รับสิทธิ์ประเมินราคา/ปรึกษาฟรี พร้อมส่วนลดและสิทธิพิเศษประจำเดือนทันที!\n>\n> 📌 **ช่องทางสั่งซื้อ / สอบถามโปรโมชันพิเศษ:**\n> 💬 ทัก LINE OA ด่วน: https://manager.line.biz/account/@742srmne\n> 📘 Inbox เพจ Facebook: https://www.facebook.com/1226235303916599\n> 🎵 ติดตามรีวิวบน TikTok: https://tiktok.com/@yourbrand\n> 📸 Instagram: https://instagram.com/yourbrand\n> 📞 โทรปรึกษาด่วน: 088-7888-446\n\n---\n\n#### 2. 📱 โพสต์โปรโมชันด่วน (Flash Sale สำหรับโพสต์ลงเพจ Facebook / บรอดแคสต์ LINE)\n> ⚡ **โปรพิเศษจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — เปิดรับคิวด่วนจำนวนจำกัด!** ⚡\n> 🎯 ไฮไลท์: เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโดยทีมช่างมืออาชีพเชียงใหม่ งบไม่บานปลาย มีรับประกันผลงาน ทักแชทวันนี้ประเมินราคาฟรี!\n> • ต่อที่ 1: รับสิทธิ์ราคาโปรโมชันพิเศษเฉพาะเดือนนี้\n> • ต่อที่ 2: ฟรี! ให้คำปรึกษาและดูแลโดยทีมงานมืออาชีพ\n>\n> 👉 ทักแชทรับสิทธิ์ด่วนที่ LINE: https://manager.line.biz/account/@742srmne\n> 👉 หรือทัก Inbox เพจ: https://www.facebook.com/1226235303916599\n\n---\n\n#### 3. 🎬 สคริปต์วิดีโอสั้นสำหรับช่อง TikTok (https://tiktok.com/@yourbrand) & IG Reels (https://instagram.com/yourbrand)\n| วินาที | ภาพในคลิป (Visual) | บทพูด (Voiceover) | ข้อความขึ้นจอ (On-Screen Text) |\n| :--- | :--- | :--- | :--- |\n| **0:00-0:04 (Hook)** | ซูมเข้าหาตัวสินค้าพร้อมทำหน้าตื่นเต้น | \"หยุดเลื่อนก่อน! ถ้าคุณกำลังมองหา KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ที่คุ้มที่สุด ต้องดูคลิปนี้ให้จบ!\" | อย่าเพิ่งตัดสินใจ ถ้ายังไม่เห็นสิ่งนี้! 🚨 |\n| **0:04-0:15 (Pain & Solution)** | โชว์การใช้งานจริงของ KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม แบบชัดๆ | \"บอกเลยว่าตัวนี้ตอบโจทย์สุดๆ ทั้งสะดวก คุ้มค่า และเห็นผลจริงจนลูกค้ากลับมาซื้อซ้ำ\" | 3 เหตุผลที่คนเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ✅ |\n| **0:15-0:30 (CTA ชี้เข้าลิงก์)** | ชี้ไปที่ลิงก์หน้าโปรไฟล์ TikTok (https://tiktok.com/@yourbrand) | \"ใครอยากได้โปรลับเฉพาะคนดูคลิปนี้ กดลิงก์หน้าโปรไฟล์ทัก LINE https://manager.line.biz/account/@742srmne รับสิทธิ์ได้เลย!\" | กดลิงก์หน้าโปรไฟล์รับโปรทันที! 🎁👇 |",
+          "providerUsed": "simulation",
+          "modelUsed": "Smart Marketing Simulator v2",
+          "startedAt": "2026-10-26T11:36:00.367Z",
+          "completedAt": "2026-10-26T11:36:01.334Z"
+        },
+        {
+          "agentId": "creative_director",
+          "agentName": "Leo (Creative & Media Prompt Generator)",
+          "role": "ผู้กำกับศิลป์ & นักออกแบบ AI Prompt สร้างภาพ/วิดีโอ",
+          "department": "Creative & Visual AI",
+          "avatar": "🎨",
+          "color": "#8b5cf6",
+          "status": "completed",
+          "output": "### 🎨 คอนเซปต์ภาพโฆษณาประจำเพจ & AI Media Prompts โดย Leo (Creative & Media Prompt Generator)\n**สำหรับเพจ:** https://www.facebook.com/1226235303916599 | https://instagram.com/yourbrand | https://tiktok.com/@yourbrand\n\n---\n\n#### 1. 🖼️ คอนเซปต์ Artwork โฆษณาแยกตามขนาดแพลตฟอร์ม\n1. **Facebook & IG Feed (อัตราส่วน 4:5):** ภาพ Hero Banner โชว์จุดเด่นของ **KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม** พร้อมป้ายชื่อเพจและ Call-to-Action ชัดเจน\n2. **TikTok & Reels Cover (อัตราส่วน 9:16):** ภาพปกคลิปพาดหัวตัวหนังสือสีตัดกับพื้นหลัง อ่านออกง่ายบนมือถือ\n3. **LINE OA Rich Message (อัตราส่วน 1:1):** ภาพโปรโมชันสำหรับส่งบรอดแคสต์ให้คนกดคลิกรับสิทธิ์\n\n---\n\n#### 2. ✨ AI Image Generation Prompts (คัดลอกไปใช้เจนภาพลงเพจได้เลย)\n\n**Prompt ที่ 1: ภาพโฆษณา Hero Product สำหรับโพสต์ลงเพจ Facebook & IG**\n```text\nCommercial studio photography representing \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\", ultra-modern clean aesthetic, dramatic rim lighting, luxury advertising campaign style, high contrast, shot on Phase One XF IQ4 150MP, 8k resolution, photorealistic, clean space at the top for Thai headline --ar 4:5 --v 6.1\n```\n\n**Prompt ที่ 2: ภาพ Lifestyle กลุ่มเป้าหมายสำหรับทำแอด**\n```text\nAuthentic lifestyle photography of happy modern Thai professionals (เจ้าของบ้านใหม่ คอนโด โฮมออฟฟิศ และคาเฟ่ในเชียงใหม่-ลำพูน อายุ 28-55 ปี ที่ต้องการงานบิ้วอินคุณภาพ) smiling with confidence while using \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\", natural golden hour sunlight, warm and trustworthy atmosphere, depth of field, cinematic commercial grade --ar 16:9 --v 6.1\n```\n\n---\n\n#### 3. 🎥 AI Video Generation Prompts (สำหรับทำคลิป B-Roll ลงช่อง TikTok https://tiktok.com/@yourbrand)\n```text\nVertical 9:16 commercial video, smooth slow-motion orbital camera movement around \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" on a sleek podium, soft volumetric studio lighting, dynamic light particles, high-end social media ad aesthetic, 4k 60fps.\n```",
+          "providerUsed": "simulation",
+          "modelUsed": "Smart Marketing Simulator v2",
+          "startedAt": "2026-10-26T11:36:01.338Z",
+          "completedAt": "2026-10-26T11:36:02.298Z"
+        },
+        {
+          "agentId": "social_scheduler_line",
+          "agentName": "Namo (Social Scheduler & LINE Reporter)",
+          "role": "ผู้จัดการตารางโพสต์ & รายงานผลเข้า LINE อัตโนมัติ",
+          "department": "Operations & Reporting",
+          "avatar": "📲",
+          "color": "#06b6d4",
+          "status": "completed",
+          "output": "### 📲 ตารางโพสต์ลงเพจ 7 วัน & ระบบสั่งโพสต์อัตโนมัติ โดย Namo (Social Scheduler & LINE Reporter)\n**ผูกกับช่องทางของคุณเรียบร้อย:**\n* 📘 **Facebook:** https://www.facebook.com/1226235303916599\n* 🎵 **TikTok:** https://tiktok.com/@yourbrand\n* 📸 **Instagram:** https://instagram.com/yourbrand\n* 💬 **LINE OA:** https://manager.line.biz/account/@742srmne\n\n---\n\n#### 1. 📅 ตารางโพสต์คอนเทนต์ 7 วันแยกตามลิงก์เพจของคุณ\n| วัน | เวลาทอง | ช่องทางเพจที่จะโพสต์ | หัวข้อคอนเทนต์ | รูปแบบสื่อ |\n| :--- | :--- | :--- | :--- | :--- |\n| **วันที่ 1 (จันทร์)** | 11:30 น. | 📘 FB (https://www.facebook.com/1226235303916599) & 📸 IG | เปิดตัวจุดเด่น KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม พร้อมลิงก์ทักแชท | ภาพเดี่ยว Hero 4:5 |\n| **วันที่ 2 (อังคาร)** | 19:30 น. | 🎵 TikTok (https://tiktok.com/@yourbrand) | คลิปสั้น 30 วิ: 3 เหตุผลที่ต้องเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม | วิดีโอสั้น 9:16 |\n| **วันที่ 3 (พุธ)** | 12:00 น. | 📘 FB (https://www.facebook.com/1226235303916599) | อัลบั้มความรู้ + ป้ายยา KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม | อัลบั้มภาพ 4 หน้า |\n| **วันที่ 4 (พฤหัสบดี)** | 20:00 น. | 🎵 TikTok (https://tiktok.com/@yourbrand) & 📸 IG Reels | คลิปเปรียบเทียบความคุ้มค่า + ชี้เข้า Bio | วิดีโอสั้น 9:16 |\n| **วันที่ 5 (ศุกร์)** | 18:00 น. | 📘 FB & 📸 IG (https://instagram.com/yourbrand) | รวมรีวิวความประทับใจจากลูกค้าจริง | อัลบั้มรีวิว Social Proof |\n| **วันที่ 6 (เสาร์)** | 10:30 น. | 💬 LINE OA (https://manager.line.biz/account/@742srmne) & 📘 FB | 🔥 บรอดแคสต์โปรพิเศษเฉพาะสุดสัปดาห์ | Rich Message + โพสต์โปร |\n| **วันที่ 7 (อาทิตย์)** | 20:00 น. | ทุกช่องทาง (FB / IG / TikTok) | โค้งสุดท้าย! ปิดรับสิทธิ์โปรพิเศษเดือนนี้ | ภาพ Flash Deal |\n\n---\n\n#### 2. 🚀 วิธีให้ระบบไปโพสต์ทำงานแทนบนเพจจริงของคุณ\n* **กดปุ่ม \"📤 สั่งโพสต์ลงเพจทันที (FB / IG / TikTok)\" ด้านบนของหน้าต่างนี้** เพื่อส่งแคปชันและแผนงานไปโพสต์ที่เพจของคุณผ่าน Facebook Graph API หรือ Automation Webhook ได้ทันที!",
+          "providerUsed": "simulation",
+          "modelUsed": "Smart Marketing Simulator v2",
+          "startedAt": "2026-10-26T11:36:02.302Z",
+          "completedAt": "2026-10-26T11:36:03.259Z"
+        }
+      ],
+      "logs": [
+        {
+          "time": "18:35:56",
+          "agentName": "Aria (AI Autopilot CMO)",
+          "avatar": "🤖",
+          "message": "[AI Autopilot] คิดหัวข้อแคมเปญให้เพจ \"KPN บิ้วอิน เชียงใหม่\" อัตโนมัติ: \"เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" — เริ่มเดินเครื่องทั้ง 7 แผนก + ออกแบบ Canva/AI + ส่งเข้า LINE!"
+        },
+        {
+          "time": "18:35:56",
+          "agentName": "Aria (AI CMO & Orchestrator)",
+          "avatar": "👑",
+          "message": "[ขั้นตอน 1/7] เริ่มวิเคราะห์ข้อมูลเพจและสร้างชิ้นงานในส่วนของ \"หัวหน้าทีมการตลาด & ผู้วางแผนกลยุทธ์หลัก (Chief Marketing Officer)\"..."
+        },
+        {
+          "time": "18:35:57",
+          "agentName": "Aria (AI CMO & Orchestrator)",
+          "avatar": "👑",
+          "message": "เสร็จขั้นตอนที่ 1/7 (14%) ✅ ส่งต่อข้อมูลให้ 🔍 Marcus (Market & Competitor Researcher)"
+        },
+        {
+          "time": "18:35:57",
+          "agentName": "Marcus (Market & Competitor Researcher)",
+          "avatar": "🔍",
+          "message": "[ขั้นตอน 2/7] เริ่มวิเคราะห์ข้อมูลเพจและสร้างชิ้นงานในส่วนของ \"นักวิจัยตลาด วิเคราะห์กลุ่มเป้าหมายและคู่แข่ง\"..."
+        },
+        {
+          "time": "18:35:58",
+          "agentName": "Marcus (Market & Competitor Researcher)",
+          "avatar": "🔍",
+          "message": "เสร็จขั้นตอนที่ 2/7 (29%) ✅ ส่งต่อข้อมูลให้ 📈 Sophia (SEO & Keyword Specialist)"
+        },
+        {
+          "time": "18:35:58",
+          "agentName": "Sophia (SEO & Keyword Specialist)",
+          "avatar": "📈",
+          "message": "[ขั้นตอน 3/7] เริ่มวิเคราะห์ข้อมูลเพจและสร้างชิ้นงานในส่วนของ \"ผู้เชี่ยวชาญด้าน SEO, คีย์เวิร์ด และ Search Intent\"..."
+        },
+        {
+          "time": "18:35:59",
+          "agentName": "Sophia (SEO & Keyword Specialist)",
+          "avatar": "📈",
+          "message": "เสร็จขั้นตอนที่ 3/7 (43%) ✅ ส่งต่อข้อมูลให้ 🚀 Victor (Ad Campaign & Funnel Strategist)"
+        },
+        {
+          "time": "18:35:59",
+          "agentName": "Victor (Ad Campaign & Funnel Strategist)",
+          "avatar": "🚀",
+          "message": "[ขั้นตอน 4/7] เริ่มวิเคราะห์ข้อมูลเพจและสร้างชิ้นงานในส่วนของ \"นักวางแผนยิงแอดโฆษณา และกลยุทธ์ Sales Funnel\"..."
+        },
+        {
+          "time": "18:36:00",
+          "agentName": "Victor (Ad Campaign & Funnel Strategist)",
+          "avatar": "🚀",
+          "message": "เสร็จขั้นตอนที่ 4/7 (57%) ✅ ส่งต่อข้อมูลให้ ✍️ Chloe (Content Creator & Copywriter)"
+        },
+        {
+          "time": "18:36:00",
+          "agentName": "Chloe (Content Creator & Copywriter)",
+          "avatar": "✍️",
+          "message": "[ขั้นตอน 5/7] เริ่มวิเคราะห์ข้อมูลเพจและสร้างชิ้นงานในส่วนของ \"นักเขียนคอนเทนต์ โพสต์ขายของ และสคริปต์วิดีโอสั้น\"..."
+        },
+        {
+          "time": "18:36:01",
+          "agentName": "Chloe (Content Creator & Copywriter)",
+          "avatar": "✍️",
+          "message": "เสร็จขั้นตอนที่ 5/7 (71%) ✅ ส่งต่อข้อมูลให้ 🎨 Leo (Creative & Media Prompt Generator)"
+        },
+        {
+          "time": "18:36:01",
+          "agentName": "Leo (Creative & Media Prompt Generator)",
+          "avatar": "🎨",
+          "message": "[ขั้นตอน 6/7] เริ่มวิเคราะห์ข้อมูลเพจและสร้างชิ้นงานในส่วนของ \"ผู้กำกับศิลป์ & นักออกแบบ AI Prompt สร้างภาพ/วิดีโอ\"..."
+        },
+        {
+          "time": "18:36:02",
+          "agentName": "Leo (Creative & Media Prompt Generator)",
+          "avatar": "🎨",
+          "message": "เสร็จขั้นตอนที่ 6/7 (86%) ✅ ส่งต่อข้อมูลให้ 📲 Namo (Social Scheduler & LINE Reporter)"
+        },
+        {
+          "time": "18:36:02",
+          "agentName": "Namo (Social Scheduler & LINE Reporter)",
+          "avatar": "📲",
+          "message": "[ขั้นตอน 7/7] เริ่มวิเคราะห์ข้อมูลเพจและสร้างชิ้นงานในส่วนของ \"ผู้จัดการตารางโพสต์ & รายงานผลเข้า LINE อัตโนมัติ\"..."
+        },
+        {
+          "time": "18:36:03",
+          "agentName": "Namo (Social Scheduler & LINE Reporter)",
+          "avatar": "📲",
+          "message": "เสร็จขั้นตอนที่ 7/7 (100%) ✅ ครบทุกขั้นตอนของทีมการตลาด"
+        },
+        {
+          "time": "18:36:03",
+          "agentName": "Maya (Canva & AI Visual Studio)",
+          "avatar": "🎨",
+          "message": "ออกแบบรูปโปสเตอร์โฆษณา AI (3 ขนาด FB/IG/TikTok) + ผูกลิงก์ Canva Template เสร็จสมบูรณ์!"
+        },
+        {
+          "time": "18:36:03",
+          "agentName": "LINE Approval Gate",
+          "avatar": "📲",
+          "message": "ส่งการ์ดรูปผลงาน + แคปชันเข้า LINE OA เรียบร้อยแล้ว! กดปุ่ม \"✅ ยืนยัน & โพสต์ทุกเพจ\" ใน LINE เพื่อปล่อยโพสต์ได้เลย"
+        },
+        {
+          "time": "18:37:39",
+          "agentName": "LINE Approval",
+          "avatar": "✅",
+          "message": "ได้รับการกดยืนยันงานผ่านการ์ด LINE OA แล้ว! กำลังปล่อยโพสต์ลงทุกแพลตฟอร์มอัตโนมัติ..."
+        },
+        {
+          "time": "18:37:39",
+          "agentName": "Auto-Poster (Facebook)",
+          "avatar": "📘",
+          "message": "⏳ กำลังโพสต์คอนเทนต์ลงช่องทาง Facebook (https://www.facebook.com/1226235303916599)..."
+        },
+        {
+          "time": "18:37:47",
+          "agentName": "Auto-Poster (Facebook)",
+          "avatar": "📘",
+          "message": "✅ โพสต์ขึ้น Facebook จริงสำเร็จเรียบร้อย! (เวลา 18:37:47)"
+        },
+        {
+          "time": "18:37:47",
+          "agentName": "Auto-Poster (TikTok)",
+          "avatar": "🎵",
+          "message": "⏳ กำลังโพสต์คอนเทนต์ลงช่องทาง TikTok (https://tiktok.com/@yourchannel)..."
+        },
+        {
+          "time": "18:37:48",
+          "agentName": "Auto-Poster (TikTok)",
+          "avatar": "🎵",
+          "message": "⚠️ TikTok: ⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com) (เวลา 18:37:48)"
+        },
+        {
+          "time": "18:37:48",
+          "agentName": "Auto-Poster (Instagram)",
+          "avatar": "📸",
+          "message": "⏳ กำลังโพสต์คอนเทนต์ลงช่องทาง Instagram (https://instagram.com/yourbrand)..."
+        },
+        {
+          "time": "18:37:49",
+          "agentName": "Auto-Poster (Instagram)",
+          "avatar": "📸",
+          "message": "⚠️ Instagram: ⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com) (เวลา 18:37:49)"
+        },
+        {
+          "time": "18:37:49",
+          "agentName": "Auto-Poster (LINE OA)",
+          "avatar": "💬",
+          "message": "⏳ กำลังโพสต์คอนเทนต์ลงช่องทาง LINE OA (https://manager.line.biz/account/@742srmne)..."
+        },
+        {
+          "time": "18:37:50",
+          "agentName": "Auto-Poster (LINE OA)",
+          "avatar": "💬",
+          "message": "✅ โพสต์ขึ้น LINE OA จริงสำเร็จเรียบร้อย! (เวลา 18:37:50)"
+        }
+      ],
+      "visualAssets": {
+        "brandName": "KPN บิ้วอิน เชียงใหม่",
+        "headline": "เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม",
+        "subheadline": "ดึงลูกค้าเจ้าของบ้านและคอนโดในเชียงใหม่-ลำพูน ทักแชทประเมินราคาฟรี 15 เคสในสัปดาห์นี้",
+        "badgeText": "🏠 KPN บิ้วอิน เชียงใหม่ • มาตรฐานช่างมืออาชีพ",
+        "ctaText": "📲 ทักแชทส่งแปลนประเมินราคาฟรี",
+        "primaryColor": "#f59e0b",
+        "watermarkFree": true,
+        "visualPromptEn": "Ultra-realistic architectural interior photography of a luxury modern built-in living room TV wall unit in Chiang Mai Thailand, custom walnut fluted slats, white Carrara marble backdrop with warm recessed LED strip lights, 8k resolution, no watermark",
+        "googleFlow": {
+          "flowUrl": "https://labs.google/fx/tools/flow",
+          "imageFxUrl": "https://labs.google/fx/tools/image-fx",
+          "whiskUrl": "https://labs.google/fx/tools/whisk",
+          "imagePrompt": "Ultra-realistic architectural interior photography of a luxury modern built-in living room TV wall unit in Chiang Mai Thailand, custom walnut fluted slats, white Carrara marble backdrop with warm recessed LED strip lights, 8k resolution, no watermark",
+          "videoPrompt": "Smooth cinematic gimbal camera dolly-in through a luxury modern built-in living room, warm golden LED strip lights glowing along custom wood cabinetry and white marble wall, soft natural sunlight, architectural digest style, 4k 60fps, photorealistic, no watermark"
+        },
+        "fbBannerImageUrl": "https://dsl-occasional-acute-finger.trycloudflare.com/images/builtin/builtin_tv_wall.jpg",
+        "igSquareImageUrl": "https://dsl-occasional-acute-finger.trycloudflare.com/images/builtin/builtin_thai_tv_wall.jpg",
+        "tiktokVerticalImageUrl": "https://dsl-occasional-acute-finger.trycloudflare.com/images/builtin/builtin_tv_wall.jpg",
+        "primaryImageUrl": "https://dsl-occasional-acute-finger.trycloudflare.com/images/builtin/builtin_tv_wall.jpg",
+        "canva": {
+          "connected": true,
+          "fbTemplateUrl": "https://www.canva.com/templates/?query=interior%20design%20real%20estate%20promotion%20facebook%20post",
+          "igTemplateUrl": "https://www.canva.com/instagram-posts/templates/",
+          "tiktokTemplateUrl": "https://www.canva.com/tiktok-videos/templates/",
+          "designBriefText": "Headline: เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\nSubheadline: ดึงลูกค้าเจ้าของบ้านและคอนโดในเชียงใหม่-ลำพูน ทักแชทประเมินราคาฟรี 15 เคสในสัปดาห์นี้\nBadge: 🏠 KPN บิ้วอิน เชียงใหม่ • มาตรฐานช่างมืออาชีพ\nCTA: 📲 ทักแชทส่งแปลนประเมินราคาฟรี\nContact: 088-7888-446"
+        }
+      },
+      "connectedTools": {
+        "cmo_orchestrator": {
+          "agentId": "cmo_orchestrator",
+          "toolName": "AI Autopilot Planner + Notion / Google Sheets (via Make.com)",
+          "toolIcon": "🧭",
+          "toolBadge": "Autopilot CMO & Make.com",
+          "toolUrl": "https://eu1.make.com/3327599/scenarios",
+          "description": "คิดหัวข้อแคมเปญขายของรายวันเองอัตโนมัติ กำหนด KPI แจกงานลูกทีม 6 แผนก และส่งใบขออนุมัติเข้า LINE OA",
+          "actionLabel": "⚡ เปิด Make.com Scenario",
+          "actionUrl": "https://eu1.make.com/3327599/scenarios"
+        },
+        "market_researcher": {
+          "agentId": "market_researcher",
+          "toolName": "Meta Ad Library + Google Trends TH + TikTok Creative Center",
+          "toolIcon": "🔎",
+          "toolBadge": "Meta Ad Library & Google Trends",
+          "toolUrl": "https://www.facebook.com/ads/library/",
+          "description": "ส่องโฆษณาคู่แข่งที่กำลังยิงแอดจริงบน Facebook/IG และดึงเทรนด์การค้นหาล่าสุดในไทย",
+          "actionLabel": "🔎 ส่องแอดคู่แข่งใน Meta Ad Library",
+          "actionUrl": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=TH&q=KPN%20%E0%B8%9A%E0%B8%B4%E0%B9%89%E0%B8%A7%E0%B8%AD%E0%B8%B4%E0%B8%99%20%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88"
+        },
+        "seo_specialist": {
+          "agentId": "seo_specialist",
+          "toolName": "Google Search Console + Google Maps SEO + Hashtag Matrix",
+          "toolIcon": "📈",
+          "toolBadge": "Google SEO & Local Maps",
+          "toolUrl": "https://trends.google.com/trends/?geo=TH",
+          "description": "สร้างชุดคีย์เวิร์ดติดหน้าแรก Google, โพสต์ปักหมุด Google Business Profile และชุด Hashtag 30 คำ",
+          "actionLabel": "📈 ดูเทรนด์ค้นหาใน Google Trends TH",
+          "actionUrl": "https://trends.google.com/trends/explore?geo=TH&q=KPN%20%E0%B8%9A%E0%B8%B4%E0%B9%89%E0%B8%A7%E0%B8%AD%E0%B8%B4%E0%B8%99%20%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88"
+        },
+        "ad_strategist": {
+          "agentId": "ad_strategist",
+          "toolName": "Meta Ads Manager + TikTok Ads Manager + LINE LAP",
+          "toolIcon": "🎯",
+          "toolBadge": "Meta Ads & TikTok Ads",
+          "toolUrl": "https://adsmanager.facebook.com/",
+          "description": "สร้างโครงสร้างแคมเปญยิงแอด (Audience Targeting, งบประมาณ, A/B Testing) พร้อมไฟล์ตั้งค่า Ads",
+          "actionLabel": "🎯 เปิดหน้าจัดการแอด Meta Ads Manager",
+          "actionUrl": "https://adsmanager.facebook.com/"
+        },
+        "content_copywriter": {
+          "agentId": "content_copywriter",
+          "toolName": "Multi-Platform Viral Copy Engine (FB / IG / TikTok / LINE)",
+          "toolIcon": "✍️",
+          "toolBadge": "Viral Copywriter Engine",
+          "toolUrl": "https://www.facebook.com/",
+          "description": "เขียนแคปชันขายของแยกตามแพลตฟอร์ม (โพสต์เพจ FB, แคปชัน IG, สคริปต์คลิปสั้น TikTok, บรอดแคสต์ LINE)",
+          "actionLabel": "📘 เปิดดูหน้าเพจ Facebook",
+          "actionUrl": "https://www.facebook.com/1226235303916599"
+        },
+        "creative_director": {
+          "agentId": "creative_director",
+          "toolName": "Google Flow (Imagen 3 / Veo) + Canva Design Studio (No Watermark)",
+          "toolIcon": "🎨",
+          "toolBadge": "Google Flow + Canva (ไร้ลายน้ำ)",
+          "toolUrl": "https://labs.google/fx/tools/flow",
+          "description": "เขียน Prompt เจนภาพ/วิดีโอใน Google Flow (Imagen 3 / Veo) ไร้ลายน้ำ 100% พร้อมส่งต่อเข้า Canva Studio เพื่อทำโพสต์ลงทุกเพจ",
+          "actionLabel": "🎬 เปิด Google Flow + 🎨 Canva (ไร้ลายน้ำ)",
+          "actionUrl": "https://labs.google/fx/tools/flow"
+        },
+        "social_scheduler": {
+          "agentId": "social_scheduler",
+          "toolName": "Make.com Automation + Facebook Graph API + LINE Approval Bot",
+          "toolIcon": "📤",
+          "toolBadge": "Make.com + LINE Approval",
+          "toolUrl": "https://eu1.make.com/3327599/scenarios",
+          "description": "ส่งรูปที่ออกแบบเสร็จและแคปชันเข้า LINE ให้คุณกด 'ยืนยันงาน' แล้วปล่อยโพสต์ลง FB / IG / TikTok / LINE อัตโนมัติ",
+          "actionLabel": "📤 ส่งตรวจใน LINE & โพสต์ผ่าน Make.com",
+          "actionUrl": "https://eu1.make.com/3327599/scenarios"
+        }
+      },
+      "cleanCaption": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโดยทีมช่างมืออาชีพเชียงใหม่ งบไม่บานปลาย มีรับประกันผลงาน ทักแชทวันนี้ประเมินราคาฟรี!\n✅ คุ้มค่าทุกงบประมาณ ตอบโจทย์ความต้องการของ เจ้าของบ้านใหม่ คอนโด โฮมออฟฟิศ และคาเฟ่ในเชียงใหม่-ลำพูน อายุ 28-55 ปี ที่ต้องการงานบิ้วอินคุณภาพ อย่างตรงจุด\n✅ ดูแลครบวงจร ปรึกษาฟรี ประเมินราคาชัดเจน มีผลงานจริงการันตี (เป้าหมายแคมเปญ: ดึงลูกค้าเจ้าของบ้านและคอนโดในเชียงใหม่-ลำพูน ทักแชทประเมินราคาฟรี 15 เคสในสัปดาห์นี้)\n\n🎁 โปรโมชันพิเศษเฉพาะลูกค้าที่ทักมาจากเพจวันนี้!\nรับสิทธิ์ประเมินราคา/ปรึกษาฟรี พร้อมส่วนลดและสิทธิพิเศษประจำเดือนทันที!\n\n📌 ช่องทางสั่งซื้อ / สอบถามโปรโมชันพิเศษ:\n💬 ทัก LINE OA ด่วน: https://manager.line.biz/account/@742srmne\n📘 Inbox เพจ Facebook: https://www.facebook.com/1226235303916599\n🎵 ติดตามรีวิวบน TikTok: https://tiktok.com/@yourbrand\n📸 Instagram: https://instagram.com/yourbrand\n📞 โทรปรึกษาด่วน: 088-7888-446",
+      "completedAt": "2026-10-26T11:37:50.596Z",
+      "lineReported": true,
+      "lineReportStatus": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!"
+    }
+  ],
+  "lineLogs": [
+    {
+      "id": "dff9bea9-e3c9-4161-8304-e8152349028f",
+      "campaignId": "bca245e3-59f9-4e07-b4de-b49bd37833f8",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T11:37:50.818Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (18:37:47)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ⚠️ โหมดจำลอง (18:37:48)\n   💡 ยังไม่ได้เชื่อม Token/Webhook เพจจริง\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ⚠️ โหมดจำลอง (18:37:49)\n   💡 ยังไม่ได้เชื่อม Token/Webhook เพจจริง\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (18:37:50)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 18:37:50"
+    },
+    {
+      "id": "9f820374-a6a1-4d5e-b4c4-912cf2d087ff",
+      "campaignId": "bca245e3-59f9-4e07-b4de-b49bd37833f8",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T11:36:03.603Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโ"
+    },
+    {
+      "id": "33347045-cca5-45ae-b4a7-418c304885f9",
+      "campaignId": "2011a39b-3552-4abe-a49e-5df88d003d31",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T11:35:09.980Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (18:35:06)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ⚠️ โหมดจำลอง (18:35:07)\n   💡 ยังไม่ได้เชื่อม Token/Webhook เพจจริง\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ⚠️ โหมดจำลอง (18:35:08)\n   💡 ยังไม่ได้เชื่อม Token/Webhook เพจจริง\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (18:35:09)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 18:35:09"
+    },
+    {
+      "id": "4acc334b-102f-458e-881e-d290f1f8db8d",
+      "campaignId": "2011a39b-3552-4abe-a49e-5df88d003d31",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T11:33:26.774Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโ"
+    },
+    {
+      "id": "d4ca2553-41c9-483f-8a2d-52ecf20c3bed",
+      "campaignId": "28ee7461-5612-4098-a560-dad90ec67fa4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T11:30:17.331Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า?\n✅ ให้ความรู้ควบคู่การขาย: แนะนำจุดทำบิ้วอินยอดฮิต (ผนั"
+    },
+    {
+      "id": "94805291-690d-4705-8a8b-714770ef0f41",
+      "campaignId": "4730d1a8-6a38-42e9-bd5e-6e12a87c4972",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T10:43:17.510Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (17:43:13)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ⚠️ โหมดจำลอง (17:43:14)\n   💡 ยังไม่ได้เชื่อม Token/Webhook เพจจริง\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ⚠️ โหมดจำลอง (17:43:16)\n   💡 ยังไม่ได้เชื่อม Token/Webhook เพจจริง\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (17:43:17)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 17:43:17"
+    },
+    {
+      "id": "b71faf28-e76a-4867-8617-153d2cde2ef4",
+      "campaignId": "4730d1a8-6a38-42e9-bd5e-6e12a87c4972",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T10:40:31.436Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D?\n✅ กระตุ้นการตัดสินใจด่วน: รับจำนวนจำกัดต่อเดือนเพื่"
+    },
+    {
+      "id": "224050ba-1203-44cc-9b15-03338f16e4d4",
+      "campaignId": "5722a962-2ae7-4623-8ef0-26a47351d1dd",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T10:36:08.416Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโ"
+    },
+    {
+      "id": "d82a82a0-105f-4a7a-b9b3-7bab2578229f",
+      "campaignId": "d250364b-d651-4caa-a0bc-09290df3d52c",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T09:53:30.487Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (16:53:26)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (16:53:27)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (16:53:28)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (16:53:30)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 16:53:30"
+    },
+    {
+      "id": "75f6c582-ec0d-444d-ade5-29d19d4d9e4b",
+      "campaignId": "d250364b-d651-4caa-a0bc-09290df3d52c",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T09:53:05.534Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโ"
+    },
+    {
+      "id": "b4434390-ce85-4cac-b6c7-3ad1ff7f5976",
+      "campaignId": "e48c1d3c-37ac-474c-8738-03499226e0e9",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T09:04:03.692Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (16:03:59)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (16:04:00)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (16:04:02)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (16:04:03)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 16:04:03"
+    },
+    {
+      "id": "d452248a-bf12-4373-8f07-755a5743d3e1",
+      "campaignId": "e48c1d3c-37ac-474c-8738-03499226e0e9",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T08:58:04.116Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโ"
+    },
+    {
+      "id": "1b3e67ba-c375-456e-a7f3-9f669d75f513",
+      "campaignId": "68e6e911-4dce-449f-924c-1db087ef5acc",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T08:56:53.425Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (15:56:49)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (15:56:50)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (15:56:52)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (15:56:53)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 15:56:53"
+    },
+    {
+      "id": "e5ae68fb-1f3f-4ea4-b9e2-05ca25f0b72f",
+      "campaignId": "f38bdded-cb8d-4d2c-b3bb-4680d39313d5",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T07:36:41.676Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (14:36:37)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (14:36:38)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (14:36:40)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (14:36:41)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 14:36:41"
+    },
+    {
+      "id": "d7a0bb82-75b4-4f45-9a08-94e379024925",
+      "campaignId": "f38bdded-cb8d-4d2c-b3bb-4680d39313d5",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T07:35:41.825Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า?\n✅ ให้ความรู้ควบคู่การขาย: แนะนำจุดทำบิ้วอินยอดฮิต (ผนั"
+    },
+    {
+      "id": "731ca788-1e7b-4ed0-aa91-e45f9192f68c",
+      "campaignId": "bd540b26-c68c-4be8-a2f7-744d41023e85",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T06:19:53.099Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D?\n✅ กระตุ้นการตัดสินใจด่วน: รับจำนวนจำกัดต่อเดือนเพื่"
+    },
+    {
+      "id": "574190ac-7ca0-4470-a1cb-3f9bf942cdf3",
+      "campaignId": "d0286d41-55a8-4b39-80b2-cdbd4273157b",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T06:04:09.491Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (13:04:05)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (13:04:06)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (13:04:08)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (13:04:09)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 13:04:09"
+    },
+    {
+      "id": "922a6e50-75d0-41b9-883d-c90414358ea2",
+      "campaignId": "4a19869a-2c7d-43af-8a23-1dc283df5b5f",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T06:00:14.483Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (13:00:10)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (13:00:11)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (13:00:12)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (13:00:14)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 13:00:14"
+    },
+    {
+      "id": "4737f6fe-bca9-4889-b342-79718a0d31d1",
+      "campaignId": "d8ca9d42-f426-4e50-897a-aa699fd874cf",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T05:39:50.234Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโ"
+    },
+    {
+      "id": "c380068b-9085-4546-ae6c-0845c5b52fc5",
+      "campaignId": "152b94dd-9757-4c80-8648-bcb493ddfd8e",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T05:39:07.378Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (12:39:03)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (12:39:04)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (12:39:05)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (12:39:07)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 12:39:07"
+    },
+    {
+      "id": "69484fdd-493b-4149-b69d-c0e639a10ca4",
+      "campaignId": "152b94dd-9757-4c80-8648-bcb493ddfd8e",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T05:39:01.803Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโ"
+    },
+    {
+      "id": "2534af3a-fefa-47b9-9eb8-beaa6a4ef776",
+      "campaignId": "957cd0ed-ebc7-44c3-b69a-2a8ae599e141",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE (ส่งซ้ำ)",
+      "timestamp": "2026-10-26T05:38:03.883Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D?\n✅ กระตุ้นการตัดสินใจด่วน: รับจำนวนจำกัดต่อเดือนเพื่"
+    },
+    {
+      "id": "66bef831-b79a-40ff-b134-a93c8201f334",
+      "campaignId": "957cd0ed-ebc7-44c3-b69a-2a8ae599e141",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE (ส่งซ้ำ)",
+      "timestamp": "2026-10-26T05:37:23.997Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D?\n✅ กระตุ้นการตัดสินใจด่วน: รับจำนวนจำกัดต่อเดือนเพื่"
+    },
+    {
+      "id": "8ad825cf-db8a-4de3-9003-22be3b66e523",
+      "campaignId": "957cd0ed-ebc7-44c3-b69a-2a8ae599e141",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T05:32:52.901Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (12:32:49)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (12:32:50)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (12:32:51)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (12:32:52)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 12:32:52"
+    },
+    {
+      "id": "5bec05db-c7f2-4e30-b03f-74b3a370e1ba",
+      "campaignId": "957cd0ed-ebc7-44c3-b69a-2a8ae599e141",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T05:31:28.998Z",
+      "status": "sent",
+      "details": "ส่งข้อความแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D?\n✅ กระตุ้นการตัดสินใจด่วน: รับจำนวนจำกัดต่อเดือนเพื่"
+    },
+    {
+      "id": "4a89183d-1b0f-48f5-afec-a4aa21a403c6",
+      "campaignId": "42581aaa-0099-4a97-842c-3d2b3074254d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T05:10:45.096Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า?\n✅ ให้ความรู้ควบคู่การขาย: แนะนำจุดทำบิ้วอินยอดฮิต (ผนั"
+    },
+    {
+      "id": "3e51ece0-abe6-4ae6-823b-0a4227d400a2",
+      "campaignId": "42581aaa-0099-4a97-842c-3d2b3074254d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 6/7 แผนก (86%)",
+      "timestamp": "2026-10-26T05:10:43.700Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (6/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 🎨 Leo (Creative & Media Prompt Generator)\n👉 กำลังส่งต่อให้: 📲 Namo (Social Scheduler & LINE Reporter)"
+    },
+    {
+      "id": "6f9a092a-e9dc-42a1-8b71-67f113a0d027",
+      "campaignId": "42581aaa-0099-4a97-842c-3d2b3074254d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 5/7 แผนก (71%)",
+      "timestamp": "2026-10-26T05:10:42.507Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (5/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: ✍️ Chloe (Content Creator & Copywriter)\n👉 กำลังส่งต่อให้: 🎨 Leo (Creative & Media Prompt Generator)"
+    },
+    {
+      "id": "9cb124f2-03f5-4319-8068-01683a4db44d",
+      "campaignId": "42581aaa-0099-4a97-842c-3d2b3074254d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 4/7 แผนก (57%)",
+      "timestamp": "2026-10-26T05:10:41.356Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (4/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 🚀 Victor (Ad Campaign & Funnel Strategist)\n👉 กำลังส่งต่อให้: ✍️ Chloe (Content Creator & Copywriter)"
+    },
+    {
+      "id": "73e1e750-388b-4b04-acdf-94445c991426",
+      "campaignId": "42581aaa-0099-4a97-842c-3d2b3074254d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 3/7 แผนก (43%)",
+      "timestamp": "2026-10-26T05:10:40.152Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (3/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 📈 Sophia (SEO & Keyword Specialist)\n👉 กำลังส่งต่อให้: 🚀 Victor (Ad Campaign & Funnel Strategist)"
+    },
+    {
+      "id": "3b21874d-ee40-40f1-b1e5-68fdc624decf",
+      "campaignId": "42581aaa-0099-4a97-842c-3d2b3074254d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 2/7 แผนก (29%)",
+      "timestamp": "2026-10-26T05:10:38.935Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (2/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 🔍 Marcus (Market & Competitor Researcher)\n👉 กำลังส่งต่อให้: 📈 Sophia (SEO & Keyword Specialist)"
+    },
+    {
+      "id": "3d02aba5-711d-43da-bdb6-5b77cf849476",
+      "campaignId": "42581aaa-0099-4a97-842c-3d2b3074254d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 1/7 แผนก (14%)",
+      "timestamp": "2026-10-26T05:10:37.706Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (1/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 👑 Aria (AI CMO & Orchestrator)\n👉 กำลังส่งต่อให้: 🔍 Marcus (Market & Competitor Researcher)"
+    },
+    {
+      "id": "a7db4009-c4d7-4c93-867e-aec23f5e4241",
+      "campaignId": "42581aaa-0099-4a97-842c-3d2b3074254d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🚀 เริ่มงาน (0/7 แผนก)",
+      "timestamp": "2026-10-26T05:10:36.524Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🚀 [AI Autopilot เริ่มทำงาน 7 แผนกอัตโนมัติ]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์/เพจ: KPN บิ้วอิน เชียงใหม่\n📌 หัวข้อแคมเปญ: KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\n🎨 สิ่งที่กำลังทำ: วิเคราะห์ตลาด + เขียนแคปชัน + ออกแบบโปสเตอร์ Canva/AI\n━━━━━━━━━━━━━━━━━━\n🌐 เพจเป้าหมายที่เข้าคิวรอโพสต์:\n• 📘 Facebook: ⬜ รอคิวโพสต์ (https://www.facebook.com/1226235303916599)\n• 🎵 TikTok: ⬜ รอคิวโพสต์ (https://tiktok.com/@yourchannel)\n• 📸 Instagram: ⬜ รอคิวโพสต์ (https://instagram.com/yourbrand)\n• 💬 LINE OA: ⬜ รอคิวโพสต์ (https://manager.line.biz/account/@742srmne)\n⏰ เวลาเริ่ม: 12:10:35"
+    },
+    {
+      "id": "a6c5371e-1ed9-4188-a09c-2e5b6b91e6b0",
+      "campaignId": "c4a59714-107d-4332-8c0e-952b4fd110f4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE",
+      "timestamp": "2026-10-26T04:56:03.140Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม?\n✅ เน้นจุดขาย: ออกแบบ 3D ให้เห็นภาพก่อนทำจริง ใช้วัสดุเกรดพรีเมียม ทนชื้น ไม่บวม งานเนี้ยบโ"
+    },
+    {
+      "id": "1a5da8ee-d341-40b5-8198-5a40ef3acb8a",
+      "campaignId": "c4a59714-107d-4332-8c0e-952b4fd110f4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 6/7 แผนก (86%)",
+      "timestamp": "2026-10-26T04:56:01.946Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (6/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 🎨 Leo (Creative & Media Prompt Generator)\n👉 กำลังส่งต่อให้: 📲 Namo (Social Scheduler & LINE Reporter)"
+    },
+    {
+      "id": "27336835-c9ad-401d-bf5b-8ca6a72d1a16",
+      "campaignId": "c4a59714-107d-4332-8c0e-952b4fd110f4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 5/7 แผนก (71%)",
+      "timestamp": "2026-10-26T04:56:00.763Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (5/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: ✍️ Chloe (Content Creator & Copywriter)\n👉 กำลังส่งต่อให้: 🎨 Leo (Creative & Media Prompt Generator)"
+    },
+    {
+      "id": "ce952f16-e00d-4277-af8c-59975f2da25b",
+      "campaignId": "c4a59714-107d-4332-8c0e-952b4fd110f4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 4/7 แผนก (57%)",
+      "timestamp": "2026-10-26T04:55:59.576Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (4/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 🚀 Victor (Ad Campaign & Funnel Strategist)\n👉 กำลังส่งต่อให้: ✍️ Chloe (Content Creator & Copywriter)"
+    },
+    {
+      "id": "ce2e6603-4744-44f3-a85c-70187752d176",
+      "campaignId": "c4a59714-107d-4332-8c0e-952b4fd110f4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 3/7 แผนก (43%)",
+      "timestamp": "2026-10-26T04:55:58.390Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (3/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 📈 Sophia (SEO & Keyword Specialist)\n👉 กำลังส่งต่อให้: 🚀 Victor (Ad Campaign & Funnel Strategist)"
+    },
+    {
+      "id": "6d42e975-9c3e-429e-a5e7-022d6b217483",
+      "campaignId": "c4a59714-107d-4332-8c0e-952b4fd110f4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 2/7 แผนก (29%)",
+      "timestamp": "2026-10-26T04:55:57.187Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (2/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 🔍 Marcus (Market & Competitor Researcher)\n👉 กำลังส่งต่อให้: 📈 Sophia (SEO & Keyword Specialist)"
+    },
+    {
+      "id": "b6c3900c-f766-4a4a-ade9-672dd6aa2b96",
+      "campaignId": "c4a59714-107d-4332-8c0e-952b4fd110f4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 1/7 แผนก (14%)",
+      "timestamp": "2026-10-26T04:55:56.003Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าทีม AI (1/7 แผนก)]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n✅ เสร็จแล้ว: 👑 Aria (AI CMO & Orchestrator)\n👉 กำลังส่งต่อให้: 🔍 Marcus (Market & Competitor Researcher)"
+    },
+    {
+      "id": "ca32eba7-1f03-4e13-8ca9-6308e8b09437",
+      "campaignId": "c4a59714-107d-4332-8c0e-952b4fd110f4",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🚀 เริ่มงาน (0/7 แผนก)",
+      "timestamp": "2026-10-26T04:55:54.804Z",
+      "status": "sent",
+      "details": "ส่งการ์ดตรวจงานและแจ้งเตือนเข้า LINE OA สำเร็จ!",
+      "preview": "🚀 [AI Autopilot เริ่มทำงาน 7 แผนกอัตโนมัติ]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์/เพจ: KPN บิ้วอิน เชียงใหม่\n📌 หัวข้อแคมเปญ: KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\n🎨 สิ่งที่กำลังทำ: วิเคราะห์ตลาด + เขียนแคปชัน + ออกแบบโปสเตอร์ Canva/AI\n━━━━━━━━━━━━━━━━━━\n🌐 เพจเป้าหมายที่เข้าคิวรอโพสต์:\n• 📘 Facebook: ⬜ รอคิวโพสต์ (https://www.facebook.com/1226235303916599)\n• 🎵 TikTok: ⬜ รอคิวโพสต์ (https://tiktok.com/@yourchannel)\n• 📸 Instagram: ⬜ รอคิวโพสต์ (https://instagram.com/yourbrand)\n• 💬 LINE OA: ⬜ รอคิวโพสต์ (https://manager.line.biz/account/@742srmne)\n⏰ เวลาเริ่ม: 11:55:54"
+    },
+    {
+      "id": "a0a67b82-2547-4d2f-b9ea-669b92ad8064",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🎉 สรุปผลโพสต์ครบทุกช่องทาง (FB / TikTok / IG / LINE)",
+      "timestamp": "2026-10-26T04:41:34.282Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "🎉 [โพสต์ครบทุกเพจ 100% เรียบร้อยแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩🟩 (4/4 ช่องทาง • 100%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:29)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:31)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:32)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:33)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 11:41:33"
+    },
+    {
+      "id": "190e60a2-12db-4082-9a07-5cb74029c929",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 📢 อัปเดตสถานะโพสต์ Instagram",
+      "timestamp": "2026-10-26T04:41:32.869Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "📢 [อัปเดต: โพสต์ลง Instagram สำเร็จแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩🟩⬜ (3/4 ช่องทาง • 75%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:29)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:31)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:32)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ⏳ กำลังอัปโหลดและโพสต์ลงเพจ...\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 11:41:32"
+    },
+    {
+      "id": "cc2308ca-3b8d-4fe1-b1d8-0ad7a797fcff",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 📢 อัปเดตสถานะโพสต์ TikTok",
+      "timestamp": "2026-10-26T04:41:31.452Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "📢 [อัปเดต: โพสต์ลง TikTok สำเร็จแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩🟩⬜⬜ (2/4 ช่องทาง • 50%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:29)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:31)\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ⏳ กำลังอัปโหลดและโพสต์ลงเพจ...\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ⬜ ยังไม่ได้โพสต์ (รอคิว)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 11:41:31"
+    },
+    {
+      "id": "a68b9de5-4691-42d6-9f5f-9ac4ad75452a",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 📢 อัปเดตสถานะโพสต์ Facebook",
+      "timestamp": "2026-10-26T04:41:30.016Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "📢 [อัปเดต: โพสต์ลง Facebook สำเร็จแล้ว!]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่\n🤖 งานเตรียมคอนเทนต์: เสร็จ 7/7 แผนก\n📊 ความคืบหน้าการโพสต์ลงเพจ:\n🟩⬜⬜⬜ (1/4 ช่องทาง • 25%)\n━━━━━━━━━━━━━━━━━━\n📋 สถานะแยกตามเพจ (โพสต์ไปหรือยัง?):\n📘 Facebook: ✅ โพสต์ขึ้นเพจจริงแล้ว (11:41:29)\n   🔗 https://www.facebook.com/1226235303916599\n🎵 TikTok: ⏳ กำลังอัปโหลดและโพสต์ลงเพจ...\n   🔗 https://tiktok.com/@yourchannel\n📸 Instagram: ⬜ ยังไม่ได้โพสต์ (รอคิว)\n   🔗 https://instagram.com/yourbrand\n💬 LINE OA: ⬜ ยังไม่ได้โพสต์ (รอคิว)\n   🔗 https://manager.line.biz/account/@742srmne\n━━━━━━━━━━━━━━━━━━\n⏰ อัปเดตเมื่อ: 11:41:29"
+    },
+    {
+      "id": "96e5cbe4-8da5-4431-ad25-613bbb663009",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 6/7 แผนก (86%)",
+      "timestamp": "2026-10-26T04:41:27.140Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าเตรียมคอนเทนต์ก่อนโพสต์]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n🤖 เตรียมงานเสร็จแล้ว: 6/7 แผนก\n✅ ล่าสุด: 🎨 Leo (Creative & Media Prompt Generator)\n👉 ถัดไป: 📲 Namo (Social Scheduler & LINE Reporter)\n📌 สถานะการโพสต์ลงเพจ: ยังอยู่ในขั้นตอนเตรียมสื่อ (รอโพสต์หลังครบ 7 แผนก)"
+    },
+    {
+      "id": "f8a82fd7-4aba-4665-abe6-5ea0d4877423",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 5/7 แผนก (71%)",
+      "timestamp": "2026-10-26T04:41:25.889Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าเตรียมคอนเทนต์ก่อนโพสต์]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n🤖 เตรียมงานเสร็จแล้ว: 5/7 แผนก\n✅ ล่าสุด: ✍️ Chloe (Content Creator & Copywriter)\n👉 ถัดไป: 🎨 Leo (Creative & Media Prompt Generator)\n📌 สถานะการโพสต์ลงเพจ: ยังอยู่ในขั้นตอนเตรียมสื่อ (รอโพสต์หลังครบ 7 แผนก)"
+    },
+    {
+      "id": "6fe526f7-1fdd-466b-bea6-0f650bb09c7b",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 4/7 แผนก (57%)",
+      "timestamp": "2026-10-26T04:41:24.719Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าเตรียมคอนเทนต์ก่อนโพสต์]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n🤖 เตรียมงานเสร็จแล้ว: 4/7 แผนก\n✅ ล่าสุด: 🚀 Victor (Ad Campaign & Funnel Strategist)\n👉 ถัดไป: ✍️ Chloe (Content Creator & Copywriter)\n📌 สถานะการโพสต์ลงเพจ: ยังอยู่ในขั้นตอนเตรียมสื่อ (รอโพสต์หลังครบ 7 แผนก)"
+    },
+    {
+      "id": "612ea70a-c4c3-4ad3-8d50-8f67aeaea753",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 3/7 แผนก (43%)",
+      "timestamp": "2026-10-26T04:41:23.547Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าเตรียมคอนเทนต์ก่อนโพสต์]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n🤖 เตรียมงานเสร็จแล้ว: 3/7 แผนก\n✅ ล่าสุด: 📈 Sophia (SEO & Keyword Specialist)\n👉 ถัดไป: 🚀 Victor (Ad Campaign & Funnel Strategist)\n📌 สถานะการโพสต์ลงเพจ: ยังอยู่ในขั้นตอนเตรียมสื่อ (รอโพสต์หลังครบ 7 แผนก)"
+    },
+    {
+      "id": "8feb2296-fee0-4fd1-a7d0-af879b8e016e",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 2/7 แผนก (29%)",
+      "timestamp": "2026-10-26T04:41:22.317Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าเตรียมคอนเทนต์ก่อนโพสต์]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n🤖 เตรียมงานเสร็จแล้ว: 2/7 แผนก\n✅ ล่าสุด: 🔍 Marcus (Market & Competitor Researcher)\n👉 ถัดไป: 📈 Sophia (SEO & Keyword Specialist)\n📌 สถานะการโพสต์ลงเพจ: ยังอยู่ในขั้นตอนเตรียมสื่อ (รอโพสต์หลังครบ 7 แผนก)"
+    },
+    {
+      "id": "e6cb37a9-a3d7-40b9-9f32-4051350655b7",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] ⏳ ความคืบหน้า 1/7 แผนก (14%)",
+      "timestamp": "2026-10-26T04:41:21.140Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "⏳ [ความคืบหน้าเตรียมคอนเทนต์ก่อนโพสต์]\n📁 โปรเจกต์: KPN บิ้วอิน เชียงใหม่\n🤖 เตรียมงานเสร็จแล้ว: 1/7 แผนก\n✅ ล่าสุด: 👑 Aria (AI CMO & Orchestrator)\n👉 ถัดไป: 🔍 Marcus (Market & Competitor Researcher)\n📌 สถานะการโพสต์ลงเพจ: ยังอยู่ในขั้นตอนเตรียมสื่อ (รอโพสต์หลังครบ 7 แผนก)"
+    },
+    {
+      "id": "da254aac-eef5-49b4-aeb3-95a428872882",
+      "campaignId": "8ca82119-353f-4347-807e-fc4a4736c17d",
+      "brandId": "brand_1792833736158",
+      "campaignTitle": "[KPN บิ้วอิน เชียงใหม่] 🚀 เริ่มงาน (0/7 แผนก)",
+      "timestamp": "2026-10-26T04:41:19.967Z",
+      "status": "sent",
+      "details": "ส่งแจ้งเตือนสถานะการโพสต์เข้า LINE OA สำเร็จ!",
+      "preview": "🚀 [เริ่มงานแคมเปญ & เตรียมโพสต์ลงเพจ]\n━━━━━━━━━━━━━━━━━━\n📁 โปรเจกต์/เพจ: KPN บิ้วอิน เชียงใหม่\n📌 แคมเปญ: KPN บิ้วอิน เชียงใหม่\n🤖 สถานะตอนนี้: ทีม AI กำลังผลิตคอนเทนต์เพื่อนำไปโพสต์ลงเพจ\n━━━━━━━━━━━━━━━━━━\n🌐 เพจเป้าหมายที่เข้าคิวรอโพสต์:\n• 📘 Facebook: ⬜ รอคิวโพสต์ (https://www.facebook.com/1226235303916599)\n• 🎵 TikTok: ⬜ รอคิวโพสต์ (https://tiktok.com/@yourchannel)\n• 📸 Instagram: ⬜ รอคิวโพสต์ (https://instagram.com/yourbrand)\n• 💬 LINE OA: ⬜ รอคิวโพสต์ (https://manager.line.biz/account/@742srmne)\n⏰ เวลาเริ่ม: 11:41:19"
+    }
+  ],
+  "brandProfiles": [
+    {
+      "id": "brand_1792833736158",
+      "brandName": "KPN บิ้วอิน เชียงใหม่",
+      "icon": "🏠",
+      "color": "#6366f1",
+      "productDefault": "KPN บิ้วอิน เชียงใหม่",
+      "goalDefault": "10 งานใน 1 เดือน",
+      "targetAudienceDefault": "เจ้าของบ้าน คอนโด ร้านค้า เชียงใหม่ ที่ต้องการทำบิ้วอิน",
+      "budgetDefault": "1000",
+      "commandDefault": "รับออกแบบและติดตั้งเฟอร์นิเจอร์บิ้วอิน เชียงใหม่ งานคุณภาพมาตรฐานช่างมืออาชีพ ประเมินราคาฟรี งบไม่บานปลาย",
+      "fbUrl": "https://www.facebook.com/1226235303916599",
+      "fbPageId": "1226235303916599",
+      "fbPageAccessToken": "EAAZC0hcsEbMUBSxgRaJLA0CW8ezU3XDO6dqvBAOu5sVqKQ6As1oezFCC5oCZCgHqQAROPhPTOFPsuOfAyNbG9aVSeIHZBqAK3MYP5gLsejNSLBVlp59wW9nJZARRX5TqVhKxOgf7EOaZBasqwZAY6CwBc408aQZBYEJOFacrTUyaZAZCYpV0jzzkiRC6L6ZBwGDgKWBrqq2TRcdsnO5QydFvdVOJ9Vv4UytZCh1Iv6WtwcCmyc7cxDLSp1ZAZBFnKXUkZD",
+      "lineUrl": "https://manager.line.biz/account/@742srmne",
+      "contactPhone": "088-7888-446",
+      "tiktokUrl": "",
+      "igUrl": "",
+      "websiteUrl": "",
+      "shopUrl": "",
+      "automationWebhookUrl": "https://hook.eu1.make.com/djuy9w273t62th7e01uom2v2bb7smn0b"
+    },
+    {
+      "id": "brand_fb_101163072466099",
+      "brandName": "รับสร้างบ้านเชียงใหม่ ลำพูน by KPN Construction",
+      "icon": "📘",
+      "color": "#0ea5e9",
+      "productDefault": "รับสร้างบ้านเชียงใหม่ ลำพูน by KPN Construction",
+      "goalDefault": "สร้างยอดขายและขยายฐานลูกค้าใหม่",
+      "targetAudienceDefault": "ลูกค้ากลุ่มเป้าหมายบนโลกออนไลน์",
+      "budgetDefault": "1000",
+      "commandDefault": "โปรโมตเพจ รับสร้างบ้านเชียงใหม่ ลำพูน by KPN Construction เน้นจุดเด่นบริการคุณภาพ พร้อมให้คำปรึกษาฟรี",
+      "fbUrl": "https://www.facebook.com/101163072466099",
+      "fbPageId": "101163072466099",
+      "fbPageAccessToken": "EAAZC0hcsEbMUBS3lGLLkEukZAEbjUK0AcwFECYEkpjVyCC2LYbLIbYqurPWsrkrGPsVARbNyvSMrZCKOa067ZAtgFYbHWDEaji9uKeoYfCeAZB4TySlsYroIKXyACoIPAJ5tUS3JC08BvyA3cN4zFdWjnRvJFhV2kJD9mdhZC1ohCPI89gujJdAawHYNC6o8WnjMwhlOhbgO8WRFJu0dcQy8biqAwbKgmy9edqnSlkJzMP67iqHAenW3YvIQZDZD",
+      "lineUrl": "https://manager.line.biz/account/@742srmne",
+      "contactPhone": "088-7888-446"
+    },
+    {
+      "id": "brand_fb_101149255150165",
+      "brandName": "KPN construction รับสร้างบ้านรีโนเวทราคาถูกภาคเหนือ",
+      "icon": "📘",
+      "color": "#0ea5e9",
+      "productDefault": "KPN construction รับสร้างบ้านรีโนเวทราคาถูกภาคเหนือ",
+      "goalDefault": "สร้างยอดขายและขยายฐานลูกค้าใหม่",
+      "targetAudienceDefault": "ลูกค้ากลุ่มเป้าหมายบนโลกออนไลน์",
+      "budgetDefault": "1000",
+      "commandDefault": "โปรโมตเพจ KPN construction รับสร้างบ้านรีโนเวทราคาถูกภาคเหนือ เน้นจุดเด่นบริการคุณภาพ พร้อมให้คำปรึกษาฟรี",
+      "fbUrl": "https://www.facebook.com/101149255150165",
+      "fbPageId": "101149255150165",
+      "fbPageAccessToken": "EAAZC0hcsEbMUBS5wYVGHE65ZAEFVO7suSt1C7bNZCHV9AMuOKQbKHmNXOXClk2Gh9k8XP5Iv9YxPHsZAPb6byPatdyQXXdRLaqCb1CZBkIIF2wmqXLUkEfBnrwiI8xsDtHdwrXMvGxRnpmJ7KZB3Ci40ONXVpKqyfP6HzcH6Vuqk0Tf4fJO2gQvgNyNYAaMdZBT8Mqct1Adw27qy6X8omZBsQsDBSyVaXSeZB09RX37DZAwWGgmHfrr8ZALVyPtFgZDZD",
+      "lineUrl": "https://manager.line.biz/account/@742srmne",
+      "contactPhone": "088-7888-446"
+    },
+    {
+      "id": "brand_fb_101125258093341",
+      "brandName": "AIR WASH บริการล้างติดตั้งแอร์ทั่วลำพูน บริการดีราคาถูก",
+      "icon": "📘",
+      "color": "#0ea5e9",
+      "productDefault": "AIR WASH บริการล้างติดตั้งแอร์ทั่วลำพูน บริการดีราคาถูก",
+      "goalDefault": "สร้างยอดขายและขยายฐานลูกค้าใหม่",
+      "targetAudienceDefault": "ลูกค้ากลุ่มเป้าหมายบนโลกออนไลน์",
+      "budgetDefault": "1000",
+      "commandDefault": "โปรโมตเพจ AIR WASH บริการล้างติดตั้งแอร์ทั่วลำพูน บริการดีราคาถูก เน้นจุดเด่นบริการคุณภาพ พร้อมให้คำปรึกษาฟรี",
+      "fbUrl": "https://www.facebook.com/101125258093341",
+      "fbPageId": "101125258093341",
+      "fbPageAccessToken": "EAAZC0hcsEbMUBSZBsaKcTzB1DJ2PgMW72sL9TuYubXdDEZBm7wNTYv827QNq4toZAJuw946h4ZCGZBF0EVBi736FlF3MXFkogux67ayUVDwkzO7TlsKuwF9Y6e3UCLo4FyFiV1NGn66wmZBBK4SUoADfUZA6ltdBjaqzbqsq7lVpG8LQEIOQNCh8bFhtlgKSuXe0GoBCa5zGDgGS4159jwVZA7PRMNWZBT9ZCUVl2sdMiJWieelWZAMQMnIaiwPXMAZDZD",
+      "lineUrl": "https://manager.line.biz/account/@742srmne",
+      "contactPhone": "088-7888-446"
+    },
+    {
+      "id": "brand_fb_895532130501923",
+      "brandName": "Ave'Bag Shop",
+      "icon": "📘",
+      "color": "#0ea5e9",
+      "productDefault": "Ave'Bag Shop",
+      "goalDefault": "สร้างยอดขายและขยายฐานลูกค้าใหม่",
+      "targetAudienceDefault": "ลูกค้ากลุ่มเป้าหมายบนโลกออนไลน์",
+      "budgetDefault": "1000",
+      "commandDefault": "โปรโมตเพจ Ave'Bag Shop เน้นจุดเด่นบริการคุณภาพ พร้อมให้คำปรึกษาฟรี",
+      "fbUrl": "https://www.facebook.com/895532130501923",
+      "fbPageId": "895532130501923",
+      "fbPageAccessToken": "EAAZC0hcsEbMUBSw4dl5S9TCkZCy1ngp3mFVjNeyGdVMzgPadR4t0cHRoE2ehaoUzIh8bhUZBZB7bCXZCyelJ6DhJYpp8r4wPxPw9DrKtZCluuOB6ll6j2qSw3CS9pxpT90vv37yDMgMPR49pZA1rdlRqOq7gsqUn5CoAieYdJq2c5sa8hfdxVZBIPhW8ouPafcVopdTG1OHxCH2db8Ix0tLSjoYmQXvUFfQJRuRQiwwwtMVKZA0FlDrCpdIOWR90ZD",
+      "lineUrl": "https://manager.line.biz/account/@742srmne",
+      "contactPhone": "088-7888-446"
+    }
+  ],
+  "publishLogs": [
+    {
+      "id": "a4dfd995-28ff-45ca-acf1-7b49288d9954",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T11:37:50.578Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "c0bfc478-86bd-40f2-84ad-b5a52bc9a62f",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T11:37:49.379Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": true,
+          "platform": "Instagram",
+          "targetUrl": "",
+          "message": "⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "1686ea71-acd9-4c39-b256-36df26106dd3",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T11:37:48.193Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": true,
+          "platform": "TikTok",
+          "targetUrl": "",
+          "message": "⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "e78ca002-56e2-4e0c-a774-31d2b8428967",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T11:37:47.030Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "postId": "1226235303916599_122128658571470030",
+          "platform": "Facebook Page",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "✅ โพสต์รูปภาพผลงานพร้อมแคปชันขึ้นเพจ Facebook จริงสำเร็จ! (Post ID: 1226235303916599_122128658571470030)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "9e4c6cbf-9790-4a43-a9b7-cd8c2e16cb21",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T11:35:09.683Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "5b67e956-08ce-4d39-9484-45c2aee90a3c",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T11:35:08.518Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": true,
+          "platform": "Instagram",
+          "targetUrl": "",
+          "message": "⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "bdf2fb1e-9c13-436f-8b7f-7e7483562de2",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T11:35:07.339Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": true,
+          "platform": "TikTok",
+          "targetUrl": "",
+          "message": "⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "064a578e-4b12-4cc6-bc54-bbe45159991e",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T11:35:06.153Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "postId": "1226235303916599_122128657857470030",
+          "platform": "Facebook Page",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "✅ โพสต์รูปภาพผลงานพร้อมแคปชันขึ้นเพจ Facebook จริงสำเร็จ! (Post ID: 1226235303916599_122128657857470030)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "c7696350-9684-47e2-a73a-357c588a792d",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T10:43:17.274Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "e13c4f8d-da32-4e5e-956b-8b9dc0af7c8d",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T10:43:16.073Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": true,
+          "platform": "Instagram",
+          "targetUrl": "",
+          "message": "⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "66bcbdd4-917e-4488-8d37-33019da551fc",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T10:43:14.882Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": true,
+          "platform": "TikTok",
+          "targetUrl": "",
+          "message": "⚠️ เตรียมแคปชันเรียบร้อย (รอคุณกดปุ่ม 'Run once' หรือเปิดสวิตช์ ON ในหน้า Make.com)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "30e709e8-68a2-4195-aca9-e770feb3b5a7",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T10:43:13.708Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "postId": "1226235303916599_122128645611470030",
+          "platform": "Facebook Page",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "✅ โพสต์ขึ้นเพจ Facebook จริงสำเร็จ! (Post ID: 1226235303916599_122128645611470030)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "8f9ec9a7-9a03-4661-b233-52bed29be05a",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T09:53:30.166Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "21cba2df-7dc0-4141-bca0-01c2ddd50d43",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T09:53:28.956Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "b1d5ed95-9937-4e68-accb-e72ad2541666",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T09:53:27.603Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "5419047b-0e59-4398-92ae-5bb04e3a769a",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T09:53:26.269Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "assisted": true,
+          "platform": "Facebook Page (Self-Healed)",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "⚠️ โพสต์ตรงติดปัญหา (❌ Facebook Access Token หมดอายุหรือไม่ถูกต้อง (Error #190) กรุณากดรับ Token ใหม่จาก Graph API Explorer) -> AI สลับมาคัดลอกแคปชันเข้า Clipboard + เปิดหน้าเพจให้วางโพสต์เรียบร้อย!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "c97ac05f-e351-4be3-a8e9-55d237904973",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T09:04:03.447Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "8f570d7c-4b77-46af-896e-49056eb6442a",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T09:04:02.184Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "8cb70510-af60-435c-8a8b-1fc420c018a6",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T09:04:00.669Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "680ec7ec-8e85-4b7b-8310-0ebc71f91123",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T09:03:59.289Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "assisted": true,
+          "platform": "Facebook Page (Self-Healed)",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "⚠️ โพสต์ตรงติดปัญหา (❌ Facebook Access Token หมดอายุหรือไม่ถูกต้อง (Error #190) กรุณากดรับ Token ใหม่จาก Graph API Explorer) -> AI สลับมาคัดลอกแคปชันเข้า Clipboard + เปิดหน้าเพจให้วางโพสต์เรียบร้อย!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "0e4fe69d-10c5-469f-96e3-686127984c29",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T08:56:53.175Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "c6ace58e-04ad-4410-a846-b5183393593b",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T08:56:52.004Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "7b8a3fa7-025e-4b26-88b8-081c1b037c60",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T08:56:50.718Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "6109bbe0-5068-41d8-b3fd-a3e53e0bbdf1",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T08:56:49.458Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "postId": "1226235303916599_122128613907470030",
+          "platform": "Facebook Page",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "✅ โพสต์รูปภาพผลงานพร้อมแคปชันขึ้นเพจ Facebook จริงสำเร็จ! (Post ID: 1226235303916599_122128613907470030)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "fa51c59c-cb60-4b25-a61c-ea704a7d67f5",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T07:36:41.420Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก "
+    },
+    {
+      "id": "7aeae266-6c54-4b73-9ed0-ff14c2d12499",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T07:36:40.093Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก "
+    },
+    {
+      "id": "69ed9330-9da2-471b-8cd9-99bccaa62722",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T07:36:38.858Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก "
+    },
+    {
+      "id": "077318da-ddbe-4ff3-b5b4-749ae541ef72",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T07:36:37.532Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "postId": "1226235303916599_122128594881470030",
+          "platform": "Facebook Page",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "✅ โพสต์รูปภาพผลงานพร้อมแคปชันขึ้นเพจ Facebook จริงสำเร็จ! (Post ID: 1226235303916599_122128594881470030)"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — 5 จุดในบ้านที่ทำบิ้วอินแล้วคุ้มที่สุด สวยหรู เก็บของได้เยอะขึ้น 3 เท่า ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก "
+    },
+    {
+      "id": "52c0b0ff-578e-439c-9d49-a107d0546751",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T06:04:09.255Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "c34eeadf-e349-443f-ba9f-8f76fd4d2119",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T06:04:08.064Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "e3eadaf0-62ef-4d80-a07e-3ca0d2983973",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T06:04:06.788Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "b7a6b41c-0552-426f-a778-dc2583d4d967",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T06:04:05.498Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "assisted": true,
+          "platform": "Facebook Page (Self-Healed)",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "⚠️ โพสต์ตรงติดปัญหา (❌ Facebook Access Token หมดอายุหรือไม่ถูกต้อง (Error #190) กรุณากดรับ Token ใหม่จาก Graph API Explorer) -> AI สลับมาคัดลอกแคปชันเข้า Clipboard + เปิดหน้าเพจให้วางโพสต์เรียบร้อย!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "d2bacbf8-2d65-4c45-bc18-4605ce075428",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T06:00:14.245Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "dd7a3291-6092-43bb-a0d7-4e8b78cebaf7",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T06:00:12.873Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "a0349613-17a2-4fb6-9a92-5412d62c5698",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T06:00:11.654Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "c3d80b7c-1728-49e4-a645-9b05eab47f91",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T06:00:10.379Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "assisted": true,
+          "platform": "Facebook Page (Self-Healed)",
+          "targetUrl": "https://www.facebook.com/1226235303916599",
+          "message": "⚠️ โพสต์ตรงติดปัญหา (❌ Facebook Access Token หมดอายุหรือไม่ถูกต้อง (Error #190) กรุณากดรับ Token ใหม่จาก Graph API Explorer) -> AI สลับมาคัดลอกแคปชันเข้า Clipboard + เปิดหน้าเพจให้วางโพสต์เรียบร้อย!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "b2938509-687a-4adb-bebe-e7283c7420c6",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T05:39:07.123Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "102ba8a9-5399-4fbb-94a8-5e9b758c89cd",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T05:39:05.936Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "78aa970e-4834-4177-9ccb-dbc71418154d",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T05:39:04.707Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "57716b39-5240-40d8-aac9-0f66575e59fd",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T05:39:03.483Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Facebook Page (Make.com)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!",
+          "targetUrl": "https://www.facebook.com/1226235303916599"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — เปลี่ยนบ้านโล่งเป็นบ้านหรู ด้วยงานบิ้วอินสั่งตัดพอดีทุกมุม ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่ — "
+    },
+    {
+      "id": "15eb3d1f-0eec-4820-96c2-0fbe7786b661",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T05:32:52.654Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "53b5664c-584a-47a2-b8f7-f2adf5d369d1",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T05:32:51.458Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "3dd049a2-b530-4544-8ab6-8a1c105a56bb",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T05:32:50.244Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "2d9d557d-717c-474e-bf4b-a9c637fd496d",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T05:32:49.015Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Facebook Page (Make.com)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!",
+          "targetUrl": "https://www.facebook.com/1226235303916599"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ — โปรโมชันพิเศษเดือนนี้! จองคิวทำบิ้วอินกับ KPN เชียงใหม่ ฟรีค่าออกแบบ 3D ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือ"
+    },
+    {
+      "id": "43737e96-ffee-4011-abdf-37012cd5955d",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T04:41:33.987Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — LINE OA",
+      "platforms": [
+        "LINE OA"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "LINE OA",
+          "targetUrl": "https://manager.line.biz/account/@742srmne",
+          "message": "✅ บรอดแคสต์โพสต์ขายของเข้า LINE OA จริงสำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่?\n✅ รับออกแบบและติดตั้งเฟอร์นิเจอร์บิ้วอิน เชียงใหม่ งานคุณภาพมาตรฐานช่างมืออาชีพ ประเมินราคาฟรี งบไม่บานปลาย\n✅ คุ้มค่าทุกงบป"
+    },
+    {
+      "id": "8979f9ab-1871-4e9f-a386-a4f57fd1cff9",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T04:41:32.670Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Instagram",
+      "platforms": [
+        "Instagram"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่?\n✅ รับออกแบบและติดตั้งเฟอร์นิเจอร์บิ้วอิน เชียงใหม่ งานคุณภาพมาตรฐานช่างมืออาชีพ ประเมินราคาฟรี งบไม่บานปลาย\n✅ คุ้มค่าทุกงบป"
+    },
+    {
+      "id": "cf6606cc-5a3f-4896-8ead-1311c70d1172",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T04:41:31.235Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — TikTok",
+      "platforms": [
+        "TikTok"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Multi-Platform Webhook (FB / IG / TikTok)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่?\n✅ รับออกแบบและติดตั้งเฟอร์นิเจอร์บิ้วอิน เชียงใหม่ งานคุณภาพมาตรฐานช่างมืออาชีพ ประเมินราคาฟรี งบไม่บานปลาย\n✅ คุ้มค่าทุกงบป"
+    },
+    {
+      "id": "f7882e77-98b7-44c3-9c2c-9afb2a53c768",
+      "brandId": "brand_1792833736158",
+      "timestamp": "2026-10-26T04:41:29.802Z",
+      "brandName": "KPN บิ้วอิน เชียงใหม่ — Facebook",
+      "platforms": [
+        "Facebook"
+      ],
+      "results": [
+        {
+          "success": true,
+          "simulated": false,
+          "platform": "Facebook Page (Make.com)",
+          "message": "✅ ส่งคำสั่งโพสต์จริงไปยังระบบ Automation Webhook สำเร็จ!",
+          "targetUrl": "https://www.facebook.com/1226235303916599"
+        }
+      ],
+      "contentPreview": "🔥 มองหา \"KPN บิ้วอิน เชียงใหม่\" ที่ตอบโจทย์ครบ จบในที่เดียวอยู่ใช่ไหม? ✨\n\nใครที่กำลังวางแผนหรือมองหาบริการ/สินค้าคุณภาพจาก KPN บิ้วอิน เชียงใหม่ ห้ามพลาดโพสต์นี้เลยครับ 👇\n\n💡 ทำไมลูกค้าถึงไว้วางใจเลือก KPN บิ้วอิน เชียงใหม่?\n✅ รับออกแบบและติดตั้งเฟอร์นิเจอร์บิ้วอิน เชียงใหม่ งานคุณภาพมาตรฐานช่างมืออาชีพ ประเมินราคาฟรี งบไม่บานปลาย\n✅ คุ้มค่าทุกงบป"
+    }
+  ]
+}

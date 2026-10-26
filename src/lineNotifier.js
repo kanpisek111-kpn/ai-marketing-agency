@@ -1,3 +1,16 @@
+const os = require("os");
+function getLocalNetworkIp() {
+  const nets = os.networkInterfaces();
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      if (net.family === "IPv4" && !net.internal && !net.address.startsWith("169.")) {
+        return net.address;
+      }
+    }
+  }
+  return "localhost";
+}
+
 // src/lineNotifier.js
 // ระบบส่งแจ้งเตือนติดตามสถานะงาน, ส่งการ์ดตรวจงานพร้อมรูปโปสเตอร์ (LINE Flex Approval Card) และรายงานการโพสต์เข้า LINE OA
 
@@ -187,7 +200,19 @@ async function sendLineApprovalCard({
   serverBaseUrl = "http://localhost:3080"
 }) {
   const brandName = brandProfile?.brandName || campaign?.projectName || "KPN บิ้วอิน เชียงใหม่";
-  const approvePcUrl = `${serverBaseUrl}/api/campaigns/approve-get?campaignId=${encodeURIComponent(campaign.id)}`;
+  const localIp = getLocalNetworkIp();
+  let publicTunnelUrl = process.env.PUBLIC_APP_URL || process.env.RENDER_EXTERNAL_URL || "https://dsl-occasional-acute-finger.trycloudflare.com";
+  try {
+    const path = require("path");
+    const tFile = path.join(__dirname, "../data/active_tunnel.txt");
+    if (fs.existsSync(tFile)) {
+      const saved = fs.readFileSync(tFile, "utf8").trim();
+      if (saved.startsWith("http")) publicTunnelUrl = saved;
+    }
+  } catch(e) {}
+  const approve5gUrl = `${publicTunnelUrl}/api/campaigns/approve-get?campaignId=${encodeURIComponent(campaign.id)}`;
+  const approveWifiUrl = `http://${localIp}:3080/api/campaigns/approve-get?campaignId=${encodeURIComponent(campaign.id)}`;
+  const approvePcUrl = approve5gUrl;
   const regeneratePcUrl = `${serverBaseUrl}/api/campaigns/regenerate-get?campaignId=${encodeURIComponent(campaign.id)}`;
   const canvaUrl = visualAssets?.canva?.fbTemplateUrl || "https://www.canva.com/";
   // รับประกันว่า heroImageUrl ต้องเป็น https:// ที่ LINE API ยอมรับ 100%
@@ -195,9 +220,9 @@ async function sendLineApprovalCard({
   if (!heroImageUrl.startsWith("https://")) {
     const brandLower = (brandName + " " + (campaign?.brief?.productName || "")).toLowerCase();
     if (brandLower.includes("ครัว") || brandLower.includes("kitchen")) {
-      heroImageUrl = "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=90";
+      heroImageUrl = `${publicTunnelUrl}/images/builtin/builtin_thai_modern_kitchen.jpg`;
     } else if (brandLower.includes("ตู้เสื้อผ้า") || brandLower.includes("closet")) {
-      heroImageUrl = "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=90";
+      heroImageUrl = `${publicTunnelUrl}/images/builtin/builtin_thai_walkin_closet.jpg`;
     } else if (brandLower.includes("สร้างบ้าน") || brandLower.includes("construction")) {
       heroImageUrl = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=90";
     } else if (brandLower.includes("แอร์") || brandLower.includes("air")) {
@@ -205,7 +230,7 @@ async function sendLineApprovalCard({
     } else if (brandLower.includes("กระเป๋า") || brandLower.includes("bag")) {
       heroImageUrl = "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1200&q=90";
     } else {
-      heroImageUrl = "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90";
+      heroImageUrl = `${publicTunnelUrl}/images/builtin/builtin_thai_tv_wall.jpg`;
     }
   }
 
@@ -310,19 +335,8 @@ async function sendLineApprovalCard({
             height: "sm",
             action: {
               type: "uri",
-              label: "✅ ยืนยัน & โพสต์ทุกเพจ (บนคอม)",
-              uri: approvePcUrl
-            }
-          },
-          {
-            type: "button",
-            style: "primary",
-            color: "#6366f1",
-            height: "sm",
-            action: {
-              type: "uri",
-              label: "📲 ยืนยันส่งเข้า Make.com (มือถือ)",
-              uri: directMakeApproveUrl
+              label: "✅ กดยืนยันโพสต์ทันที (เน็ตมือถือ 5G / Wi-Fi)",
+              uri: approve5gUrl
             }
           },
           {
@@ -331,8 +345,18 @@ async function sendLineApprovalCard({
             height: "sm",
             action: {
               type: "uri",
-              label: "🎨 เปิดดู/แต่งต่อใน Canva",
-              uri: canvaUrl
+              label: "🚀 สั่ง AI เริ่มแคมเปญใหม่ทันที",
+              uri: `${publicTunnelUrl}/api/campaigns/trigger-get`
+            }
+          },
+          {
+            type: "button",
+            style: "secondary",
+            height: "sm",
+            action: {
+              type: "uri",
+              label: "📘 เปิดดูหน้าเพจ Facebook",
+              uri: brandProfile?.fbUrl || `https://www.facebook.com/${brandProfile?.fbPageId || "1226235303916599"}`
             }
           },
           {
@@ -341,8 +365,8 @@ async function sendLineApprovalCard({
             height: "sm",
             action: {
               type: "uri",
-              label: "🔄 สั่ง AI ออกแบบ & คิดใหม่",
-              uri: regeneratePcUrl
+              label: "📱 เปิดแดชบอร์ดบนมือถือ",
+              uri: publicTunnelUrl
             }
           }
         ]

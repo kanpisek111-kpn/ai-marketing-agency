@@ -136,19 +136,19 @@
         <!-- Full AI Autopilot & 7-Agent Connected Ecosystem Bar -->
         <div id="autopilotHeroBanner" style="background:linear-gradient(135deg, rgba(99,102,241,0.18), rgba(16,185,129,0.14), rgba(6,182,212,0.16)); border:1px solid rgba(99,102,241,0.45); border-radius:14px; padding:16px 18px; margin-bottom:16px; display:flex; flex-direction:column; gap:12px;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div>
+            <div style="max-width:680px;">
               <div style="display:flex; align-items:center; gap:8px;">
-                <span style="background:#10b981; color:#052e16; font-weight:700; font-size:11px; padding:3px 9px; border-radius:99px;">FULL AI AUTOPILOT</span>
-                <h3 style="margin:0; font-size:16px; color:#f8fafc;">🤖 ให้ AI สั่งการเองทั้งหมด: คิดหัวข้อแคมเปญ • ออกแบบรูป Canva/AI • ส่งตรวจใน LINE • โพสต์ครบทุกแพลตฟอร์ม</h3>
+                <span style="background:#10b981; color:#052e16; font-weight:700; font-size:11px; padding:3px 9px; border-radius:99px;">1-CLICK FULL AUTOPILOT</span>
+                <h3 style="margin:0; font-size:16px; color:#f8fafc;">🤖 สั่งการ AI ครั้งเดียวจบ: เจนภาพใหม่ตรงงานบิ้วอิน ไร้ลายน้ำ 100% • ตรวจ QA อัตโนมัติ • โพสต์ขึ้นเพจจริง</h3>
               </div>
-              <p style="margin:4px 0 0; font-size:12.5px; color:#cbd5e1;">ไม่ต้องพิมพ์โจทย์เอง! กดปุ่มเดียว หัวหน้าทีม AI (Aria) จะคิดแคมเปญให้เพจที่เลือก สั่ง Maya ออกแบบรูปโปสเตอร์จริง + ผูก Canva แล้วส่งการ์ดเข้า LINE ให้คุณกด <strong>"✅ ยืนยันงาน"</strong> เพื่อโพสต์ลง FB / IG / TikTok (ผ่าน Make.com) และ LINE OA ทันที</p>
+              <p style="margin:4px 0 0; font-size:12.5px; color:#cbd5e1;">คลิกเดียวจบ! ทีม AI 7 แผนกจะวิเคราะห์โจทย์ เขียนแคปชันขายของ สั่ง Maya เจนภาพผลงานบิ้วอินชุดใหม่สดทุกครั้ง ตรวจคุณภาพอัตโนมัติ (ถ้ายังไม่เวิร์คจะปรับแก้ใหม่เอง) และยิงโพสต์ขึ้นเพจ Facebook จริง พร้อมส่งเข้า Make.com และ LINE OA ทันที</p>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button type="button" id="btnRunAutopilotApprove" class="btn-primary" style="background:linear-gradient(135deg,#10b981,#059669); border:none; padding:11px 16px; font-weight:700; font-size:13.5px; box-shadow:0 6px 20px rgba(16,185,129,0.35);" onclick="handleTriggerAutopilot(true)">
-                🤖 ให้ AI คิด + ออกแบบ Canva + ส่งให้กดยืนยันใน LINE
+              <button type="button" id="btnRunAutopilotApprove" class="btn-primary" style="background:linear-gradient(135deg,#10b981,#059669); border:none; color:#fff; padding:11px 18px; font-weight:700; font-size:13.5px; box-shadow:0 6px 20px rgba(16,185,129,0.35);" onclick="handleTriggerAutopilot(true)">
+                📲 สั่ง AI ทำงาน + เจนภาพใหม่ + ส่งให้กดยืนยันใน LINE
               </button>
-              <button type="button" id="btnRunAutopilotDirect" class="btn-secondary" style="background:linear-gradient(135deg,#6366f1,#8b5cf6); border:none; color:#fff; padding:11px 14px; font-weight:600; font-size:13px;" onclick="handleTriggerAutopilot(false)">
-                ⚡ ให้ AI คิด + ออกแบบ + โพสต์ลงทุกเพจทันที 100%
+              <button type="button" id="btnRunAutopilotDirect" class="btn-secondary" style="background:rgba(15,23,42,0.85); border:1px solid rgba(99,102,241,0.5); color:#c7d2fe; padding:11px 14px; font-weight:600; font-size:13px;" onclick="handleTriggerAutopilot(false)">
+                ⚡ สั่งยิงโพสต์ขึ้นเพจทันที 100%
               </button>
             </div>
           </div>

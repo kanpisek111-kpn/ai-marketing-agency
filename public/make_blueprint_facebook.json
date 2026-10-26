@@ -1,0 +1,39 @@
+{
+  "name": "KPN บิ้วอิน เชียงใหม่ — AI Marketing Auto-Post to Facebook",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {
+        "hook": 3327599
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "รับข้อมูลจาก AI Agency Webhook"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "facebook-pages:createAPost",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "page_id": "1226235303916599",
+        "message": "{{1.message}}",
+        "link": "{{1.imageUrl}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "โพสต์รูปและแคปชันลง Facebook Page อัตโนมัติ"
+        }
+      }
+    }
+  ]
+}

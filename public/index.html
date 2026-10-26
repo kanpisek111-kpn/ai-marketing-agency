@@ -6,7 +6,7 @@
   <title>AI Marketing Agency — ระบบสั่งการทีม AI การตลาดออนไลน์ครบวงจร</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -95,229 +95,201 @@
       <!-- Top Header -->
       <header class="top-header">
         <div class="header-left">
-          <h2 id="pageTitle">🚀 ศูนย์บัญชาการทีม AI การตลาดออนไลน์ (Single Command Center)</h2>
-          <p id="pageSubtitle">วางลิงก์เพจของคุณ (FB / TikTok / IG / LINE) แล้วสั่งงานที่เดียวให้ทีม AI ทั้ง 7 แผนกวางแผน เขียนโพสต์ และส่งขึ้นเพจอัตโนมัติ</p>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <h2 id="pageTitle" style="font-size:21px; font-weight:700; color:#f8fafc; margin:0; letter-spacing:-0.3px;">KPN Marketing Studio</h2>
+            <span style="font-size:11px; padding:2px 8px; border-radius:99px; background:rgba(99,102,241,0.2); color:#a5b4fc; font-weight:600; border:1px solid rgba(99,102,241,0.3);">7 AI AGENTS</span>
+          </div>
+          <p id="pageSubtitle" style="font-size:13px; color:#94a3b8; margin:4px 0 0;">ระบบ AI การตลาดอัตโนมัติประจำวัน • โพสต์ขึ้นเพจจริง & LINE OA</p>
         </div>
         <div class="header-right">
-          <button type="button" class="btn-reset-zero" onclick="handleResetToZeroNewPage()" title="ล้างข้อมูลเพจเก่าและประวัติทั้งหมดเพื่อเริ่มเพจใหม่ตั้งแต่ 0">
-            🔄 เซต 0 เริ่มเพจใหม่
-          </button>
-          <div class="header-badge" onclick="switchMainTab('channels')" title="คลิกเพื่อตั้งค่าการเชื่อมเพจ FB/TikTok/IG">
-            <span>🌐 เพจที่ดูแล:</span>
-            <strong id="activeBrandHeaderLabel">Lumina Glow Official</strong>
+          <div class="header-badge" style="border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.08);">
+            <span style="color:#34d399; font-size:10px;">●</span>
+            <strong style="color:#6ee7b7; font-size:12px;">Cloud 24/7 (Live)</strong>
           </div>
-          <div class="header-badge" onclick="switchMainTab('settings')" title="คลิกเพื่อเปลี่ยนค่าย AI">
-            <span>🧠 AI Engine:</span>
-            <strong id="activeProviderLabel">Smart Simulator</strong>
+          <div class="header-badge" style="border-color:rgba(99,102,241,0.3); background:rgba(99,102,241,0.08);">
+            <span style="font-size:12px;">⏰</span>
+            <strong style="color:#c7d2fe; font-size:12px;">รันอัตโนมัติ 09:30 น.</strong>
           </div>
           <div class="header-badge line-badge" onclick="switchMainTab('line')" title="คลิกเพื่อตั้งค่า LINE">
-            <span>📲 LINE Report:</span>
-            <strong id="lineStatusLabel">พร้อมทำงาน</strong>
+            <span style="font-size:12px;">📲</span>
+            <strong id="lineStatusLabel" style="font-size:12px;">LINE พร้อม</strong>
           </div>
         </div>
       </header>
 
       <!-- MULTI-PROJECT WORKSPACE SWITCHER BAR -->
-      <div class="project-switcher-bar">
-        <div class="project-switcher-left">
-          <span class="project-bar-label">📁 โปรเจกต์/เพจที่ดูแลอยู่:</span>
-          <div id="projectTabsList" class="project-tabs-list">
+      <div class="project-switcher-bar" style="margin-bottom:14px; background:rgba(17,24,39,0.6); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:10px 14px;">
+        <div class="project-switcher-left" style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:12.5px; font-weight:600; color:#94a3b8; white-space:nowrap;">เพจธุรกิจที่ดูแล:</span>
+          <div id="projectTabsList" class="project-tabs-list" style="display:flex; gap:6px; flex-wrap:wrap;">
             <!-- Rendered by JS -->
           </div>
         </div>
-        <div class="project-switcher-actions">
-          <button type="button" class="btn-primary btn-sm" onclick="openNewProjectModal()">➕ เพิ่มโปรเจกต์/เพจใหม่</button>
-          <button type="button" class="btn-secondary btn-sm" onclick="handleDeleteCurrentProject()" title="ลบโปรเจกต์เพจที่เลือกอยู่">🗑️ ลบโปรเจกต์นี้</button>
-        </div>
-      </div>
-
-      <!-- MULTI-PROJECT AUTOPILOT STATUS STRIP -->
-      <div id="multiProjectStatusStrip" style="background:#0f172a; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <div style="display:flex; align-items:center; gap:10px; font-size:13px;">
-          <span style="font-size:18px;">📡</span>
-          <span style="color:#94a3b8;">สถานะเซิร์ฟเวอร์:</span>
-          <strong style="color:#10b981;">🟢 Cloud 24/7 (Render)</strong>
-          <span style="color:#64748b;">•</span>
-          <span style="color:#94a3b8;">รอบรันอัตโนมัติ:</span>
-          <strong style="color:#cbd5e1;">ทุกวันเวลา 09:30 น.</strong>
-          <span style="color:#64748b;">•</span>
-          <span style="color:#94a3b8;">เพจที่ดูแล:</span>
-          <strong style="color:#38bdf8;" id="activeProjectsCountBadge">5 โปรเจกต์</strong>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-secondary btn-sm" onclick="handleSendStatusReportToLine()" title="ส่งรายงานสถานะทุกเพจเข้า LINE">
-            📲 ส่งรายงานสถานะเข้า LINE
-          </button>
+        <div class="project-switcher-actions" style="margin-left:auto; display:flex; gap:8px;">
+          <button type="button" class="btn-primary btn-sm" onclick="openNewProjectModal()" style="border-radius:8px; font-weight:600;">+ เพิ่มเพจใหม่</button>
         </div>
       </div>
 
       <!-- ================= TAB 1: COMMAND CENTER ================= -->
       <section id="tab-command" class="tab-panel active">
-        <!-- Full AI Autopilot & 7-Agent Connected Ecosystem Bar -->
-        <div id="autopilotHeroBanner" style="background:linear-gradient(135deg, rgba(99,102,241,0.18), rgba(16,185,129,0.14), rgba(6,182,212,0.16)); border:1px solid rgba(99,102,241,0.45); border-radius:14px; padding:16px 18px; margin-bottom:16px; display:flex; flex-direction:column; gap:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div style="max-width:680px;">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="background:#10b981; color:#052e16; font-weight:700; font-size:11px; padding:3px 9px; border-radius:99px;">1-CLICK FULL AUTOPILOT</span>
-                <h3 style="margin:0; font-size:16px; color:#f8fafc;">🤖 สั่งการ AI ครั้งเดียวจบ: เจนภาพใหม่ตรงงานบิ้วอิน ไร้ลายน้ำ 100% • ตรวจ QA อัตโนมัติ • โพสต์ขึ้นเพจจริง</h3>
+        <!-- Sleek Unified Autopilot Command Banner -->
+        <div class="card" style="background:linear-gradient(135deg, rgba(17,24,39,0.95), rgba(30,41,59,0.7)); border:1px solid rgba(99,102,241,0.35); border-radius:14px; padding:18px 22px; margin-bottom:16px; box-shadow:0 8px 24px rgba(0,0,0,0.25);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div style="max-width:620px;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                <span style="background:#10b981; color:#022c22; font-weight:700; font-size:10.5px; padding:2px 8px; border-radius:99px; letter-spacing:0.5px;">AUTOPILOT ONLINE</span>
+                <h3 style="margin:0; font-size:16.5px; font-weight:700; color:#f8fafc;">ระบบเดินเครื่องอัตโนมัติประจำวัน</h3>
               </div>
-              <p style="margin:4px 0 0; font-size:12.5px; color:#cbd5e1;">คลิกเดียวจบ! ทีม AI 7 แผนกจะวิเคราะห์โจทย์ เขียนแคปชันขายของ สั่ง Maya เจนภาพผลงานบิ้วอินชุดใหม่สดทุกครั้ง ตรวจคุณภาพอัตโนมัติ (ถ้ายังไม่เวิร์คจะปรับแก้ใหม่เอง) และยิงโพสต์ขึ้นเพจ Facebook จริง พร้อมส่งเข้า Make.com และ LINE OA ทันที</p>
+              <p style="margin:0; font-size:13px; color:#cbd5e1; line-height:1.5;">ทีม AI 7 แผนกคิดคอนเทนต์ เจนภาพผลงานบิ้วอินความละเอียดสูง 8K ไร้ลายน้ำ และส่งการ์ดตรวจงานมารอใน LINE OA ทุกเช้าเวลา 09:30 น.</p>
+              
+              <div style="display:flex; align-items:center; gap:6px; margin-top:10px; font-size:11.5px; color:#94a3b8;">
+                <span style="color:#64748b;">ทีม AI ประจำการ:</span>
+                <span title="Aria - CMO" style="background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:6px; color:#c7d2fe;">👑 Aria</span>
+                <span title="Marcus - Research" style="background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:6px; color:#bae6fd;">🔍 Marcus</span>
+                <span title="Sophia - SEO" style="background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:6px; color:#a7f3d0;">📈 Sophia</span>
+                <span title="Victor - Ads" style="background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:6px; color:#fde68a;">🚀 Victor</span>
+                <span title="Elena - Copy" style="background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:6px; color:#fbcfe8;">✍️ Elena</span>
+                <span title="Maya - Designer" style="background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:6px; color:#67e8f9;">🎨 Maya</span>
+                <span title="Leo - Social" style="background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:6px; color:#86efac;">📅 Leo</span>
+              </div>
             </div>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button type="button" id="btnRunAutopilotApprove" class="btn-primary" style="background:linear-gradient(135deg,#10b981,#059669); border:none; color:#fff; padding:11px 18px; font-weight:700; font-size:13.5px; box-shadow:0 6px 20px rgba(16,185,129,0.35);" onclick="handleTriggerAutopilot(true)">
-                📲 สั่ง AI ทำงาน + เจนภาพใหม่ + ส่งให้กดยืนยันใน LINE
-              </button>
-              <button type="button" id="btnRunAutopilotDirect" class="btn-secondary" style="background:rgba(15,23,42,0.85); border:1px solid rgba(99,102,241,0.5); color:#c7d2fe; padding:11px 14px; font-weight:600; font-size:13px;" onclick="handleTriggerAutopilot(false)">
-                ⚡ สั่งยิงโพสต์ขึ้นเพจทันที 100%
-              </button>
-            </div>
-          </div>
 
-          <!-- 7 Agents Connected Software Pills -->
-          <div style="display:flex; flex-wrap:wrap; gap:6px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08); font-size:11.5px;">
-            <span style="color:#94a3b8; font-weight:600; align-self:center;">🔗 โปรแกรมที่เชื่อมกับ 7 Agents แล้ว:</span>
-            <a href="https://eu1.make.com/3327599/scenarios" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(99,102,241,0.4); color:#c7d2fe; padding:4px 10px; border-radius:8px;">👑 Aria ↔ Make.com Autopilot</a>
-            <a href="https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=TH&q=%E0%B8%9A%E0%B8%B4%E0%B9%89%E0%B8%A7%E0%B8%AD%E0%B8%B4%E0%B8%99" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.4); color:#bae6fd; padding:4px 10px; border-radius:8px;">🔍 Marcus ↔ Meta Ad Library</a>
-            <a href="https://trends.google.com/trends/explore?geo=TH&q=%E0%B8%9A%E0%B8%B4%E0%B9%89%E0%B8%A7%E0%B8%AD%E0%B8%B4%E0%B8%99" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(16,185,129,0.4); color:#a7f3d0; padding:4px 10px; border-radius:8px;">📈 Sophia ↔ Google Trends & SEO</a>
-            <a href="https://adsmanager.facebook.com/" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(245,158,11,0.4); color:#fde68a; padding:4px 10px; border-radius:8px;">🚀 Victor ↔ Meta Ads Manager</a>
-            <span style="background:rgba(15,23,42,0.8); border:1px solid rgba(236,72,153,0.4); color:#fbcfe8; padding:4px 10px; border-radius:8px;">✍️ Elena ↔ Multi-Channel Copy AI</span>
-            <a href="https://www.canva.com/" target="_blank" style="text-decoration:none; background:rgba(15,23,42,0.8); border:1px solid rgba(0,196,204,0.5); color:#67e8f9; padding:4px 10px; border-radius:8px;">🎨 Maya ↔ Google Flow + Canva (ไร้ลายน้ำ 100%)</a>
-            <span style="background:rgba(15,23,42,0.8); border:1px solid rgba(34,197,94,0.5); color:#86efac; padding:4px 10px; border-radius:8px;">📅 Leo ↔ LINE Flex Approval + Make.com</span>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button type="button" class="btn-primary" style="background:linear-gradient(135deg,#10b981,#059669); border:none; color:#fff; padding:11px 18px; font-weight:600; font-size:13.5px; border-radius:10px; box-shadow:0 4px 16px rgba(16,185,129,0.3); display:flex; align-items:center; gap:8px;" onclick="handleTriggerAutopilot(true)">
+                <span>⚡ สั่ง AI รันแคมเปญใหม่ทันที</span>
+              </button>
+              <button type="button" class="btn-secondary" style="background:rgba(30,41,59,0.8); border:1px solid rgba(255,255,255,0.12); color:#e2e8f0; padding:11px 16px; font-weight:500; font-size:13px; border-radius:10px; display:flex; align-items:center; gap:6px;" onclick="handleSendStatusReportToLine()">
+                <span>📡 ส่งสถานะเข้า LINE</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- Quick Presets Bar -->
-        <div class="preset-bar">
-          <span class="preset-label">💡 เติมโจทย์ตัวอย่างในคลิกเดียว:</span>
-          <button class="preset-btn" onclick="fillPreset('skincare')">✨ แบรนด์สกินแคร์/เซรั่ม</button>
-          <button class="preset-btn" onclick="fillPreset('clinic')">🏥 คลินิกความงาม/ทันตกรรม</button>
-          <button class="preset-btn" onclick="fillPreset('course')">💻 คอร์สออนไลน์/SaaS</button>
-          <button class="preset-btn" onclick="fillPreset('cafe')">☕ ร้านอาหาร/คาเฟ่เดลิเวอรี</button>
-          <div style="margin-left:auto; display:flex; gap:8px;">
-            <button type="button" class="preset-btn clear-form-btn" onclick="handleClearFormOnly()">🧹 เคลียร์ช่องกรอกให้ว่าง</button>
-            <button type="button" class="preset-btn reset-zero-btn" onclick="handleResetToZeroNewPage()">🔄 เซต 0 เริ่มเพจใหม่ทั้งหมด</button>
+        <!-- Quick Presets Bar (Tailored for Built-in & Home Construction) -->
+        <div class="preset-bar" style="background:rgba(17,24,39,0.5); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:8px 14px; margin-bottom:18px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="font-size:12px; color:#94a3b8; font-weight:500;">ไอเดียโจทย์ด่วน:</span>
+          <button type="button" class="preset-btn" onclick="fillPreset('tv_wall')">🏠 ผนังทีวีระแนงหินอ่อน</button>
+          <button type="button" class="preset-btn" onclick="fillPreset('closet')">🚪 Walk-in Closet ชาทอง</button>
+          <button type="button" class="preset-btn" onclick="fillPreset('kitchen')">🍳 ครัวบิ้วอินชนฝ้า</button>
+          <button type="button" class="preset-btn" onclick="fillPreset('headboard')">🛏️ ผนังหัวเตียงซ่อนไฟ</button>
+          <button type="button" class="preset-btn" onclick="fillPreset('promo')">🎁 โปรฟรีค่าออกแบบ 3D</button>
+          <div style="margin-left:auto;">
+            <button type="button" class="preset-btn clear-form-btn" onclick="handleClearFormOnly()" style="opacity:0.75;">🧹 ล้างช่อง</button>
           </div>
         </div>
 
         <div class="command-grid">
           <!-- Left: Single Command Form + Master Channel Links -->
           <div class="card command-card">
-            <div class="card-header">
+            <div class="card-header" style="margin-bottom:14px; padding-bottom:10px;">
               <div>
-                <h3>🎯 สั่งการทีม AI ที่เดียว + ระบุลิงก์เพจประจำโปรเจกต์</h3>
-                <small id="currentProjectFormBadge" style="color:#a5b4fc;">กำลังทำงานในโปรเจกต์หลัก</small>
+                <h3 style="font-size:16px; font-weight:600; color:#f8fafc; margin:0;">🎯 สั่งการทีม AI (Custom Command)</h3>
+                <small id="currentProjectFormBadge" style="color:#a5b4fc; font-size:12px;">กำลังทำงานในโปรเจกต์หลัก</small>
               </div>
-              <button type="button" class="btn-secondary btn-sm" onclick="handleClearFormOnly()">🧹 ล้างช่องเพื่อใส่เพจใหม่</button>
             </div>
 
             <form id="campaignForm" onsubmit="handleRunCampaign(event)">
-              <!-- MASTER PAGE LINKS BOX -->
-              <div class="channel-links-box">
-                <div class="channel-links-header">
-                  <div>
-                    <strong>🌐 ลิงก์เพจประจำโปรเจกต์นี้ (แยกอิสระตามแต่ละโปรเจกต์)</strong>
-                    <p>เมื่อสลับโปรเจกต์ด้านบน ลิงก์เพจและโจทย์จะสลับตามเพจที่คุณเลือกโดยอัตโนมัติ</p>
+              <!-- Collapsible Channel Links Details Box -->
+              <details class="channel-links-details" style="background:rgba(15,23,42,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 14px; margin-bottom:16px;">
+                <summary style="font-size:13px; font-weight:600; color:#a5b4fc; cursor:pointer; user-select:none; display:flex; justify-content:space-between; align-items:center;">
+                  <span>⚙️ ตรวจสอบ / แก้ไขลิงก์เพจประจำโปรเจกต์นี้ (FB, TikTok, IG, LINE)</span>
+                  <span style="font-size:11px; color:#94a3b8; font-weight:400;">(คลิกเพื่อดู/ซ่อน)</span>
+                </summary>
+                <div style="margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06);">
+                  <div class="form-row">
+                    <div class="form-group compact">
+                      <label style="font-size:12px; color:#cbd5e1;">📘 ลิงก์เพจ Facebook</label>
+                      <input type="text" id="inputFbUrl" placeholder="https://facebook.com/ชื่อเพจของคุณ" value="https://facebook.com/1226235303916599" />
+                    </div>
+                    <div class="form-group compact">
+                      <label style="font-size:12px; color:#cbd5e1;">💬 ลิงก์ LINE OA</label>
+                      <input type="text" id="inputLineUrl" placeholder="https://lin.ee/xxxx หรือ @yourline" value="https://manager.line.biz/account/@742srmne" />
+                    </div>
                   </div>
-                  <div style="display:flex; gap:6px;">
-                    <button type="button" class="btn-secondary btn-sm" onclick="handleInspectLinks()">🔍 ตรวจสอบลิงก์</button>
-                    <button type="button" class="btn-secondary btn-sm" onclick="switchMainTab('channels')">⚙️ ตั้งค่า API โพสต์จริง</button>
-                  </div>
-                </div>
 
-                <div class="form-row">
-                  <div class="form-group compact">
-                    <label>📘 ลิงก์เพจ Facebook (FB Page URL)</label>
-                    <input type="text" id="inputFbUrl" placeholder="https://facebook.com/ชื่อเพจของคุณ" value="https://facebook.com/LuminaGlowThailand" />
+                  <div class="form-row">
+                    <div class="form-group compact">
+                      <label style="font-size:12px; color:#cbd5e1;">🎵 ลิงก์ TikTok</label>
+                      <input type="text" id="inputTiktokUrl" placeholder="https://tiktok.com/@ชื่อช่อง" value="" />
+                    </div>
+                    <div class="form-group compact">
+                      <label style="font-size:12px; color:#cbd5e1;">📸 ลิงก์ Instagram</label>
+                      <input type="text" id="inputIgUrl" placeholder="https://instagram.com/ชื่อไอจี" value="" />
+                    </div>
                   </div>
-                  <div class="form-group compact">
-                    <label>🎵 ลิงก์ช่อง TikTok (TikTok Profile URL)</label>
-                    <input type="text" id="inputTiktokUrl" placeholder="https://tiktok.com/@ชื่อช่องของคุณ" value="https://tiktok.com/@luminaglow.th" />
-                  </div>
-                </div>
 
-                <div class="form-row">
-                  <div class="form-group compact">
-                    <label>📸 ลิงก์ Instagram (IG Profile URL)</label>
-                    <input type="text" id="inputIgUrl" placeholder="https://instagram.com/ชื่อไอจีของคุณ" value="https://instagram.com/luminaglow.official" />
+                  <div class="form-row">
+                    <div class="form-group compact" style="margin-bottom:0;">
+                      <label style="font-size:12px; color:#cbd5e1;">📞 เบอร์โทรติดต่อท้ายโพสต์</label>
+                      <input type="text" id="inputContactPhone" placeholder="เช่น 088-7888-446" value="088-7888-446" />
+                    </div>
+                    <div class="form-group compact" style="margin-bottom:0;">
+                      <label style="font-size:12px; color:#cbd5e1;">🛒 เว็บไซต์ / ลิงก์ร้านค้า (ถ้ามี)</label>
+                      <input type="text" id="inputShopUrl" placeholder="https://..." value="" />
+                    </div>
                   </div>
-                  <div class="form-group compact">
-                    <label>💬 ลิงก์ LINE OA / ลิงก์คลิกทักแชทปิดการขาย</label>
-                    <input type="text" id="inputLineUrl" placeholder="https://lin.ee/xxxx หรือ @yourline" value="https://lin.ee/luminaglow" />
-                  </div>
-                </div>
 
-                <div class="form-row">
-                  <div class="form-group compact" style="margin-bottom:0;">
-                    <label>🛒 ลิงก์เว็บไซต์ / Shopee / Lazada (ถ้ามี)</label>
-                    <input type="text" id="inputShopUrl" placeholder="https://shopee.co.th/yourshop" value="https://shopee.co.th/luminaglow" />
-                  </div>
-                  <div class="form-group compact" style="margin-bottom:0;">
-                    <label>📞 เบอร์โทรติดต่อท้ายโพสต์ (ถ้ามี)</label>
-                    <input type="text" id="inputContactPhone" placeholder="เช่น 099-123-4567" value="099-123-4567" />
-                  </div>
+                  <div id="linkInspectResult" class="link-inspect-badge hidden" style="margin-top:10px;"></div>
                 </div>
-
-                <div id="linkInspectResult" class="link-inspect-badge hidden"></div>
-              </div>
+              </details>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label>ชื่อสินค้า / บริการ / แบรนด์ของคุณ *</label>
+                  <label style="font-size:12px; font-weight:500; color:#cbd5e1; margin-bottom:5px; display:block;">ชื่อสินค้า / แบรนด์ *</label>
                   <input type="text" id="inputProductName" required placeholder="เช่น KPN บิ้วอิน เชียงใหม่" value="" />
                 </div>
                 <div class="form-group">
-                  <label>เป้าหมายหลักของแคมเปญ *</label>
+                  <label>เป้าหมายแคมเปญ *</label>
                   <input type="text" id="inputGoal" required placeholder="เช่น ปิดงาน 10 งานใน 1 เดือน และดึงคนทักแชทเพจ/LINE" value="" />
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label>กลุ่มเป้าหมาย (Target Audience)</label>
+                  <label>กลุ่มเป้าหมาย</label>
                   <input type="text" id="inputAudience" placeholder="เช่น เจ้าของบ้าน คอนโด ร้านค้า เชียงใหม่ ที่ต้องการทำบิ้วอิน" value="" />
                 </div>
                 <div class="form-group">
-                  <label>งบประมาณการตลาด / ยิงแอด</label>
+                  <label>งบการตลาด / เดือน</label>
                   <input type="text" id="inputBudget" placeholder="เช่น 1,000 - 15,000 บาท/เดือน" value="" />
                 </div>
               </div>
 
               <div class="form-group">
-                <label>แพลตฟอร์มที่ต้องการให้ทีม AI ไปทำงาน</label>
+                <label>ช่องทางที่ต้องการโพสต์</label>
                 <div class="platform-checkboxes" id="platformCheckboxes">
                   <label class="chip-checkbox"><input type="checkbox" value="Facebook" checked /> <span>Facebook</span></label>
                   <label class="chip-checkbox"><input type="checkbox" value="TikTok" checked /> <span>TikTok</span></label>
                   <label class="chip-checkbox"><input type="checkbox" value="Instagram" checked /> <span>Instagram</span></label>
                   <label class="chip-checkbox"><input type="checkbox" value="LINE OA" checked /> <span>LINE OA</span></label>
                   <label class="chip-checkbox"><input type="checkbox" value="Google Search / SEO" checked /> <span>Google SEO</span></label>
-                  <label class="chip-checkbox"><input type="checkbox" value="Shopee / Lazada" checked /> <span>Shopee / Lazada</span></label>
                 </div>
               </div>
 
               <div class="form-group">
-                <label>คำสั่งพิเศษถึงหัวหน้าทีม AI (จุดเด่นสินค้า / โปรโมชัน / โจทย์เพิ่มเติม)</label>
-                <textarea id="inputCommandText" rows="2" placeholder="พิมพ์จุดขาย โปรโมชัน หรือสิ่งที่อยากให้ทีม AI โพสต์ลงเพจ..."></textarea>
+                <label>จุดเด่นสินค้า / โปรโมชัน / คำสั่งพิเศษ</label>
+                <textarea id="inputCommandText" rows="2" placeholder="พิมพ์จุดขาย โปรโมชัน หรือสิ่งที่อยากให้ทีม AI เน้นในโพสต์นี้..."></textarea>
               </div>
 
               <div class="form-actions">
                 <button type="submit" id="btnRunCampaign" class="btn-primary btn-lg">
-                  <span>🚀 สั่งทีม AI ทั้ง 7 แผนกเริ่มทำงานให้โปรเจกต์เพจนี้ทันที</span>
+                  <span>🚀 สั่ง AI เริ่มคิดแคมเปญตามโจทย์นี้</span>
                 </button>
               </div>
             </form>
           </div>
 
-          <!-- Right: Live Platform Posting Tracker (FB / TikTok / IG / LINE โพสต์ไปหรือยัง?) & LINE OA Notifications -->
+          <!-- Right: Live Platform Posting Tracker -->
           <div class="card live-log-card">
             <div class="card-header">
-              <h3>📡 ติดตามงานโพสต์ลงเพจ (FB / TikTok / IG โพสต์ไปหรือยัง?)</h3>
+              <h3>📡 สถานะการโพสต์ลงเพจ</h3>
               <span id="campaignStatusBadge" class="status-tag idle">พร้อมรับคำสั่ง</span>
             </div>
 
             <!-- Visual Progress & 4-Platform Posting Status Board -->
             <div class="task-progress-box">
               <div class="task-progress-top">
-                <span id="progressStepText">📊 สถานะการโพสต์ลงเพจ: รอเริ่มงาน (0/4 ช่องทาง)</span>
+                <span id="progressStepText">ความคืบหน้า: รอเริ่มงาน (0/4 ช่องทาง)</span>
                 <strong id="progressPercentText">0%</strong>
               </div>
               <div class="progress-bar-track">
@@ -331,29 +303,29 @@
               </div>
 
               <div class="line-milestone-toggles">
-                <span style="font-size:11.5px; color:#86efac; font-weight:600;">📲 แจ้งเตือนสถานะการโพสต์เข้า LINE OA อัตโนมัติเมื่อ:</span>
+                <span style="font-size:11.5px; color:#86efac; font-weight:600;">แจ้งเตือนเข้า LINE OA เมื่อ:</span>
                 <div class="milestone-chips">
-                  <label class="chip-checkbox mini"><input type="checkbox" id="quickLineStart" checked onchange="handleQuickToggleLineTrack()" /> <span>🚀 เริ่มเตรียมโพสต์</span></label>
-                  <label class="chip-checkbox mini"><input type="checkbox" id="quickLineStep" checked onchange="handleQuickToggleLineTrack()" /> <span>📢 โพสต์เสร็จทีละเพจ (FB / TT / IG)</span></label>
-                  <label class="chip-checkbox mini"><input type="checkbox" id="quickLineDone" checked onchange="handleQuickToggleLineTrack()" /> <span>🎉 โพสต์ครบทุกเพจ 100%</span></label>
+                  <label class="chip-checkbox mini"><input type="checkbox" id="quickLineStart" checked onchange="handleQuickToggleLineTrack()" /> <span>🚀 เริ่มงาน</span></label>
+                  <label class="chip-checkbox mini"><input type="checkbox" id="quickLineStep" checked onchange="handleQuickToggleLineTrack()" /> <span>📢 โพสต์ทีละเพจ</span></label>
+                  <label class="chip-checkbox mini"><input type="checkbox" id="quickLineDone" checked onchange="handleQuickToggleLineTrack()" /> <span>🎉 ครบ 100%</span></label>
                 </div>
               </div>
             </div>
 
             <div id="liveLogContainer" class="live-log-container" style="height: 215px;">
               <div class="empty-log">
-                <p>กดปุ่ม <strong>"สั่งทีม AI เริ่มทำงาน"</strong> เพื่อดูสถานะการเตรียมคอนเทนต์และไล่โพสต์ลง Facebook, TikTok, IG พร้อมแจ้งเตือนเข้า LINE OA</p>
+                <p>กดปุ่ม <strong>"สั่ง AI เริ่มคิดแคมเปญ"</strong> เพื่อดูสถานะการเตรียมคอนเทนต์และไล่โพสต์ลง Facebook, TikTok, IG พร้อมแจ้งเตือนเข้า LINE OA</p>
               </div>
             </div>
             <div class="live-log-footer">
               <button class="btn-secondary btn-sm" onclick="handleTriggerSequentialPosting(null)">
-                📤 สั่ง AI ไล่โพสต์ทุกเพจใหม่
+                📤 โพสต์ซ้ำทุกช่องทาง
               </button>
               <button class="btn-secondary btn-sm" style="background:rgba(139,92,246,0.22); border-color:rgba(139,92,246,0.5); color:#ddd6fe;" onclick="jumpToGraphicStudio()">
-                🎨 ดูรูปกราฟิกที่ AI ทำเสร็จแล้ว (3 รูป)
+                🎨 ดูรูปกราฟิก AI (3 รูป)
               </button>
               <button class="btn-line btn-sm" onclick="triggerSendLiveStatusToLine()">
-                📡 ส่งเช็กเข้า LINE ว่าเพจไหนโพสต์แล้วบ้าง
+                📡 ส่งเช็กสถานะเข้า LINE
               </button>
             </div>
           </div>

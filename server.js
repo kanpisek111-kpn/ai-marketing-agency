@@ -244,20 +244,7 @@ async function executeSequentialPlatformPosting(campaignId, specificPlatform = n
       saveDB(db);
       broadcastEvent("posting_updated", { campaignId: campaign.id, postingStep: pStep, campaign });
 
-      // ส่งแจ้งเตือนเข้า LINE OA ทันทีว่าเพจนี้โพสต์เสร็จแล้ว และเพจอื่นโพสต์หรือยัง!
-      if (db.settings.line?.enabled && db.settings.line?.notifyOnEachStep && nextPlatformStep) {
-        const lineMsg = formatPlatformPostingStatusLineMessage({
-          campaign,
-          latestPlatform: pStep.platform,
-          projectName: campaign.projectName,
-          isFinal: false
-        });
-        await pushLineNotificationAndLog({
-          campaign,
-          titleSuffix: `📢 อัปเดตสถานะโพสต์ ${pStep.platform}`,
-          messageText: lineMsg
-        });
-      }
+      // ปิดการแจ้งเตือนทีละแพลตฟอร์ม (ส่งเฉพาะใบสรุปผลรอบเดียวตอนจบ 100%)
     } catch (err) {
       pStep.status = "error";
       pStep.simulated = false;
@@ -307,23 +294,7 @@ async function executeCampaignPipeline(campaignId) {
   saveDB(db);
   broadcastEvent("campaign_updated", { campaign });
 
-  // 1. แจ้งเตือนเข้า LINE OA เมื่อเริ่มรันแคมเปญ (0%)
-  if (db.settings.line?.enabled && db.settings.line?.notifyOnStart) {
-    const startMsg = formatCampaignStartLineMessage(campaign, campaign.projectName);
-    await pushLineNotificationAndLog({
-      campaign,
-      titleSuffix: `🚀 เริ่มงาน (0/${campaign.steps.length} แผนก)`,
-      messageText: startMsg
-    });
-    campaign.logs.push({
-      time: new Date().toLocaleTimeString("th-TH"),
-      agentName: "LINE Tracker",
-      avatar: "📲",
-      message: `ส่งแจ้งเตือน "เริ่มรันงานแคมเปญ (0%)" เข้า LINE OA เรียบร้อย`
-    });
-    saveDB(db);
-    broadcastEvent("campaign_updated", { campaign });
-  }
+  // ปิดแจ้งเตือนตอนเริ่ม 0% (แจ้งเฉพาะการ์ดรอยืนยันงาน และผลสรุปตอนโพสต์เสร็จ)
 
   const previousOutputs = [];
   const totalSteps = campaign.steps.length;
@@ -389,22 +360,7 @@ async function executeCampaignPipeline(campaignId) {
       saveDB(db);
       broadcastEvent("step_completed", { campaignId: campaign.id, step, campaign });
 
-      // 2. แจ้งเตือนความคืบหน้ารายแผนกเข้า LINE OA (เฉพาะขั้นตอนระหว่างทาง 1 ถึง N-1 เพราะตอนจบมีสรุป 100% อยู่แล้ว)
-      if (db.settings.line?.enabled && db.settings.line?.notifyOnEachStep && nextStep) {
-        const progressMsg = formatStepProgressLineMessage({
-          campaign,
-          step,
-          stepIndex: i,
-          totalSteps,
-          nextStep,
-          projectName: campaign.projectName
-        });
-        await pushLineNotificationAndLog({
-          campaign,
-          titleSuffix: `⏳ ความคืบหน้า ${i + 1}/${totalSteps} แผนก (${pct}%)`,
-          messageText: progressMsg
-        });
-      }
+      // ปิดแจ้งเตือนทีละแผนก (ส่งเฉพาะการ์ดรอยืนยันงานเมื่อทำเสร็จ 7 แผนก)
     } catch (err) {
       step.status = "error";
       step.error = err.message;

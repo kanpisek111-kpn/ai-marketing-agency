@@ -131,6 +131,26 @@
         </div>
       </div>
 
+      <!-- MULTI-PROJECT AUTOPILOT STATUS STRIP -->
+      <div id="multiProjectStatusStrip" style="background:#0f172a; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px; font-size:13px;">
+          <span style="font-size:18px;">📡</span>
+          <span style="color:#94a3b8;">สถานะเซิร์ฟเวอร์:</span>
+          <strong style="color:#10b981;">🟢 Cloud 24/7 (Render)</strong>
+          <span style="color:#64748b;">•</span>
+          <span style="color:#94a3b8;">รอบรันอัตโนมัติ:</span>
+          <strong style="color:#cbd5e1;">ทุกวันเวลา 09:30 น.</strong>
+          <span style="color:#64748b;">•</span>
+          <span style="color:#94a3b8;">เพจที่ดูแล:</span>
+          <strong style="color:#38bdf8;" id="activeProjectsCountBadge">5 โปรเจกต์</strong>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn-secondary btn-sm" onclick="handleSendStatusReportToLine()" title="ส่งรายงานสถานะทุกเพจเข้า LINE">
+            📲 ส่งรายงานสถานะเข้า LINE
+          </button>
+        </div>
+      </div>
+
       <!-- ================= TAB 1: COMMAND CENTER ================= -->
       <section id="tab-command" class="tab-panel active">
         <!-- Full AI Autopilot & 7-Agent Connected Ecosystem Bar -->

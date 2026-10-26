@@ -121,6 +121,53 @@ function formatCampaignLineSummary(campaign, projectName) {
   });
 }
 
+// สร้างรายงานสถานะระบบ Autopilot และเช็กสุขภาพแยกรายโปรเจกต์ส่งเข้า LINE OA
+function formatMultiProjectStatusMessage({ db, serverBaseUrl = "" }) {
+  const brandProfiles = db?.brandProfiles || [];
+  const campaigns = db?.campaigns || [];
+  const activeBrandId = db?.settings?.activeBrandId;
+  const scheduler = db?.settings?.scheduler || { enabled: true, dailyTime: "09:30" };
+
+  const nowBangkok = new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit" });
+  const todayBangkok = new Date().toLocaleDateString("th-TH", { timeZone: "Asia/Bangkok" });
+
+  const projectStatusLines = brandProfiles.map((p, idx) => {
+    const isMain = p.id === activeBrandId;
+    const projCampaigns = campaigns.filter((c) => c.brandId === p.id);
+    const lastCamp = projCampaigns[0];
+    let statusText = "🟢 พร้อมทำงาน";
+    if (lastCamp) {
+      if (lastCamp.status === "awaiting_approval") {
+        statusText = "🟡 รอกดยืนยันโพสต์";
+      } else if (lastCamp.status === "completed" || (lastCamp.postingSteps || []).some((s) => s.status === "posted")) {
+        statusText = "✅ โพสต์ขึ้นเพจสำเร็จแล้ว";
+      } else if (lastCamp.status === "running" || lastCamp.status === "starting") {
+        statusText = "⏳ กำลังเดินเครื่อง";
+      }
+    }
+    return [
+      `${idx + 1}. ${p.icon || "📁"} ${p.brandName}${isMain ? " (⭐ เพจหลัก)" : ""}`,
+      `   • สถานะ: ${statusText}`,
+      `   • แคมเปญล่าสุด: ${lastCamp?.brief?.autonomousAngle || lastCamp?.projectName || "พร้อมรันรอบถัดไป"}`,
+      `   • ลิงก์เพจ: ${p.fbUrl || "https://www.facebook.com/" + (p.fbPageId || "-")}`
+    ].join("\n");
+  }).join("\n\n");
+
+  return [
+    `📊 [รายงานสถานะระบบ AI Marketing & ทุกโปรเจกต์]`,
+    `━━━━━━━━━━━━━━━━━━`,
+    `🌐 คลาวด์เซิร์ฟเวอร์: 🟢 ออนไลน์ 24 ชม. (Render)`,
+    `⏰ ระบบรันอัตโนมัติ (Autopilot): ${scheduler.enabled ? `🟢 เปิดใช้งาน (ทุกวันเวลา ${scheduler.dailyTime} น.)` : "🔴 ปิดใช้งาน"}`,
+    `⏳ เวลาปัจจุบัน: ${nowBangkok} น. | วันที่: ${todayBangkok}`,
+    `━━━━━━━━━━━━━━━━━━`,
+    `📁 สถานะแยกแต่ละโปรเจกต์ (${brandProfiles.length} เพจ):`,
+    `\n${projectStatusLines}`,
+    `━━━━━━━━━━━━━━━━━━`,
+    `💡 เปิดดูหน้าจอแดชบอร์ดสดควบคุมทุกโปรเจกต์:`,
+    serverBaseUrl ? `🔗 ${serverBaseUrl}` : ""
+  ].filter(Boolean).join("\n");
+}
+
 async function sendLineReport({ lineConfig, messageText, flexMessages }) {
   const token = (lineConfig?.channelAccessToken || "").trim();
   const targetId = (lineConfig?.targetId || "").trim();
@@ -361,6 +408,16 @@ async function sendLineApprovalCard({
           },
           {
             type: "button",
+            style: "secondary",
+            height: "sm",
+            action: {
+              type: "uri",
+              label: "📡 เช็กสถานะระบบ & ทุกโปรเจกต์",
+              uri: `${publicTunnelUrl}/api/system/status-get`
+            }
+          },
+          {
+            type: "button",
             style: "link",
             height: "sm",
             action: {
@@ -402,5 +459,6 @@ module.exports = {
   formatLiveStatusCheckLineMessage,
   formatCampaignLineSummary,
   sendLineReport,
-  sendLineApprovalCard
+  sendLineApprovalCard,
+  formatMultiProjectStatusMessage
 };

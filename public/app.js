@@ -205,6 +205,19 @@ function renderAll() {
   renderLLMSettings();
 }
 
+async function handleSendStatusReportToLine() {
+  try {
+    const res = await fetch("/api/system/status-get");
+    if (res.ok) {
+      alert("✅ ส่งสรุปสถานะระบบและทุกโปรเจกต์เข้า LINE OA เรียบร้อยแล้วครับ! เปิดดูในแอป LINE ได้เลย");
+    } else {
+      alert("❌ ส่งสถานะไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
+    }
+  } catch (e) {
+    alert("❌ ขัดข้อง: " + e.message);
+  }
+}
+
 function renderProjectSwitcherBar() {
   const container = document.getElementById("projectTabsList");
   if (!container) return;

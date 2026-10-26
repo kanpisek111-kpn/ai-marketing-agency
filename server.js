@@ -14,7 +14,8 @@ const {
   formatLiveStatusCheckLineMessage,
   formatCampaignLineSummary,
   sendLineReport,
-  sendLineApprovalCard
+  sendLineApprovalCard,
+  formatMultiProjectStatusMessage
 } = require("./src/lineNotifier");
 const {
   AGENT_TOOL_ECOSYSTEM,
@@ -1408,6 +1409,71 @@ const server = http.createServer(async (req, res) => {
       return res.end(htmlPage);
     }
 
+    // 5.11 ลิงก์เช็กสถานะระบบและทุกโปรเจกต์จากมือถือในคลิกเดียว (GET /api/system/status-get)
+    if (pathname === "/api/system/status-get" && req.method === "GET") {
+      const serverBase = req.headers.host ? `${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}` : "";
+      const statusText = formatMultiProjectStatusMessage({ db, serverBaseUrl: serverBase });
+      
+      // ส่งรายงานละเอียดเข้า LINE OA
+      await pushLineNotificationAndLog({
+        campaign: null,
+        titleSuffix: "📊 รายงานสถานะระบบ & ทุกโปรเจกต์ประจำวัน",
+        messageText: statusText
+      });
+
+      const scheduler = db.settings?.scheduler || { enabled: true, dailyTime: "09:30" };
+      const projectItemsHtml = (db.brandProfiles || []).map((p, idx) => {
+        const isMain = p.id === db.settings?.activeBrandId;
+        const lastCamp = (db.campaigns || []).find((c) => c.brandId === p.id);
+        const st = lastCamp?.status === "awaiting_approval" ? "🟡 รอกดยืนยัน" : (lastCamp?.postingSteps || []).some((s) => s.status === "posted") ? "✅ โพสต์สำเร็จ" : "🟢 พร้อมทำงาน";
+        return `
+        <div style="background:#1e293b; padding:14px; border-radius:12px; margin-bottom:10px; text-align:left; border-left:4px solid ${isMain ? '#10b981' : '#6366f1'};">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="color:#f8fafc; font-size:15px;">${p.icon || "📁"} ${p.brandName}</strong>
+            <span style="font-size:11px; padding:2px 8px; border-radius:99px; background:${isMain ? '#065f46' : '#312e81'}; color:#fff;">${isMain ? 'เพจหลัก' : 'โปรเจกต์'}</span>
+          </div>
+          <div style="font-size:12.5px; color:#cbd5e1; margin-top:6px;">
+            <div>สถานะ: <strong>${st}</strong></div>
+            <div>แคมเปญล่าสุด: ${lastCamp?.brief?.autonomousAngle || "พร้อมรันรอบถัดไป"}</div>
+            <div>เพจ: <a href="${p.fbUrl || '#'}" target="_blank" style="color:#38bdf8;">${p.fbPageId || 'ดูหน้าเพจ'}</a></div>
+          </div>
+        </div>`;
+      }).join("");
+
+      const htmlPage = `<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>สถานะระบบ AI Marketing & ทุกโปรเจกต์</title>
+  <style>
+    body { background:#090d16; color:#f8fafc; font-family:'Prompt',sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; padding:16px; box-sizing:border-box; }
+    .box { background:#111827; border:2px solid #3b82f6; border-radius:18px; max-width:540px; width:100%; padding:24px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.6); }
+    .icon { font-size:48px; margin-bottom:8px; }
+    h1 { font-size:20px; color:#60a5fa; margin:0 0 10px; }
+    .badge-bar { display:flex; justify-content:center; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .badge { font-size:12px; padding:4px 12px; border-radius:99px; font-weight:600; background:#1e3a8a; color:#93c5fd; }
+    .btn { display:inline-block; margin-top:14px; padding:12px 24px; background:linear-gradient(135deg,#3b82f6,#1d4ed8); color:#fff; text-decoration:none; border-radius:10px; font-weight:600; font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="icon">📡</div>
+    <h1>ระบบ AI Marketing & สถานะทุกโปรเจกต์</h1>
+    <div class="badge-bar">
+      <span class="badge" style="background:#064e3b; color:#6ee7b7;">🟢 Cloud 24/7 (Render)</span>
+      <span class="badge">⏰ รันอัตโนมัติ: ${scheduler.dailyTime} น. ทุกวัน</span>
+    </div>
+    <p style="font-size:13px; color:#94a3b8; margin-bottom:16px;">📲 ส่งรายงานสรุปสถานะละเอียดเข้า <strong>LINE OA (@742srmne)</strong> ของคุณเรียบร้อยแล้วครับ!</p>
+    <div>${projectItemsHtml}</div>
+    <a class="btn" href="/">📱 เปิดดูหน้าจอควบคุมสด (Dashboard)</a>
+  </div>
+</body>
+</html>`;
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      return res.end(htmlPage);
+    }
+
     // 6. สั่งรันหรือสั่งแก้ไขงานเฉพาะ Agent รายตัว
     if (pathname === "/api/campaigns/rerun-step" && req.method === "POST") {
       const body = await parseBody(req);
@@ -1786,6 +1852,18 @@ setInterval(() => {
     if (timeStr === schedulerConfig.dailyTime && lastDailyRunDate !== todayDate) {
       lastDailyRunDate = todayDate;
       console.log(`⏰ [Daily Routine Triggered] ถึงเวลา ${timeStr} น. เริ่มเดินเครื่องประจำวันอัตโนมัติ...`);
+      if (!db.settings.scheduler) db.settings.scheduler = { enabled: true, dailyTime: "09:30" };
+      db.settings.scheduler.lastRunAt = new Date().toISOString();
+      db.settings.scheduler.lastRunDate = todayDate;
+      saveDB(db);
+
+      const activeBrand = db.brandProfiles.find((b) => b.id === db.settings.activeBrandId) || db.brandProfiles[0];
+      pushLineNotificationAndLog({
+        campaign: null,
+        titleSuffix: `⏰ ถึงเวลา ${timeStr} น. เริ่มเดินเครื่องประจำวันอัตโนมัติ!`,
+        messageText: `⏰ [แจ้งเตือน: ถึงเวลา ${timeStr} น. เริ่มเดินเครื่องประจำวัน]\n\n📁 โปรเจกต์: ${activeBrand?.brandName || "KPN บิ้วอิน เชียงใหม่"}\n🤖 Aria กำลังคิดแคมเปญใหม่ และส่งต่อให้ Maya เจนรูปบิ้วอิน 8K\n📲 เมื่อออกแบบเสร็จ ระบบจะส่งการ์ดรูป+แคปชันมารอให้กดยืนยันใน LINE ภายใน 1 นาทีครับ!`
+      }).catch(() => {});
+
       triggerDailyAutopilotRun();
     }
   } catch (e) {

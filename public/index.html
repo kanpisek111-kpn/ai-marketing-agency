@@ -2,12 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#090d16" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="AI Marketing" />
-  <link rel="manifest" href="/manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Marketing Agency — ระบบสั่งการทีม AI การตลาดออนไลน์ครบวงจร</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,16 +95,10 @@
       <!-- Top Header -->
       <header class="top-header">
         <div class="header-left">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <button type="button" class="mobile-menu-toggle" onclick="toggleMobileSidebar()" title="เปิดเมนูทั้งหมด">☰</button>
-            <h2 id="pageTitle">🚀 ศูนย์บัญชาการทีม AI การตลาดออนไลน์ (Single Command Center)</h2>
-          </div>
+          <h2 id="pageTitle">🚀 ศูนย์บัญชาการทีม AI การตลาดออนไลน์ (Single Command Center)</h2>
           <p id="pageSubtitle">วางลิงก์เพจของคุณ (FB / TikTok / IG / LINE) แล้วสั่งงานที่เดียวให้ทีม AI ทั้ง 7 แผนกวางแผน เขียนโพสต์ และส่งขึ้นเพจอัตโนมัติ</p>
         </div>
         <div class="header-right">
-          <button type="button" class="btn-reset-zero" style="background:linear-gradient(135deg,#06b6d4,#6366f1); box-shadow:0 4px 12px rgba(99,102,241,0.35);" onclick="openMobileAccessModal()" title="สแกน QR Code หรือส่งลิงก์เข้า LINE เพื่อใช้งานผ่านมือถือได้จากทุกที่">
-            📱 เปิดในมือถือ (QR / ลิงก์ 4G)
-          </button>
           <button type="button" class="btn-reset-zero" onclick="handleResetToZeroNewPage()" title="ล้างข้อมูลเพจเก่าและประวัติทั้งหมดเพื่อเริ่มเพจใหม่ตั้งแต่ 0">
             🔄 เซต 0 เริ่มเพจใหม่
           </button>
@@ -878,76 +867,6 @@
       </form>
     </div>
   </div>
-
-  <!-- Modal: Connect & Use on Mobile Phone (QR Code + Cloud 4G/5G Tunnel + Send to LINE) -->
-  <div id="mobileAccessModal" class="modal-overlay hidden">
-    <div class="modal-box" style="max-width:560px;">
-      <div class="modal-header">
-        <h3>📱 เปิดใช้งานระบบสั่งการทีม AI บนมือถือ (iPhone / Android)</h3>
-        <button class="modal-close" onclick="closeMobileAccessModal()">✕</button>
-      </div>
-      <div class="modal-body" style="display:flex; flex-direction:column; gap:14px;">
-        <div style="background:linear-gradient(135deg,rgba(16,185,129,0.14),rgba(6,182,212,0.12)); border:1px solid rgba(16,185,129,0.4); border-radius:12px; padding:14px; text-align:center;">
-          <div style="font-size:13.5px; font-weight:700; color:#6ee7b7; margin-bottom:6px;">
-            📲 วิธีที่ง่ายที่สุด: กดปุ่มด้านล่างเพื่อส่งลิงก์เข้าแอป LINE ในมือถือของคุณทันที!
-          </div>
-          <button type="button" class="btn-line" style="width:100%; justify-content:center; padding:11px 16px; font-size:14px; font-weight:600;" onclick="sendMobileLinkToLine()">
-            💬 ส่งลิงก์เข้าใช้งานบนมือถือไปที่ LINE OA เดี๋ยวนี้
-          </button>
-        </div>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px;">
-          <!-- Option 1: 4G/5G Cloud URL -->
-          <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(99,102,241,0.4); border-radius:12px; padding:12px; text-align:center;">
-            <strong style="font-size:13px; color:#a5b4fc; display:block; margin-bottom:4px;">🌐 1. เข้าผ่านเน็ตมือถือ 4G/5G/Wi-Fi (ทุกที่)</strong>
-            <small style="color:#94a3b8; font-size:11px; display:block; margin-bottom:8px;">สแกนด้วยกล้องมือถือหรือแอป LINE</small>
-            <div id="mobileCloudQrWrap" style="background:#fff; padding:10px; border-radius:10px; width:160px; height:160px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center;">
-              <span style="color:#0f172a; font-size:12px;">กำลังสร้าง QR...</span>
-            </div>
-            <input type="text" id="mobileCloudUrlInput" readonly value="กำลังสร้างลิงก์ออนไลน์..." style="width:100%; font-size:11.5px; padding:6px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:#090d16; color:#38bdf8; text-align:center;" onclick="this.select()" />
-          </div>
-
-          <!-- Option 2: Same Wi-Fi LAN URL -->
-          <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(6,182,212,0.4); border-radius:12px; padding:12px; text-align:center;">
-            <strong style="font-size:13px; color:#67e8f9; display:block; margin-bottom:4px;">📶 2. เข้าผ่านวง Wi-Fi เดียวกับคอม</strong>
-            <small style="color:#94a3b8; font-size:11px; display:block; margin-bottom:8px;">เร็วแรง ไม่ต้องผ่านคลาวด์</small>
-            <div id="mobileLanQrWrap" style="background:#fff; padding:10px; border-radius:10px; width:160px; height:160px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center;">
-              <span style="color:#0f172a; font-size:12px;">กำลังสร้าง QR...</span>
-            </div>
-            <input type="text" id="mobileLanUrlInput" readonly value="http://192.168.1.9:3080" style="width:100%; font-size:11.5px; padding:6px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:#090d16; color:#6ee7b7; text-align:center;" onclick="this.select()" />
-          </div>
-        </div>
-
-        <div style="font-size:12px; color:#cbd5e1; background:rgba(255,255,255,0.04); padding:10px 12px; border-radius:8px;">
-          💡 <strong>เคล็ดลับทำเป็นแอปบนหน้าจอมือถือ:</strong> พอเปิดลิงก์ในมือถือแล้ว กดปุ่ม <strong>แชร์ (Share)</strong> บน Safari (iPhone) หรือเมนู <strong>⋮</strong> บน Chrome (Android) แล้วเลือก <strong>"เพิ่มไปยังหน้าจอโฮม (Add to Home Screen)"</strong> จะได้ไอคอนแอปไว้กดเข้าใช้งานเหมือนแอปทั่วไปเลยครับ!
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Bottom App Navigation Bar (Visible on Smartphones) -->
-  <nav class="mobile-bottom-nav" id="mobileBottomNav">
-    <button type="button" class="mob-nav-btn active" data-mob-tab="command" onclick="switchMainTab('command')">
-      <span class="mob-icon">🚀</span>
-      <span>สั่งงาน AI</span>
-    </button>
-    <button type="button" class="mob-nav-btn" data-mob-tab="channels" onclick="switchMainTab('channels')">
-      <span class="mob-icon">🌐</span>
-      <span>เพจ/โพสต์</span>
-    </button>
-    <button type="button" class="mob-nav-btn" data-mob-tab="graphics" onclick="switchMainTab('command'); setTimeout(()=>jumpToGraphicStudio(),100);">
-      <span class="mob-icon">🎨</span>
-      <span>รูปกราฟิก</span>
-    </button>
-    <button type="button" class="mob-nav-btn" data-mob-tab="line" onclick="switchMainTab('line')">
-      <span class="mob-icon">📲</span>
-      <span>LINE OA</span>
-    </button>
-    <button type="button" class="mob-nav-btn" data-mob-tab="settings" onclick="switchMainTab('settings')">
-      <span class="mob-icon">⚙️</span>
-      <span>ตั้งค่า</span>
-    </button>
-  </nav>
 
   <!-- Toast Notification -->
   <div id="toastContainer" class="toast-container"></div>

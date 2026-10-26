@@ -4,8 +4,6 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const os = require("os");
-const { spawn } = require("child_process");
 const { randomUUID } = require("crypto");
 const { ensureDB, saveDB, DEFAULT_AGENTS } = require("./src/store");
 const { runAgentLLM } = require("./src/llmProvider");
@@ -29,57 +27,13 @@ const PUBLIC_DIR = path.join(__dirname, "public");
 
 let db = ensureDB();
 const sseClients = new Set();
-let publicTunnelUrl = "";
-let tunnelProcess = null;
 
-function getLocalLanIps() {
-  const nets = os.networkInterfaces();
-  const ips = [];
-  for (const list of Object.values(nets)) {
-    for (const net of list || []) {
-      if (net.family === "IPv4" && !net.internal) {
-        ips.push(net.address);
-      }
-    }
-  }
-  return ips;
-}
-
-function startPublicMobileTunnel() {
-  if (tunnelProcess) return;
-  try {
-    tunnelProcess = spawn(
-      "ssh",
-      [
-        "-o",
-        "StrictHostKeyChecking=no",
-        "-o",
-        "ServerAliveInterval=30",
-        "-R",
-        `80:localhost:${PORT}`,
-        "nokey@localhost.run"
-      ],
-      { stdio: ["ignore", "pipe", "pipe"] }
-    );
-
-    const handleChunk = (chunk) => {
-      const text = chunk.toString("utf8");
-      const match = text.match(/https:\/\/[a-zA-Z0-9.-]+\.lhr\.life/);
-      if (match && match[0]) {
-        publicTunnelUrl = match[0];
-        broadcastEvent("mobile_tunnel_ready", { publicTunnelUrl });
-      }
-    };
-
-    tunnelProcess.stdout.on("data", handleChunk);
-    tunnelProcess.stderr.on("data", handleChunk);
-    tunnelProcess.on("exit", () => {
-      tunnelProcess = null;
-    });
-  } catch (e) {
-    tunnelProcess = null;
-  }
-}
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err.message);
+});
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled Rejection:", reason);
+});
 
 function broadcastEvent(type, payload) {
   const data = `data: ${JSON.stringify({ type, payload, timestamp: new Date().toISOString() })}\n\n`;
@@ -1214,42 +1168,6 @@ const server = http.createServer(async (req, res) => {
       return sendJSON(res, 200, { ok: true });
     }
 
-    // 10. ข้อมูลลิงก์เชื่อมต่อใช้งานบนมือถือ (Wi-Fi LAN IP + Public Cloud Tunnel URL สำหรับ 4G/5G)
-    if (pathname === "/api/mobile-info" && req.method === "GET") {
-      if (!publicTunnelUrl) {
-        startPublicMobileTunnel();
-      }
-      const ips = getLocalLanIps();
-      const lanUrl = ips.length > 0 ? `http://${ips[0]}:${PORT}` : `http://localhost:${PORT}`;
-      return sendJSON(res, 200, {
-        ok: true,
-        port: PORT,
-        lanIps: ips,
-        lanUrl,
-        publicTunnelUrl: publicTunnelUrl || ""
-      });
-    }
-
-    // 10.1 ส่งลิงก์เข้าใช้งานบนมือถือไปที่แชท LINE OA ทันที (จะได้กดเปิดจากในมือถือได้เลย)
-    if (pathname === "/api/mobile-send-line" && req.method === "POST") {
-      const ips = getLocalLanIps();
-      const lanUrl = ips.length > 0 ? `http://${ips[0]}:${PORT}` : `http://localhost:${PORT}`;
-      const msgLines = [
-        `📱 [ลิงก์เปิดใช้งานระบบ AI Marketing บนมือถือ]`,
-        `━━━━━━━━━━━━━━━━━━`,
-        publicTunnelUrl
-          ? `🌐 1. เข้าผ่านเน็ตมือถือ 4G/5G/Wi-Fi (จากที่ไหนก็ได้):\n👉 ${publicTunnelUrl}`
-          : `⏳ กำลังสร้างลิงก์ออนไลน์ 4G/5G...`,
-        `━━━━━━━━━━━━━━━━━━`,
-        `📶 2. เข้าผ่านวง Wi-Fi เดียวกับคอมพิวเตอร์:\n👉 ${lanUrl}`,
-        `━━━━━━━━━━━━━━━━━━`,
-        `💡 แตะที่ลิงก์ด้านบนจากในมือถือเพื่อสั่งงานทีม AI, ดูรูปกราฟิก และสั่งโพสต์ลงเพจได้ทันที!`
-      ];
-      const messageText = msgLines.join("\n");
-      const result = await sendLineReport({ lineConfig: db.settings.line, messageText });
-      return sendJSON(res, 200, { ok: true, result, lanUrl, publicTunnelUrl });
-    }
-
     return serveStaticFile(req, res);
   } catch (err) {
     console.error("Server Error:", err);
@@ -1257,13 +1175,9 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, "0.0.0.0", () => {
-  const ips = getLocalLanIps();
-  const lanUrl = ips.length > 0 ? `http://${ips[0]}:${PORT}` : `http://localhost:${PORT}`;
-  startPublicMobileTunnel();
+server.listen(PORT, () => {
   console.log(`\n============================================================`);
   console.log(`🚀 AI Marketing Agency Command Dashboard is running!`);
-  console.log(`👉 PC Browser:     http://localhost:${PORT}`);
-  console.log(`📱 Mobile (Wi-Fi): ${lanUrl}`);
+  console.log(`👉 Open in browser: http://localhost:${PORT}`);
   console.log(`============================================================\n`);
 });

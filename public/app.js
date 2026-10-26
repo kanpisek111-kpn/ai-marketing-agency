@@ -948,9 +948,6 @@ function renderAiGraphicStudio(campaign, selectedAgentId) {
             <canvas id="graphicCanvasFb" width="1080" height="1080"></canvas>
           </div>
           <div class="ai-graphic-card-actions">
-            <button type="button" class="btn-graphic-action copy-img" onclick="shareGraphicOnMobile('graphicCanvasFb')">
-              📲 แชร์เข้าแอปมือถือ
-            </button>
             <button type="button" class="btn-graphic-action copy-img" onclick="copyGraphicCanvasToClipboard('graphicCanvasFb', true)">
               📘 คัดลอกรูป + เปิดเพจ FB
             </button>
@@ -973,9 +970,6 @@ function renderAiGraphicStudio(campaign, selectedAgentId) {
             <canvas id="graphicCanvasTiktok" width="1080" height="1080"></canvas>
           </div>
           <div class="ai-graphic-card-actions">
-            <button type="button" class="btn-graphic-action copy-img" onclick="shareGraphicOnMobile('graphicCanvasTiktok')">
-              📲 แชร์เข้าแอปมือถือ
-            </button>
             <button type="button" class="btn-graphic-action" onclick="copyGraphicCanvasToClipboard('graphicCanvasTiktok', false)">
               🖼️ คัดลอกรูป (Ctrl+V)
             </button>
@@ -998,9 +992,6 @@ function renderAiGraphicStudio(campaign, selectedAgentId) {
             <canvas id="graphicCanvasLine" width="1080" height="1080"></canvas>
           </div>
           <div class="ai-graphic-card-actions">
-            <button type="button" class="btn-graphic-action copy-img" onclick="shareGraphicOnMobile('graphicCanvasLine')">
-              📲 แชร์เข้าแอปมือถือ
-            </button>
             <button type="button" class="btn-graphic-action copy-img" onclick="copyGraphicCanvasToClipboard('graphicCanvasLine', true)">
               📘 คัดลอกรูป + เปิดเพจ FB
             </button>
@@ -2458,119 +2449,12 @@ async function handleSaveLLMSettings(e) {
 function switchMainTab(tabName) {
   document.querySelectorAll(".tab-panel").forEach((el) => el.classList.remove("active"));
   document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("active"));
-  document.querySelectorAll(".mob-nav-btn").forEach((el) => el.classList.remove("active"));
 
   const targetSection = document.getElementById(`tab-${tabName}`);
   if (targetSection) targetSection.classList.add("active");
 
   const navBtn = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
   if (navBtn) navBtn.classList.add("active");
-
-  const mobBtn = document.querySelector(`.mob-nav-btn[data-mob-tab="${tabName}"]`);
-  if (mobBtn) mobBtn.classList.add("active");
-
-  const sidebar = document.querySelector(".sidebar");
-  if (sidebar) sidebar.classList.remove("mobile-open");
-}
-
-function toggleMobileSidebar() {
-  const sidebar = document.querySelector(".sidebar");
-  if (sidebar) sidebar.classList.toggle("mobile-open");
-}
-
-// แชร์รูปกราฟิก + แคปชัน เข้าแอปมือถือ (Facebook / TikTok / IG / LINE) ผ่าน Native Share Sheet
-async function shareGraphicOnMobile(canvasId) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-
-  const campaign = getCurrentCampaign();
-  const activeBrand = getActiveBrandProfile() || {};
-  const copyStep =
-    (campaign?.steps || []).find((s) => s.agentId === "content_copywriter" && s.output) ||
-    (campaign?.steps || [])[0];
-  const cleanCaption = extractCleanCaptionClient(
-    copyStep?.output || activeBrand.commandDefault || activeBrand.brandName || ""
-  );
-
-  try {
-    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
-    const file = new File([blob], `${(activeBrand.brandName || "banner").replace(/\s+/g, "-")}.png`, {
-      type: "image/png"
-    });
-
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({
-        title: activeBrand.brandName || "AI Marketing Campaign",
-        text: cleanCaption,
-        files: [file]
-      });
-      showToast("📲 เปิดเมนูแชร์รูป+แคปชันเข้าแอปมือถือเรียบร้อย!");
-      return;
-    }
-  } catch (e) {
-    // fallback if user cancels or desktop browser doesn't support file share
-  }
-
-  await copyGraphicCanvasToClipboard(canvasId, false);
-}
-
-// เปิดหน้าต่างสแกน QR Code / ลิงก์ใช้งานบนมือถือ
-async function openMobileAccessModal() {
-  const modal = document.getElementById("mobileAccessModal");
-  if (modal) modal.classList.remove("hidden");
-
-  try {
-    const res = await fetch("/api/mobile-info");
-    const data = await res.json();
-    const lanUrl = data.lanUrl || window.location.origin;
-    const cloudUrl = data.publicTunnelUrl || "";
-
-    const lanInput = document.getElementById("mobileLanUrlInput");
-    if (lanInput) lanInput.value = lanUrl;
-
-    const lanQrWrap = document.getElementById("mobileLanQrWrap");
-    if (lanQrWrap) {
-      lanQrWrap.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(lanUrl)}" alt="LAN QR" style="width:140px;height:140px;display:block;" />`;
-    }
-
-    const cloudInput = document.getElementById("mobileCloudUrlInput");
-    const cloudQrWrap = document.getElementById("mobileCloudQrWrap");
-    if (cloudUrl) {
-      if (cloudInput) cloudInput.value = cloudUrl;
-      if (cloudQrWrap) {
-        cloudQrWrap.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(cloudUrl)}" alt="Cloud QR" style="width:140px;height:140px;display:block;" />`;
-      }
-    } else {
-      if (cloudInput) cloudInput.value = "กำลังสร้างลิงก์ออนไลน์ 4G/5G (รอ 3 วินาที)...";
-      setTimeout(openMobileAccessModal, 2500);
-    }
-  } catch (err) {
-    showToast("ไม่สามารถโหลดข้อมูลลิงก์มือถือได้: " + err.message);
-  }
-}
-
-function closeMobileAccessModal() {
-  const modal = document.getElementById("mobileAccessModal");
-  if (modal) modal.classList.add("hidden");
-}
-
-async function sendMobileLinkToLine() {
-  try {
-    showToast("📲 กำลังส่งลิงก์เข้าใช้งานบนมือถือไปที่ LINE OA ของคุณ...");
-    const res = await fetch("/api/mobile-send-line", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({})
-    });
-    const data = await res.json();
-    if (data.ok) {
-      showToast("✅ ส่งลิงก์เข้า LINE OA สำเร็จ! เปิดแอป LINE ในมือถือแล้วแตะลิงก์ได้เลยครับ!");
-    } else {
-      showToast("⚠️ ส่งเข้า LINE ไม่สำเร็จ: " + (data.error || ""));
-    }
-  } catch (err) {
-    showToast("เกิดข้อผิดพลาด: " + err.message);
-  }
 }
 
 function showToast(message) {

@@ -1,5 +1,7 @@
 # 🤖 AI Marketing Agency — Command Center & Multi-Page Auto-Publisher
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/kanpisek111-kpn/ai-marketing-agency)
+
 ระบบทีม AI การตลาดออนไลน์ครบวงจร (7 แผนกอัจฉริยะ) พร้อมระบบแยกโปรเจกต์ดูแลหลายเพจ (Multi-Project Workspace), ระบบสั่งโพสต์อัตโนมัติ (Facebook / TikTok / Instagram / LINE OA) และระบบแจ้งเตือนติดตามสถานะผ่าน **LINE Official Account (LINE OA)**
 
 ---

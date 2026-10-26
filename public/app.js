@@ -2747,6 +2747,9 @@ function renderApprovalGateBox(campaign) {
         <a href="${escapeHtml(canvaUrl)}" target="_blank" class="btn-secondary btn-sm" style="text-decoration:none; border-color:#00c4cc; color:#67e8f9;">
           🎨 เปิดแต่งใน Canva
         </a>
+        <button type="button" class="btn-line btn-sm" onclick="handleResendLineApprovalCard('${escapeHtml(campaign.id)}')">
+          📲 ส่งการ์ดเข้า LINE อีกครั้ง
+        </button>
         <button type="button" class="btn-secondary btn-sm" onclick="jumpToGraphicStudio()">
           🖼️ ดูรูปทั้ง 3 ขนาด
         </button>
@@ -2869,4 +2872,22 @@ function setBuiltinScene(sceneKey) {
     drawAllMarketingCanvases(data);
   };
   img.src = scene.img;
+}
+
+
+async function handleResendLineApprovalCard(campaignId) {
+  const targetId = campaignId || appState.currentCampaignId;
+  showToast("📲 กำลังส่งการ์ดตรวจงานและปุ่มยืนยันเข้า LINE OA ของคุณ...");
+  try {
+    const res = await fetch("/api/campaigns/resend-line-card", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ campaignId: targetId })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || "ส่งเข้า LINE ไม่สำเร็จ");
+    showToast(data.message || "✅ ส่งการ์ดตรวจงานเข้า LINE OA เรียบร้อยแล้ว!");
+  } catch (err) {
+    showToast("❌ " + err.message);
+  }
 }

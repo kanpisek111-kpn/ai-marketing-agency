@@ -190,9 +190,24 @@ async function sendLineApprovalCard({
   const approvePcUrl = `${serverBaseUrl}/api/campaigns/approve-get?campaignId=${encodeURIComponent(campaign.id)}`;
   const regeneratePcUrl = `${serverBaseUrl}/api/campaigns/regenerate-get?campaignId=${encodeURIComponent(campaign.id)}`;
   const canvaUrl = visualAssets?.canva?.fbTemplateUrl || "https://www.canva.com/";
-  const heroImageUrl =
-    visualAssets?.fbBannerImageUrl ||
-    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90";
+  // รับประกันว่า heroImageUrl ต้องเป็น https:// ที่ LINE API ยอมรับ 100%
+  let heroImageUrl = visualAssets?.fbBannerImageUrl || "";
+  if (!heroImageUrl.startsWith("https://")) {
+    const brandLower = (brandName + " " + (campaign?.brief?.productName || "")).toLowerCase();
+    if (brandLower.includes("ครัว") || brandLower.includes("kitchen")) {
+      heroImageUrl = "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=90";
+    } else if (brandLower.includes("ตู้เสื้อผ้า") || brandLower.includes("closet")) {
+      heroImageUrl = "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=90";
+    } else if (brandLower.includes("สร้างบ้าน") || brandLower.includes("construction")) {
+      heroImageUrl = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=90";
+    } else if (brandLower.includes("แอร์") || brandLower.includes("air")) {
+      heroImageUrl = "https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&w=1200&q=90";
+    } else if (brandLower.includes("กระเป๋า") || brandLower.includes("bag")) {
+      heroImageUrl = "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1200&q=90";
+    } else {
+      heroImageUrl = "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=90";
+    }
+  }
 
   // สร้างลิงก์ยิงเข้า Make.com โดยตรงกรณีผู้ใช้กดยืนยันจากมือถือผ่าน 4G/5G
   const makeWebhook = (brandProfile?.automationWebhookUrl || "").trim();

@@ -1107,6 +1107,50 @@ const server = http.createServer(async (req, res) => {
       return sendJSON(res, 200, { ok: true, campaign });
     }
 
+    // 5.75 ส่งการ์ดตรวจงานพร้อมรูปโปสเตอร์เข้า LINE OA ซ้ำอีกครั้ง
+    if (pathname === "/api/campaigns/resend-line-card" && req.method === "POST") {
+      const body = await parseBody(req);
+      const campaign = db.campaigns.find((c) => c.id === body.campaignId) || db.campaigns[0];
+      if (!campaign) return sendJSON(res, 404, { error: "ไม่พบแคมเปญ" });
+
+      const brandProfile =
+        db.brandProfiles.find((b) => b.id === (campaign.brandId || db.settings.activeBrandId)) ||
+        db.brandProfiles[0];
+
+      if (!campaign.visualAssets) {
+        campaign.visualAssets = generateCampaignVisualAssets(campaign, brandProfile);
+      }
+      const copyStep =
+        (campaign.steps || []).find((s) => s.agentId === "content_copywriter" && s.output) ||
+        (campaign.steps || [])[0];
+      const rawCopy = copyStep?.output || `โปรโมชันพิเศษจาก ${campaign.brief?.productName || "เพจของเรา"}`;
+      const cleanCaption = campaign.cleanCaption || extractCleanPostCaption(rawCopy, campaign.brief);
+
+      const result = await sendLineApprovalCard({
+        lineConfig: db.settings.line,
+        campaign,
+        brandProfile,
+        visualAssets: campaign.visualAssets,
+        cleanCaption,
+        serverBaseUrl: `http://localhost:${PORT}`
+      });
+
+      db.lineLogs.unshift({
+        id: randomUUID(),
+        campaignId: campaign.id,
+        brandId: campaign.brandId,
+        campaignTitle: `${campaign.brief?.productName || "แคมเปญ"} — 🎨 ส่งการ์ดรูป+แคปชันให้กดยืนยันใน LINE (ส่งซ้ำ)`,
+        timestamp: new Date().toISOString(),
+        status: result.success ? "sent" : "simulated",
+        details: result.message,
+        preview: cleanCaption.slice(0, 500)
+      });
+      saveDB(db);
+      broadcastEvent("line_log_added", { lineLogs: db.lineLogs });
+
+      return sendJSON(res, 200, { ok: true, result, message: "✅ ส่งการ์ดตรวจงานและปุ่มยืนยันเข้าแอป LINE เรียบร้อยแล้ว!" });
+    }
+
     // 5.8 ลิงก์กดยืนยันงานในคลิกเดียวจากปุ่มในการ์ด LINE OA (GET /api/campaigns/approve-get)
     if (pathname === "/api/campaigns/approve-get" && req.method === "GET") {
       const campaignId = parsedUrl.searchParams.get("campaignId");
